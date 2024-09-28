@@ -1,30 +1,45 @@
-// might have some problem
-struct node{
-	int val;
-	node *l, *r;
-	node(int v): val(v), l(0), r(0){}
-	void pull(){val = min(l->val, r->val);}
+struct Node{
+    int mx;  // 區間最大值
+    int tag; // 子樹裡所有人都要加上 tag
 };
-int arr[N];
-node* build(int l, int r, node *p){
-	if(l == r) return new node(arr[l]);
-	int m = l + r >> 1;
-	p = new node(0);
-	p->l = build(l, m, p->l), p->r = build(m+1, r, p->r);
-	p->pull();
+
+vector<Node> seg;
+
+// 節點 id 的整個區間要加上 tag
+void addtag(int tag, int id){
+    seg[id].mx += tag; // 最大值會加上 tag
+    seg[id].tag += tag; // 注意可能本來就有標記了，所以是 +=
 }
-int query(int ql, int qr, int l, int r, node *p){
-	if(ql <= l && r <= qr) return p->val;
-	int m = l + r >> 1;
-	if(qr <= m) return query(ql, qr, l, m, p->l);
-	if(ql > m) return query(ql, qr, m+1, r, p->r);
-	return min(query(ql, qr, l, m, p->l), query(ql, qr, m+1, r, p->r));
+
+// 更新子節點資訊並把標記移到子節點身上
+void push(int id){
+    addtag(seg[id].tag, lc);
+    addtag(seg[id].tag, rc);
+    seg[id].tag = 0; // 標記被移到子節點上所以要改成 0
 }
-void modify(int x, int l, int r, node *p, int v){
-	if(l == r)
-	return p->val = v;
-	int m = l + r >> 1;
-	if(x <= m) modify(x, l, m, p->l, v);
-	else modify(x, m+1, r, p->r, v);
-	p->pull();
+
+// 區間 [l,r] 加上 v
+void modify(int l, int r, int v, int L, int R, int id){
+    if(l <= L && R <= r){
+        addtag(v, id);
+        return;
+    }
+    push(id);
+    if(r <= M) modify(l, r, v, L, M, lc);
+    else if(l > M) modify(l, r, v, M + 1, R, rc);
+    else{
+        modify(l, r, v, L, M, lc);
+        modify(l, r, v, M + 1, R, rc);
+    }
+    seg[id].mx = max(seg[lc].mx, seg[rc].mx);
+}
+
+int query(int l, int r, int L, int R, int id){
+    if(l <= L && R <= r) return seg[id].mx;
+    push(id);
+    int M = (L + R) / 2;
+    if(r <= M) return query(l, r, L, M, lc);
+    else if(l > M) return query(l, r, M + 1, R, rc);
+    else return max(query(l, r, L, M, lc), 
+                    query(l, r, M + 1, R, rc));
 }
