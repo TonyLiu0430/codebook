@@ -24,3 +24,6 @@ python3 a.py < input.txt > output.txt
 # Copy Paste In Ubuntu
 * copy: ctrl+insert
 * paste: shift+insert
+
+# 比對文件相同
+sdiff a.txt b.txt 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.9.28)  28 SEP 2024 23:29
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.9.28)  12 OCT 2024 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -584,13 +584,13 @@ Package fancyhdr Warning: \footskip is too small (0.0pt):
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 )
-(Flow/Min_Cost_Max_Flow.cpp) (Math/ax+by=gcd.cpp
+(Flow/Min_Cost_Max_Flow.cpp)
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[3]) (Math/Bigint.cpp
+[3] (Math/ax+by=gcd.cpp) (Math/Bigint.cpp
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -600,91 +600,98 @@ Package fancyhdr Warning: \footskip is too small (0.0pt):
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
 [4]) (Math/GaussElimination.cpp) (Math/Inverse.cpp) (Math/LinearPrime.cpp)
-(Math/Miller-Rabin.cpp) (Math/pollardRho.cpp) (Math/number_tool.cpp
+(Math/Miller-Rabin.cpp)
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[5]) (Math/Mobius.cpp) (Math/Sprague-Grundy.cpp) (Math/theorem.cpp
+[5] (Math/pollardRho.cpp) (Math/number_tool.cpp) (Math/Mobius.cpp)
+(Math/Sprague-Grundy.cpp) (Math/theorem.cpp
 
 LaTeX Font Warning: Font shape `TU/NotoSansCJKTC(0)/m/it' undefined
 (Font)              using `TU/NotoSansCJKTC(0)/m/n' instead on input line 20.
 
-) (Graph/BCC_edge.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[6]) (Graph/Prim.cpp) (Graph/Bellman_ford.cpp) (Graph/Kruskal.cpp
+[6]) (Graph/BCC_edge.cpp) (Graph/Prim.cpp) (Graph/Bellman_ford.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[7]) (Graph/Dijkstra.cpp) (Graph/Kosaraju_SCC.cpp)
-(Graph/Matching/Hungarian.cpp) (Graph/Matching/Kuhn_Munkres.cpp
+[7]) (Graph/Kruskal.cpp) (Graph/Dijkstra.cpp) (Graph/Kosaraju_SCC.cpp)
+(Graph/Matching/Hungarian.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[8]) (Graph/Min_mean_cycle.cpp) (Graph/negative_cycle_validation.cpp
+[8]) (Graph/Matching/Kuhn_Munkres.cpp) (Graph/Min_mean_cycle.cpp)
+(Graph/negative_cycle_validation.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[9]) (Graph/Tarjan.cpp) (Graph/Topological_Sort.cpp)
-(DataStructure/2D_RangeTree.cpp
+[9]) (Graph/Tarjan.cpp) (Graph/Topological_Sort.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[10]) (DataStructure/SparseTable.h) (DataStructure/Segment_tree.cpp)
-(DataStructure/zkw.cpp
+[10]) (DataStructure/2D_RangeTree.cpp) (DataStructure/SparseTable.h)
+(DataStructure/Segment_tree.cpp) (DataStructure/zkw.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[11]) (DataStructure/Lazy_tag.cpp) (String/KMP.h) (String/smallest_rotation.cpp
-) (String/suffix_array.cpp
-
-Package fancyhdr Warning: \footskip is too small (0.0pt): 
-(fancyhdr)                Make it at least 3.60004pt, for example:
-(fancyhdr)                \setlength{\footskip}{3.60004pt}.
-
-[12]) (String/Z-value.cpp) (Other/count_spanning_tree.cpp
+[11]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-
-Package fancyhdr Warning: \footskip is too small (0.0pt): 
-(fancyhdr)                Make it at least 3.60004pt, for example:
-(fancyhdr)                \setlength{\footskip}{3.60004pt}.
-
-[13]) (Other/Dp1D1D.cpp) (Other/DP-optimization.txt) (Other/Marriage.cpp
+)
+(DataStructure/Lazy_tag.cpp) (DataStructure/BIT.cpp) (String/KMP.h
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[14]) (Other/MatrixMul.cpp) (Other/Skill.cpp) (Other/python.py
+[12]) (String/smallest_rotation.cpp) (String/suffix_array.cpp)
+(String/Z-value.cpp) (String/RollingHash.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[15]))
+[13]) (Other/count_spanning_tree.cpp) (Other/Dp1D1D.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[16
+[14]) (Other/DP-optimization.txt) (Other/Marriage.cpp
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.60004pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.60004pt}.
+
+[15]) (Other/MatrixMul.cpp) (Other/Skill.cpp) (Other/python.py
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.60004pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.60004pt}.
+
+[16]))
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.60004pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.60004pt}.
+
+[17
 
 ] (codebook.aux)
  ***********
@@ -697,12 +704,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 11531 strings out of 409616
- 244583 string characters out of 5778255
- 2959191 words of memory out of 5000000
- 33352 multiletter control sequences out of 15000+600000
+ 11631 strings out of 409616
+ 246007 string characters out of 5778255
+ 2914191 words of memory out of 5000000
+ 33446 multiletter control sequences out of 15000+600000
  560182 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 79i,12n,93p,386b,1661s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,12n,93p,386b,1690s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on codebook.pdf (16 pages).
+Output written on codebook.pdf (17 pages).

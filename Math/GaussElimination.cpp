@@ -27,3 +27,27 @@ void Gauss() {
     }
   }
 }
+
+template<class T>
+void Gauss(vector<vector<T>> &A) {
+  int n = A.size();
+  for(int i = 0; i < n; i++) {
+    bool ok = 0;
+    for(int j = i; j < n; j++) {
+      if(A[j][i] != 0) {
+        swap(A[j], A[i]);
+        ok = 1;
+        break;
+      }
+    }
+    if(!ok) continue;
+
+    T fs = A[i][i];
+    for(int j = i+1; j < n; j++) {
+      T r = A[j][i] / fs;
+      for(int k = i; k < n; k++) {
+        A[j][k] -= A[i][k] * r;
+      }
+    }
+  }
+}
