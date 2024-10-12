@@ -65,8 +65,15 @@ valarray<int> c = a + b;
 valarray<int> d = a * b;
 valarray<int> e = a + 10;
 valarray<int> f = a * 10;
+valarray<int> g = a.cshift(1); //循環左移
 valarray<bool> equal = a == b;
 int sum = a.sum();
 int max = a.max();
 int min = a.min();
 std::valarray<int> g = a.apply([](int x) { return x * x; });
+
+//regex
+#include <regex>
+using namespace std;
+bool res = regex_match("abc", regex("a.c"));
+bool res = regex_match("abc", regex("A.c", regex::icase)); //忽略大小寫
