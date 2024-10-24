@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.9.28)  12 OCT 2024 23:32
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.9.28)  24 OCT 2024 20:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -667,33 +667,34 @@ Package fancyhdr Warning: \footskip is too small (0.0pt):
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[13]) (Other/count_spanning_tree.cpp) (Other/Dp1D1D.cpp
+[13]) (String/SAM_lite.cpp) (Other/count_spanning_tree.cpp
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[14]) (Other/DP-optimization.txt) (Other/Marriage.cpp
+[14]) (Other/Dp1D1D.cpp) (Other/DP-optimization.txt) (Other/Marriage.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[15]) (Other/MatrixMul.cpp) (Other/Skill.cpp) (Other/python.py
+[15]) (Other/MatrixMul.cpp) (Other/Skill.cpp
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[16]))
+[16]) (Other/python.py))
 
 Package fancyhdr Warning: \footskip is too small (0.0pt): 
 (fancyhdr)                Make it at least 3.60004pt, for example:
 (fancyhdr)                \setlength{\footskip}{3.60004pt}.
 
-[17
-
-] (codebook.aux)
+[17] (codebook.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -704,10 +705,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 11639 strings out of 409616
- 246101 string characters out of 5778255
+ 11659 strings out of 409616
+ 246373 string characters out of 5778255
  2914191 words of memory out of 5000000
- 33454 multiletter control sequences out of 15000+600000
+ 33471 multiletter control sequences out of 15000+600000
  560182 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  79i,12n,93p,386b,1690s stack positions out of 10000i,1000n,20000p,200000b,200000s

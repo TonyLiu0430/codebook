@@ -50,12 +50,13 @@
 \contentsline {subsection}{\numberline {8.3}Suffix Array}{13}{}%
 \contentsline {subsection}{\numberline {8.4}Z-value}{13}{}%
 \contentsline {subsection}{\numberline {8.5}旋轉哈希}{13}{}%
+\contentsline {subsection}{\numberline {8.6}後綴自動機}{14}{}%
 \contentsline {section}{\numberline {9}Others}{14}{}%
 \contentsline {subsection}{\numberline {9.1}矩陣樹定理}{14}{}%
-\contentsline {subsection}{\numberline {9.2}1D/1D dp 優化}{14}{}%
+\contentsline {subsection}{\numberline {9.2}1D/1D dp 優化}{15}{}%
 \contentsline {subsection}{\numberline {9.3}Theorm - DP optimization}{15}{}%
 \contentsline {subsection}{\numberline {9.4}Stable Marriage}{15}{}%
 \contentsline {subsection}{\numberline {9.5}矩陣乘法}{16}{}%
 \contentsline {subsection}{\numberline {9.6}c++ 小抄}{16}{}%
-\contentsline {subsection}{\numberline {9.7}python 小抄}{16}{}%
+\contentsline {subsection}{\numberline {9.7}python 小抄}{17}{}%
 \contentsline {section}{\numberline {10}Persistence}{17}{}%
