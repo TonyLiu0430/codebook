@@ -1,16 +1,7 @@
 {
     "files.associations": {
-        "vector": "cpp",
-        "thread": "cpp",
-        "*.tcc": "cpp",
-        "deque": "cpp",
-        "list": "cpp",
-        "string": "cpp",
-        "unordered_map": "cpp",
-        "unordered_set": "cpp",
-        "forward_list": "cpp",
-        "rope": "cpp",
-        "slist": "cpp",
-        "regex": "cpp"
+        "*.cod": "masm",
+        "cmath": "cpp",
+        "complex": "cpp"
     }
 }
