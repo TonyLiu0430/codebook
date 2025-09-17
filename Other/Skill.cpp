@@ -14,13 +14,14 @@ tree::order_of_key(ele) // O(logN) 得到ele是tree中第幾大(有幾個元素�
 using namespace __gnu_pbds;
 
 priority_queue<int, less<int>, pairing_heap_tag> pq;
-pq.push(x);
+auto it = pq.push(x); 
+// type of it = priority_queue<int, less<int>, pairing_heap_tag>::point_iterator
 pq.pop();
 pq.top();
 pq.join(b);
 pq.empty();
 pq.size(); 
-pq.modify(it,6);
+pq.modify(it,6);    // O(logN)
 pq.erase(it);
 
 //builtin functions
@@ -72,7 +73,7 @@ int max = a.max();
 int min = a.min();
 std::valarray<int> g = a.apply([](int x) { return x * x; });
 
-//regex
+//regex  ***very slow***
 #include <regex>
 using namespace std;
 bool res = regex_match("abc", regex("a.c"));
