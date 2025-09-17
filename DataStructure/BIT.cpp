@@ -1,5 +1,6 @@
 class Bitree {
 public:
+    /* bit 一定是 1 indexed */
     vector<int> data;
     Bitree(const vector<int> &nums) {
         data.resize(nums.size() + 1, 0);
@@ -8,20 +9,20 @@ public:
         }
     }
     void update(int x, int val) {
-        x++;
+        x++; /*變成 1 indexed*/
         for(; x < data.size(); x += lowbit(x)) {
             data[x] += val;
         }
     }
     int query(int x) {
-        x++;
+        x++; /*變成 1 indexed*/
         int result = 0;
         for(; x > 0; x -= lowbit(x)) {
             result += data[x];
         }
         return result;
     }
-    int lowbit(int x) {
+    static int lowbit(int x) {
         return x & (-x);
     }
 };

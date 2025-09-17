@@ -1,6 +1,6 @@
 struct Node{
     int mx;  // 區間最大值
-    int tag; // 子樹裡所有人都要加上 tag
+    int tag; // 子樹裡所有人的'值'都要加上 tag
 };
 
 vector<Node> seg;

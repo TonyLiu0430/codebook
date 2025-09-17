@@ -1,4 +1,5 @@
 /* nums 長度 N ;; query 長度為 M */
+/* O(N * sqrt(M))*/
 
 struct Query {
     int l, r, id;
