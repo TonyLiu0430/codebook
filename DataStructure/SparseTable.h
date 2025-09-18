@@ -1,6 +1,8 @@
 const int MAXN = 200005;
 const int lgN = 20;
-
+/* Sp[i][j] 為 區間 [i, i + 2^j - 1] 的值 */
+/* 從 i 開始 長度為 2 ^ j */
+/* 解決可重複貢獻問題 */
 struct SP{ //sparse table
 	int Sp[MAXN][lgN];
 	function<int(int,int)> opt;
