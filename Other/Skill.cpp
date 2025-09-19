@@ -5,8 +5,8 @@ using namespace __gnu_pbds;
 
 tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> tr;
 
-tree::find_by_order(k) // O(logN) 取得第k大的元素
-tree::order_of_key(ele) // O(logN) 得到ele是tree中第幾大(有幾個元素小於ele)
+tr.find_by_order(k) // O(logN) 取得第k大的元素
+tr.order_of_key(ele) // O(logN) 得到ele是tree中第幾大(有幾個元素小於ele)
 
 //pbds pair priority_queue
 #include <ext/pb_ds/assoc_container.hpp>
