@@ -1,46 +1,43 @@
-struct Point {
-    double x, y;
-}; 
+using type = long long;
+const type EPS = 0 /*1e-9*/;
+struct Point { type x, y; };
 
-Point operator*(double a, Point p) {
-    return {a * p.x, a * p.y};
+inline type cross(const Point &a, const Point &b, const Point &c) {
+    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
-Point operator+(Point a, Point b) {
-    return {a.x + b.x, a.y + b.y};
+inline bool overlap(type a, type b, type c, type d) {
+    if(a > b) swap(a,b); if(c > d) swap(c,d);
+    return max(a,c) <= min(b,d) + EPS;
 }
 
-const double EPS = 1e-9;
-
-double cross(Point p1, Point p2, Point q1) {
-	return (p2.x - p1.x) * (q1.y - p1.y) - (p2.y - p1.y) * (q1.x - p1.x);
+bool equal_zero(type x) {
+	return abs(x) <= EPS;
+}
+bool sgn(type x) {
+	return (x > EPS) - (x < -EPS);
 }
 
-template<class T>
-bool inter(T a, T b, T c) {
-    if(b < a) swap(a, b);
-	return c >= a && c <= b;
-}
+#define CROSS(i,j,k) cross(p[i],p[j],p[k])
 
-bool is_in(Point p1, Point p2, Point q) { // 判斷 q 是否在 線段 p1 p2 內
-	return inter(p1.x, p2.x, q.x) && inter(p1.y, p2.y, q.y);
-}
+#define CHECK_COLLINEAR(i,j,k) (equal_zero(CROSS(i,j,k)) && overlap(p[i].x,p[j].x,p[k].x,p[k].x) && overlap(p[i].y,p[j].y,p[k].y,p[k].y))
 
-Point interPnt(Point p1, Point p2, Point q1, Point q2, bool &res){
-	double f1 = cross(p2, q1, p1);
-	double f2 = -cross(p2, q2, p1);
-	double f = (f1 + f2);
-
-	if(fabs(f) < EPS) {
-		res = false;
-		return {};
+bool intersect(const vector<Point> &p){
+    type d[4]; 
+    for(int i=0;i<4;i++){
+        if(i<2) d[i] = CROSS(0,1,i+2);
+        else    d[i] = CROSS(2,3,i-2);
     }
+    for(int i=0;i<4;i++)
+	/**/if(CHECK_COLLINEAR(i<2?0:2,i<2?1:3,i<2?i+2:i-2)) 
+		/**/return true;
+	return sgn(d[0]) != sgn(d[1]) && sgn(d[2]) != sgn(d[3]);
+}
 
-	Point ip = (f2 / f) * q1 + (f1 / f) * q2; // intersection point
-	if(is_in(p1, p2, ip) && is_in(q1, q2, ip)) { // 兩直線交點不用這段
-		res = true;
-		return ip;
-	}
-	res = false;
-	return {};
+// 求交點 不處理共線重疊
+pair<long double,long double> intersection(const vector<Point> &p){
+    long double A1 = p[1].y - p[0].y, B1 = p[0].x - p[1].x, C1 = A1*p[0].x+B1*p[0].y;
+    long double A2 = p[3].y - p[2].y, B2 = p[2].x - p[3].x, C2 = A2*p[2].x+B2*p[2].y;
+    long double det = A1*B2 - A2*B1;
+    return {(C1*B2-C2*B1)/det,(A1*C2-A2*C1)/det};
 }
