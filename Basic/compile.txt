@@ -6,7 +6,8 @@ gedit -> preference -> tab width: 4
 gedit a.cpp
 
 # Compile
-g++ a.cpp -std=c++11
+g++ a.cpp -std=c++14 -Wall -fsanitize=address
+// -fsanitize=address 檢測記憶體違規存取
 
 **All file will be compiled to a.out unless you use -o(not recommanded, just use a.out)**
 # Run
