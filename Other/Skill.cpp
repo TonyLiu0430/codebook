@@ -79,5 +79,6 @@ using namespace std;
 bool res = regex_match("abc", regex("a.c"));
 bool res = regex_match("abc", regex("A.c", regex::icase)); //忽略大小寫
 
-https://codeforces.com/blog/entry/60737
-// 待補
+// gp_hash_table
+#include <ext/pb_ds/assoc_container.hpp>
+__gnu_pbds::gp_hash_table<int, int/*, hashFunctor */> table;
