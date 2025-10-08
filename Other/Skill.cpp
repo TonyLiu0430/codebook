@@ -78,3 +78,6 @@ std::valarray<int> g = a.apply([](int x) { return x * x; });
 using namespace std;
 bool res = regex_match("abc", regex("a.c"));
 bool res = regex_match("abc", regex("A.c", regex::icase)); //忽略大小寫
+
+https://codeforces.com/blog/entry/60737
+// 待補
