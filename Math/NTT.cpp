@@ -1,22 +1,19 @@
 /*預處理 lim lim >= lenA + lenB - 1*/
 while (lim < (lenA + lenB - 1)) lim <<= 1;
-
 /*預處理 r*/
 int r[N];
 for (i = 0; i < lim; ++i) r[i] = (i & 1) * (lim >> 1) + (r[i >> 1] >> 1);
-
-
+///////////////////////////////////////
 constexpr int P = 998244353; 
 const int G = 3;
-/*
-998244353	3
+/*998244353	3
 1004535809	3
 469762049	3
 167772161	3
-754974721	11
-*/
+754974721	11*/
 // lim 一定要是 2 的冪次   opt == -1 => inverse ntt
-void ntt(int *x, int lim, int opt) { 
+// x.size() == lim
+void ntt(vector<int> &x, int lim, int opt) { 
   int i, j, k, m, gn, g, tmp;
   for (i = 0; i < lim; ++i)
     if (r[i] < i) swap(x[i], x[r[i]]);
