@@ -1,61 +1,48 @@
-// long long version
-typedef pair<long long, long long> pll;
-struct CostFlow {
-    static const int MAXN = 350;
-    static const long long INF = 1LL<<60;
-    struct Edge {
-        int to, r;
-        long long rest, c;
+struct MinCostMaxFlow { // 0-base
+  struct Edge {
+    ll from, to, cap, flow, cost, rev; 
+  } *past[N];
+  vector<Edge> G[N];
+  int inq[N], n, s, t;
+  ll dis[N], up[N], pot[N];
+  bool BellmanFord() {
+    fill_n(dis, n, INF), fill_n(inq, n, 0);
+    queue<int> q;
+    auto relax = [&](int u, ll d, ll cap, Edge *e) {
+      if (cap > 0 && dis[u] > d) {
+        dis[u] = d, up[u] = cap, past[u] = e;
+        if (!inq[u]) inq[u] = 1, q.push(u);
+      }
     };
-    int n, pre[MAXN], preL[MAXN]; bool inq[MAXN];
-    long long dis[MAXN], fl, cost;
-    vector<Edge> G[MAXN];
-    void init() {
-        for ( int i = 0 ; i < MAXN ; i++) G[i].clear();
+    relax(s, 0, INF, 0);
+    while (!q.empty()) {
+      int u = q.front();
+      q.pop(), inq[u] = 0;
+      for (auto &e : G[u]) {
+        ll d2 = dis[u] + e.cost + pot[u] - pot[e.to];
+        relax(e.to, d2, min(up[u], e.cap - e.flow), &e);
+      }
     }
-    void add_edge(int u, int v, long long rest, long long c) {
-        G[u].push_back({v, (int)G[v].size()  , rest,  c});
-        G[v].push_back({u, (int)G[u].size()-1, 0, -c});
+    return dis[t] != INF;
+  }
+  void solve(int _s, int _t, ll &flow, ll &cost, bool neg = true) {
+    s = _s, t = _t, flow = 0, cost = 0;
+    if (neg) BellmanFord(), copy_n(dis, n, pot);
+    for (; BellmanFord(); copy_n(dis, n, pot)) {
+      for (int i = 0; i < n; ++i) dis[i] += pot[i] - pot[s];
+      flow += up[t], cost += up[t] * dis[t];
+      for (int i = t; past[i]; i = past[i]->from) {
+        auto &e = *past[i];
+        e.flow += up[t], G[e.to][e.rev].flow -= up[t];
+      }
     }
-    pll flow(int s, int t) {
-        fl = cost = 0;
-        while (true) {
-            fill(dis, dis+MAXN, INF);
-            fill(inq, inq+MAXN, 0);
-            dis[s] = 0;
-            queue<int> que;
-            que.push(s);
-            while ( !que.empty() ) {
-                int u = que.front(); que.pop();
-                inq[u] = 0;
-                for ( int i = 0 ; i < (int)G[u].size() ; i++) {
-                    int v = G[u][i].to;
-                    long long w = G[u][i].c;
-                    if ( G[u][i].rest > 0 && dis[v] > dis[u] + w) {
-                        pre[v] = u; preL[v] = i;
-                        dis[v] = dis[u] + w;
-                        if (!inq[v]) {
-                            inq[v] = 1;
-                            que.push(v);
-                        }
-                    }
-                }
-            }
-
-            if (dis[t] == INF) break;
-            long long tf = INF;
-            for (int v = t, u, l ; v != s ; v = u ) {
-                u = pre[v]; l = preL[v];
-                tf = min(tf, G[u][l].rest);
-            }
-            for (int v = t, u, l ; v != s ; v = u ) {
-                u = pre[v]; l = preL[v];
-                G[u][l].rest -= tf;
-                G[v][G[u][l].r].rest += tf;
-            }
-            cost += tf * dis[t];
-            fl += tf;
-        }
-        return {fl, cost};
-    }
-} flow;
+  }
+  void init(int _n) {
+    n = _n, fill_n(pot, n, 0);
+    for (int i = 0; i < n; ++i) G[i].clear();
+  }
+  void add_edge(ll a, ll b, ll cap, ll cost) {
+    G[a].pb(Edge{a, b, cap, 0, cost, SZ(G[b])});
+    G[b].pb(Edge{b, a, 0, 0, -cost, SZ(G[a]) - 1});
+  }
+};
