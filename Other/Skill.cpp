@@ -59,7 +59,7 @@ int getRendom(int l, int r) {
 vec.erase(unique(vec.begin(), vec.end()), vec.end());
 
 //std::valarray
-valarray<int> a(初始值, 數量);
+valarray<int> a(初始值, 數量); //就是那麼機八
 valarray<int> a(10);
 valarray<int> b(10);
 valarray<int> c = a + b;
@@ -79,6 +79,6 @@ using namespace std;
 bool res = regex_match("abc", regex("a.c"));
 bool res = regex_match("abc", regex("A.c", regex::icase)); //忽略大小寫
 
-// gp_hash_table
+//gp_hash_table
 #include <ext/pb_ds/assoc_container.hpp>
 __gnu_pbds::gp_hash_table<int, int/*, hashFunctor */> table;
