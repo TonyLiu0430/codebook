@@ -1,13 +1,7 @@
 typedef long long LL;
 
 inline LL bin_mul(LL a, LL n,const LL& MOD){
-	LL re=0;
-	while (n>0){
-		if (n&1) re += a;
-		a += a; if (a>=MOD) a-=MOD;
-		n>>=1;
-	}
-	return re%MOD;
+	return __int128(a) * n % MOD;
 }
 
 inline LL bin_pow(LL a, LL n,const LL& MOD){
