@@ -103,7 +103,7 @@ struct Dinic {
             }
         }
     }
-    vector<bool> get_min_cut_nodes(int s) {
+    vector<bool> get_min_cut_nodes(int s) { // 跟 S 同側 true ; 跟 T 同側 false
         fill(side.begin(), side.end(), false);
         _find_cut(s);
         return side;
