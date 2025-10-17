@@ -1,4 +1,4 @@
-struct MinCostMaxFlow { // 0-base
+struct MinCostMaxFlow { // 0-base N-maximum edge
   struct Edge {
     ll from, to, cap, flow, cost, rev; 
   } *past[N];

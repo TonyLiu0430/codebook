@@ -47,10 +47,10 @@ struct Dinic {
     vector<int> level, iter;
     vector<bool> side;
     int n;
-    Dinic(int v) : n(v), adj(v), level(v), iter(v) {}
+    Dinic(int v) : n(v), adj(v), level(v), iter(v), side(v) {}
     void add_edge(int u, int v, ll cap) {
-        adj[u].push_back({v, cap, (int)adj[v].size()});
-        adj[v].push_back({u, 0, (int)adj[u].size() - 1});
+        adj[u].push_back({v, cap, adj[v].size()});
+        adj[v].push_back({u, 0, adj[u].size() - 1});
     }
     bool bfs(int s, int t) {
         fill(level.begin(), level.end(), -1);
@@ -60,7 +60,7 @@ struct Dinic {
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            for (const auto& edge : adj[u]) {
+            for (auto& edge : adj[u]) {
                 if (edge.cap > 0 && level[edge.to] < 0) {
                     level[edge.to] = level[u] + 1;
                     q.push(edge.to);
@@ -71,7 +71,7 @@ struct Dinic {
     }
     ll dfs(int u, int t, ll f) {
         if (u == t) return f;
-        for (int& i = iter[u]; i < (int)adj[u].size(); ++i) {
+        for (int& i = iter[u]; i < adj[u].size(); ++i) {
             Edge& e = adj[u][i];
             if (e.cap > 0 && level[u] < level[e.to]) {
                 ll d = dfs(e.to, t, min(f, e.cap));
@@ -97,7 +97,7 @@ struct Dinic {
     }
     void _find_cut(int u) {
         side[u] = true;
-        for(const auto& e : adj[u]) {
+        for(auto& e : adj[u]) {
             if(e.cap > 0 && !side[e.to]) {
                 _find_cut(e.to);
             }
