@@ -1,0 +1,11 @@
+歐拉降冪
+對於任何正整數 m、整數 a 和非負整數 k
+\[
+a^k \equiv
+\begin{cases}
+a^{\,k \bmod \varphi(m)}, & \gcd(a,m)=1,\\[6pt]
+a^k, & \gcd(a,m)\ne 1,\ k < \varphi(m),\\[6pt]
+a^{\,(k \bmod \varphi(m))+\varphi(m)}, & \gcd(a,m)\ne 1,\ k \ge \varphi(m).
+\end{cases}
+\pmod{m}
+\]
