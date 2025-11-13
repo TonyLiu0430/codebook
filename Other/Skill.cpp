@@ -21,7 +21,7 @@ pq.top();
 pq.join(b);
 pq.empty();
 pq.size(); 
-pq.modify(it,6);    // O(logN)
+pq.modify(it,6);    // O(1) for decrease; bad for increase
 pq.erase(it);
 
 //builtin functions

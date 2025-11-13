@@ -5,7 +5,7 @@ const int lgN = 20;
 /* 解決可重複貢獻問題 */
 struct SP{ //sparse table
 	int Sp[MAXN][lgN];
-	function<int(int,int)> opt;
+	#define opt min<int>
 	void build(vector<int> &nums){ // 0 base
 		for (int i = 0; i < nums.size(); i++) Sp[i][0]=nums[i];
 
