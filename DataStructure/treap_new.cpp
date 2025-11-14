@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 struct Node {
     int val, pri, sz;
     Node *l{}, *r{};
