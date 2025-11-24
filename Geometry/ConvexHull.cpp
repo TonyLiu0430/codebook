@@ -1,6 +1,7 @@
 #include "2Dpoint.cpp"
 
 // return H, The first will occured TWICE in vector H!
+// use tie(x,y) < tie(b.x,b.y); for sorting !!!!!!
 void ConvexHull(vector<Point> &P, vector<Point> &H){
     int n = P.size(), m=0;
     sort(P.begin(),P.end());
