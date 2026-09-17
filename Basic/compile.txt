@@ -6,9 +6,9 @@ gedit -> preference -> tab width: 4
 gedit a.cpp
 
 # Compile
-g++ a.cpp -std=c++14 -Wall -fsanitize=address
+g++ a.cpp -std=c++14 -O2 -pipe -Wall
 
-g++ -Wall -Wextra -Wshadow -Wconversion
+g++ -std=c++14 -Wall -Wextra -Wshadow -Wconversion
     -g -fsanitize=address,undefined
     main.cpp -o main
 // -Wmisleading-indentation  # 檢測縮排不對 for loop 沒括號卻寫兩行

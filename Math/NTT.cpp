@@ -1,41 +1,50 @@
-constexpr int P = 998244353; 
-const int G = 3;
-/*預處理 lim*/
-int lim = 1;
-while (lim < (lenSum - 1)) lim <<= 1;
-/*每個多項式都要resize(lim)*/
-/*998244353	3 1004535809 3 469762049 3 167772161 3 754974721 11*/
-void init_rev(vector<int> &rev, int lim) {
-    int lg = __builtin_ctz(lim); // lim 是 2^k
-    rev.resize(lim);
-    for (int i = 0; i < lim; ++i)
-        rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (lg - 1));
+// coefficients must be in [0, mod)
+const int mod = 998244353, root = 3;
+
+int power(int a, int n) {
+    long long ans = 1;
+    for (; n; n /= 2, a = (long long)a * a % mod)
+        if (n & 1) ans = ans * a % mod;
+    return ans;
 }
-// a.size() == lim
-void ntt(vector<int> &a, int opt) { // opt == -1 => reverse ntt
+
+void ntt(vector<int> &a, bool inverse) {
     int n = a.size();
-    static vector<int> rev;
-    init_rev(rev, n);
-    for (int i = 0; i < n; ++i)
-        if (i < rev[i]) swap(a[i], a[rev[i]]);
-    
-    for (int m = 2; m <= n; m <<= 1) {
-        int k = m >> 1;
-        int gn = qpow(G, (P - 1) / m);
-        if (opt == -1) gn = qpow(gn, P - 2);
-        for (int i = 0; i < n; i += m) {
-            int g = 1;
-            for (int j = 0; j < k; ++j) {
-                int t = 1ll * a[i + j + k] * g % P;
-                a[i + j + k] = (a[i + j] - t + P) % P;
-                a[i + j] = (a[i + j] + t) % P;
-                g = 1ll * g * gn % P;
+    assert(n && !(n & (n - 1)) && (mod - 1) % n == 0);
+    for (int i = 1, j = 0; i < n; ++i) {
+        int bit = n / 2;
+        for (; j & bit; bit /= 2) j ^= bit;
+        j ^= bit;
+        if (i < j) swap(a[i], a[j]);
+    }
+    for (int len = 2; len <= n; len *= 2) {
+        int wlen = power(root, (mod - 1) / len);
+        if (inverse) wlen = power(wlen, mod - 2);
+        for (int i = 0; i < n; i += len) {
+            long long w = 1;
+            for (int j = 0; j < len / 2; ++j) {
+                int u = a[i + j], v = w * a[i + j + len / 2] % mod;
+                a[i + j] = u + v < mod ? u + v : u + v - mod;
+                a[i + j + len / 2] = u - v >= 0 ? u - v : u - v + mod;
+                w = w * wlen % mod;
             }
         }
     }
-
-    if (opt == -1) {
-        int inv_n = qpow(n, P - 2);
-        for (int &x : a) x = 1ll * x * inv_n % P;
+    if (inverse) {
+        int inv = power(n, mod - 2);
+        for (int &x : a) x = (long long)x * inv % mod;
     }
+}
+
+vector<int> convolution(vector<int> a, vector<int> b) {
+    if (a.empty() || b.empty()) return {};
+    int need = a.size() + b.size() - 1, n = 1;
+    while (n < need) n *= 2;
+    assert(n <= (1 << 23));
+    a.resize(n), b.resize(n);
+    ntt(a, false), ntt(b, false);
+    for (int i = 0; i < n; ++i) a[i] = (long long)a[i] * b[i] % mod;
+    ntt(a, true);
+    a.resize(need);
+    return a;
 }

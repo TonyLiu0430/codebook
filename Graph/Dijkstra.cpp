@@ -1,25 +1,27 @@
-struct node {
-    int num{}, w{};
-    bool operator < (const node& other)const {
-        return w > other.w;
-    }
-};
+using ll = long long;
+using graph_edge = pair<int, ll>; // to, weight
+using state = pair<ll, int>;      // distance, vertex
+const ll inf = LLONG_MAX / 4;
 
-vector<int> dijkstra(int root, const vector<vector<node>> &graph) {
-    vector<int> d(graph.size(), INT_MAX >> 1), p(graph.size());
-    priority_queue<node> pq;
-    d[root] = p[root] = 0;
-    pq.push({root, d[root]});
+vector<ll> dijkstra(int source, const vector<vector<graph_edge>> &g) {
+    vector<ll> dist(g.size(), inf);
+    priority_queue<state, vector<state>, greater<state>> pq;
+    dist[source] = 0;
+    pq.push({0, source}); // distance, vertex
     while (!pq.empty()) {
-        node tmp = pq.top(); pq.pop();
-        for (const node &i : graph[tmp.num]) {
-            if (d[i.num] > d[tmp.num] + i.w) {
-                d[i.num] = d[tmp.num] + i.w;
-                p[i.num] = tmp.num;
-                pq.push({i.num, d[tmp.num]});
+        ll d = pq.top().first;
+        int u = pq.top().second;
+        pq.pop();
+        if (d != dist[u]) continue;
+        for (graph_edge e : g[u]) {
+            int v = e.first;
+            ll w = e.second;
+            assert(w >= 0);
+            if (dist[v] > d + w) {
+                dist[v] = d + w;
+                pq.push({dist[v], v});
             }
         }
     }
-    return d;
+    return dist;
 }
-

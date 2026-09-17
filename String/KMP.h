@@ -1,25 +1,24 @@
-template<typename T>
-void build_KMP(int n, T *s, int *f){ // 1 base
-	f[0]=-1, f[1]=0;
-	for (int i=2; i<=n; i++){
-		int w = f[i-1];
-		while (w>=0 && s[w+1]!=s[i])w = f[w];
-		f[i]=w+1;
-	}
+vector<int> prefix_function(const string &s) {
+    vector<int> pi(s.size());
+    for (int i = 1; i < (int)s.size(); ++i) {
+        int j = pi[i - 1];
+        while (j && s[i] != s[j]) j = pi[j - 1];
+        if (s[i] == s[j]) ++j;
+        pi[i] = j;
+    }
+    return pi;
 }
 
-template<typename T>
-int KMP(int n, T *a, int m, T *b){
-	build_KMP(m,b,f);
-	int ans=0;
-
-	for (int i=1, w=0; i<=n; i++){
-	  while ( w>=0 && b[w+1]!=a[i] )w = f[w];
-		w++;
-		if (w==m){
-			ans++;
-			w=f[w];
-		}
-	}
-	return ans;
+vector<int> kmp(const string &text, const string &pattern) {
+    if (pattern.empty()) return {};
+    vector<int> pi = prefix_function(pattern), pos;
+    for (int i = 0, j = 0; i < (int)text.size(); ++i) {
+        while (j && text[i] != pattern[j]) j = pi[j - 1];
+        if (text[i] == pattern[j]) ++j;
+        if (j == (int)pattern.size()) {
+            pos.push_back(i - j + 1);
+            j = pi[j - 1];
+        }
+    }
+    return pos;
 }

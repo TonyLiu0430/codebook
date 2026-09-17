@@ -1,68 +1,55 @@
-Detect non-perfect-matching:
-1. set all edge[i][j] as INF
-2. if solve() >= INF, it is not perfectmatching.
--------------------------------------------------------
-// Maximum Weight Perfect Bipartite Matching
-// allow negative weight!
+using ll = long long;
+const ll missing = LLONG_MIN / 4;
+const ll inf = LLONG_MAX / 4;
 
-typedef long long Int;
-struct KM {
-    static const int MAXN = 1050;
-    static const int INF = 1LL<<60;
-    int n, match[MAXN], vx[MAXN], vy[MAXN];
-    Int edge[MAXN][MAXN], lx[MAXN], ly[MAXN], slack[MAXN];
-    void init(int _n){
-        n = _n;
-        for ( int i = 0 ; i < n ; i++ )
-            for ( int j = 0; j < n ; j++ )
-                edge[i][j] = 0;
-    }
-    void add_edge(int x, int y, Int w){
-        edge[x][y] = w;
-    }
-    bool DFS(int x){
-        vx[x] = 1;
-        for ( int y = 0 ; y < n ; y++ ) {
-            if ( vy[y] ) continue;
-            if ( lx[x] + ly[y] > edge[x][y] ) {
-                slack[y] = min(slack[y], lx[x] + ly[y] - edge[x][y]);
-            } else {
-                vy[y] = 1;
-                if ( match[y] == -1 || DFS(match[y]) ){
-                    match[y] = x;
-                    return true;
-                }
+struct assignment_result {
+    bool perfect;
+    ll weight;
+    vector<int> right_match;
+};
+
+// square maximum-weight assignment; use missing for absent edges
+assignment_result max_weight_matching(const vector<vector<ll>> &weight) {
+    int n = weight.size();
+    for (auto &row : weight) assert((int)row.size() == n);
+    vector<ll> u(n + 1), v(n + 1);
+    vector<int> p(n + 1), way(n + 1);
+
+    for (int i = 1; i <= n; ++i) {
+        p[0] = i;
+        vector<ll> best(n + 1, inf);
+        vector<char> used(n + 1);
+        int col = 0;
+        do {
+            used[col] = true;
+            int row = p[col], next = 0;
+            ll delta = inf;
+            for (int j = 1; j <= n; ++j) if (!used[j]) {
+                ll cost = weight[row - 1][j - 1] == missing
+                        ? inf / 2 : -weight[row - 1][j - 1];
+                ll cur = cost - u[row] - v[j];
+                if (cur < best[j]) best[j] = cur, way[j] = col;
+                if (best[j] < delta) delta = best[j], next = j;
             }
-        }
-        return false;
+            for (int j = 0; j <= n; ++j)
+                if (used[j]) u[p[j]] += delta, v[j] -= delta;
+                else best[j] -= delta;
+            col = next;
+        } while (p[col]);
+        do {
+            int prev = way[col];
+            p[col] = p[prev];
+            col = prev;
+        } while (col);
     }
-    Int solve() {
-        fill(match, match + n, -1);
-        fill(lx, lx + n, -INF);
-        fill(ly, ly + n, 0);
-        for ( int i = 0; i < n; i++ )
-            for ( int j = 0; j < n; j++ )
-                lx[i] = max(lx[i], edge[i][j]);
-        for ( int i = 0 ; i < n; i++ ) {
-            fill(slack, slack + n, INF);
-            while (true){
-                fill(vx, vx + n, 0);
-                fill(vy, vy + n, 0);
-                if ( DFS(i) ) break;
-                Int d = INF;
-                for ( int j = 0 ; j < n ; j++ )
-                    if ( !vy[j] ) d = min(d, slack[j]);
-                for ( int j = 0 ; j < n ; j++ ) {
-                    if (vx[j]) lx[j] -= d;
-                    if (vy[j]) ly[j] += d;
-                    else slack[j] -= d;
-                }
-            }
-        }
-        Int res = 0;
-        for ( int i = 0 ; i < n ; i++ ) {
-            res += edge[ match[i] ][i];
-        }
-        return res;
+
+    vector<int> match(n, -1);
+    ll sum = 0;
+    for (int col = 1; col <= n; ++col) {
+        int row = p[col] - 1;
+        match[col - 1] = row;
+        if (weight[row][col - 1] == missing) return {false, 0, {}};
+        sum += weight[row][col - 1];
     }
-} graph;
+    return {true, sum, match};
+}

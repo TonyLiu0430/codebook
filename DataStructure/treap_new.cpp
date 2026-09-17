@@ -1,63 +1,54 @@
-#include <bits/stdc++.h>
-using namespace std;
+// implicit/key treap primitives; node 0 means null
+struct treap {
+    struct node {
+        int value = 0, priority = 0, size = 0, left = 0, right = 0;
+    };
+    struct split_result { int left, right; };
+    vector<node> t{node{}};
+    mt19937 rng{uint32_t(chrono::steady_clock::now().time_since_epoch().count())};
 
-struct Node {
-    int val, pri, sz;
-    Node *l{}, *r{};
-
-    Node(int v) : val(v), pri(rand()), sz(1) {}
-    void update() {
-        sz = 1 + (l ? l->sz : 0) + (r ? r->sz : 0);
+    int make_node(int value) {
+        t.push_back({value, int(rng()), 1, 0, 0});
+        return t.size() - 1;
     }
-};
+    int size(int u) const { return u ? t[u].size : 0; }
+    void pull(int u) { t[u].size = 1 + size(t[u].left) + size(t[u].right); }
 
-struct Split { 
-    Node* l;
-    Node* r;
-};
-
-int getsz(Node* t) { return t ? t->sz : 0; }
-Split split_by_size(Node* t, int k) {
-    if (!t) return {nullptr, nullptr};
-
-    int ls = getsz(t->l);
-    if (ls >= k) {
-        auto sp = split_by_size(t->l, k);
-        t->l = sp.r;
-        t->update();
-        return {sp.l, t};
-    } else {
-        auto sp = split_by_size(t->r, k - ls - 1);
-        t->r = sp.l;
-        t->update();
-        return {t, sp.r};
+    split_result split_size(int u, int k) {
+        if (!u) return {0, 0};
+        if (size(t[u].left) >= k) {
+            auto s = split_size(t[u].left, k);
+            t[u].left = s.right;
+            pull(u);
+            return {s.left, u};
+        }
+        auto s = split_size(t[u].right, k - size(t[u].left) - 1);
+        t[u].right = s.left;
+        pull(u);
+        return {u, s.right};
     }
-}
-Split split_by_value(Node* t, int key) {
-    if (!t) return {nullptr, nullptr};
-
-    if (t->val <= key) {
-        auto sp = split_by_value(t->r, key);
-        t->r = sp.l;
-        t->update();
-        return {t, sp.r};
-    } else {
-        auto sp = split_by_value(t->l, key);
-        t->l = sp.r;
-        t->update();
-        return {sp.l, t};
+    split_result split_value(int u, int value) {
+        if (!u) return {0, 0};
+        if (t[u].value <= value) {
+            auto s = split_value(t[u].right, value);
+            t[u].right = s.left;
+            pull(u);
+            return {u, s.right};
+        }
+        auto s = split_value(t[u].left, value);
+        t[u].left = s.right;
+        pull(u);
+        return {s.left, u};
     }
-}
-Node* merge(Node* a, Node* b) {
-    if (!a || !b) return a ? a : b;
-
-    if (a->pri < b->pri) {
-        a->r = merge(a->r, b);
-        a->update();
-        return a;
-    } else {
-        b->l = merge(a, b->l);
-        b->update();
+    int merge(int a, int b) {
+        if (!a || !b) return a ? a : b;
+        if (t[a].priority < t[b].priority) {
+            t[a].right = merge(t[a].right, b);
+            pull(a);
+            return a;
+        }
+        t[b].left = merge(a, t[b].left);
+        pull(b);
         return b;
     }
-}
+};

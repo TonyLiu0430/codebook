@@ -1,9 +1,20 @@
-vector<Point> interCircle(Point o1, type r1, Point o2, type r2) {
-    type d2 = abs2(o1 - o2);
-    type d = sqrt(d2);
-    if (d < fabs(r1 - r2) || d > r1 + r2) return {};
-    Point u = (o1 + o2) * 0.5 + ((r2*r2 - r1*r1) / (2.0*d2)) * (o1 - o2);
-    type A = sqrt((r1+r2+d) * (r1-r2+d) * (r1+r2-d) * (-r1+r2+d));
-    Point v = Point{o1.y - o2.y, -(o1.x - o2.x)} * (A / (2.0*d2));
-    return { u + v, u - v };
+// count: -1 identical circles; otherwise number of points
+struct circle_hit {
+    int count;
+    vector<point> p;
+};
+
+circle_hit circle_intersections(point a, ld r, point b, ld s) {
+    point d = b - a;
+    ld d2 = norm2(d), len = sqrtl(d2);
+    if (len <= eps && fabsl(r - s) <= eps) return {-1, {}};
+    if (len <= eps || len > r + s + eps || len < fabsl(r - s) - eps)
+        return {0, {}};
+
+    ld x = (d2 + r * r - s * s) / (2 * len);
+    ld h2 = max<ld>(0, r * r - x * x);
+    point mid = a + d * (x / len);
+    if (h2 <= eps) return {1, {mid}};
+    point off{-d.y * sqrtl(h2) / len, d.x * sqrtl(h2) / len};
+    return {2, {mid + off, mid - off}};
 }

@@ -1,50 +1,39 @@
-邊雙連通
+// undirected edge-biconnected components; parallel edges are allowed
+struct edge_bcc {
+    struct edge { int to, id; };
+    vector<vector<edge>> g;
+    vector<int> dfn, low, comp;
+    vector<char> bridge;
+    int time = 0;
 
-任意兩點間至少有兩條不重疊的路徑連接，找法：
-1. 標記出所有的橋
-2. 對全圖進行 DFS，不走橋，每一次 DFS 就是一個新的邊雙連通
-
-// from BCW
-
-struct BccEdge {
-  static const int MXN = 100005;
-  struct Edge { int v,eid; };
-  int n,m,step,par[MXN],dfn[MXN],low[MXN];
-  vector<Edge> E[MXN];
-  DisjointSet djs;
-  void init(int _n) {
-    n = _n; m = 0;
-    for (int i=0; i<n; i++) E[i].clear();
-    djs.init(n);
-  }
-  void add_edge(int u, int v) {
-    E[u].PB({v, m});
-    E[v].PB({u, m});
-    m++;
-  }
-  void DFS(int u, int f, int f_eid) {
-    par[u] = f;
-    dfn[u] = low[u] = step++;
-    for (auto it:E[u]) {
-      if (it.eid == f_eid) continue;
-      int v = it.v;
-      if (dfn[v] == -1) {
-        DFS(v, u, it.eid);
-        low[u] = min(low[u], low[v]);
-      } else {
-        low[u] = min(low[u], dfn[v]);
-      }
+    edge_bcc(int n) : g(n), dfn(n), low(n), comp(n, -1) {}
+    void add_edge(int u, int v) {
+        int id = bridge.size();
+        bridge.push_back(false);
+        g[u].push_back({v, id});
+        g[v].push_back({u, id});
     }
-  }
-  void solve() {
-    step = 0;
-    memset(dfn, -1, sizeof(int)*n);
-    for (int i=0; i<n; i++) {
-      if (dfn[i] == -1) DFS(i, i, -1);
+    void dfs(int u, int parent_edge = -1) {
+        dfn[u] = low[u] = ++time;
+        for (edge e : g[u]) {
+            if (e.id == parent_edge) continue;
+            if (!dfn[e.to]) {
+                dfs(e.to, e.id);
+                low[u] = min(low[u], low[e.to]);
+                if (low[e.to] > dfn[u]) bridge[e.id] = true;
+            } else low[u] = min(low[u], dfn[e.to]);
+        }
     }
-    djs.init(n);
-    for (int i=0; i<n; i++) {
-      if (low[i] < dfn[i]) djs.uni(i, par[i]);
+    void paint(int u, int id) {
+        comp[u] = id;
+        for (edge e : g[u])
+            if (!bridge[e.id] && comp[e.to] == -1) paint(e.to, id);
     }
-  }
-}graph;
+    int solve() {
+        for (int u = 0; u < (int)g.size(); ++u) if (!dfn[u]) dfs(u);
+        int count = 0;
+        for (int u = 0; u < (int)g.size(); ++u)
+            if (comp[u] == -1) paint(u, count++);
+        return count;
+    }
+};

@@ -1,53 +1,32 @@
-// by bcw_codebook
+using ld = long double;
+const ld eps = 1e-12L;
 
-const int MAXN = 300;
-const double EPS = 1e-8;
-
-int n;
-double A[MAXN][MAXN];
-
-void Gauss() {
-  for(int i = 0; i < n; i++) {
-    bool ok = 0;
-    for(int j = i; j < n; j++) {
-      if(fabs(A[j][i]) > EPS) {
-        swap(A[j], A[i]);
-        ok = 1;
-        break;
-      }
+// augmented matrix; returns 0=no solution, 1=unique, 2=infinite
+int gauss(vector<vector<ld>> a, vector<ld> &answer) {
+    int n = a.size(), m = a.empty() ? 0 : a[0].size() - 1, row = 0;
+    vector<int> where(m, -1);
+    for (int col = 0; col < m && row < n; ++col) {
+        int best = row;
+        for (int i = row; i < n; ++i)
+            if (fabsl(a[i][col]) > fabsl(a[best][col])) best = i;
+        if (fabsl(a[best][col]) <= eps) continue;
+        swap(a[best], a[row]);
+        where[col] = row;
+        ld div = a[row][col];
+        for (int j = col; j <= m; ++j) a[row][j] /= div;
+        for (int i = 0; i < n; ++i) if (i != row) {
+            ld mul = a[i][col];
+            for (int j = col; j <= m; ++j) a[i][j] -= mul * a[row][j];
+        }
+        ++row;
     }
-    if(!ok) continue;
-
-    double fs = A[i][i];
-    for(int j = i+1; j < n; j++) {
-      double r = A[j][i] / fs;
-      for(int k = i; k < n; k++) {
-        A[j][k] -= A[i][k] * r;
-      }
+    answer.assign(m, 0);
+    for (int i = 0; i < m; ++i) if (where[i] != -1)
+        answer[i] = a[where[i]][m];
+    for (auto &r : a) {
+        ld sum = 0;
+        for (int i = 0; i < m; ++i) sum += r[i] * answer[i];
+        if (fabsl(sum - r[m]) > eps) return 0;
     }
-  }
-}
-
-template<class T>
-void Gauss(vector<vector<T>> &A) {
-  int n = A.size();
-  for(int i = 0; i < n; i++) {
-    bool ok = 0;
-    for(int j = i; j < n; j++) {
-      if(A[j][i] != 0) {
-        swap(A[j], A[i]);
-        ok = 1;
-        break;
-      }
-    }
-    if(!ok) continue;
-
-    T fs = A[i][i];
-    for(int j = i+1; j < n; j++) {
-      T r = A[j][i] / fs;
-      for(int k = i; k < n; k++) {
-        A[j][k] -= A[i][k] * r;
-      }
-    }
-  }
+    return count(where.begin(), where.end(), -1) ? 2 : 1;
 }

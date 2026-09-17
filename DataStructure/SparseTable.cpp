@@ -1,26 +1,22 @@
-const int MAXN = 200005;
-const int lgN = 20;
-/* Sp[i][j] 為 區間 [i, i + 2^j - 1] 的值 */
-/* 從 i 開始 長度為 2 ^ j */
-/* 解決可重複貢獻問題 */
-struct SP{ //sparse table
-	int Sp[MAXN][lgN];
-	#define opt min<int>
-	void build(vector<int> &nums){ // 0 base
-		for (int i = 0; i < nums.size(); i++) Sp[i][0]=nums[i];
+// idempotent rmq: minimum on [l, r]
+template<class t>
+struct sparse_table {
+    vector<int> lg;
+    vector<vector<t>> st;
 
-		for (int h = 1; h < lgN; h++) {
-			int len = 1 << (h - 1), i=0;
-			for (; i + len < nums.size(); i++)
-				Sp[i][h] = opt(Sp[i][h-1], Sp[i+len][h-1]);
-			for (; i < nums.size(); i++)
-				Sp[i][h] = Sp[i][h-1];
-		}
-	}
-	int query(int l, int r){
-		int h = __lg(r-l+1);
-		int len = 1<<h;
-		return opt(Sp[l][h], Sp[r-len+1][h] );    
-	}
+    sparse_table(const vector<t> &a) : lg(a.size() + 1) {
+        for (int i = 2; i < (int)lg.size(); ++i) lg[i] = lg[i / 2] + 1;
+        int k = a.empty() ? 0 : lg[a.size()] + 1;
+        st.assign(k, vector<t>(a.size()));
+        if (a.empty()) return;
+        st[0] = a;
+        for (int j = 1; j < k; ++j)
+            for (int i = 0; i + (1 << j) <= (int)a.size(); ++i)
+                st[j][i] = min(st[j - 1][i], st[j - 1][i + (1 << (j - 1))]);
+    }
+    t query(int l, int r) const {
+        assert(l <= r);
+        int k = lg[r - l + 1];
+        return min(st[k][l], st[k][r - (1 << k) + 1]);
+    }
 };
-

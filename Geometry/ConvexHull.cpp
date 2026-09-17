@@ -1,18 +1,22 @@
-#include "2Dpoint.cpp"
+// needs point, cross and eps from 2Dpoint.cpp
+vector<point> convex_hull(vector<point> p) {
+    sort(p.begin(), p.end());
+    p.erase(unique(p.begin(), p.end(), [](point a, point b) {
+        return fabsl(a.x - b.x) <= eps && fabsl(a.y - b.y) <= eps;
+    }), p.end());
+    if (p.size() <= 1) return p;
 
-// return H, The first will occured TWICE in vector H!
-void ConvexHull(vector<Point> &P, vector<Point> &H){
-    int n = P.size(), m=0;
-    sort(P.begin(),P.end());
-    H.clear();
-    
-    for (int i=0; i<n; i++){
-        while (m>=2 && (P[i]-H[m-2]) % (H[m-1]-H[m-2]) <0)H.pop_back(), m--;
-        H.push_back(P[i]), m++;
+    vector<point> h;
+    for (int pass = 0; pass < 2; ++pass) {
+        size_t base = h.size();
+        for (point q : p) {
+            while (h.size() >= base + 2 &&
+                   cross(h.back() - h[h.size() - 2], q - h.back()) <= eps)
+                h.pop_back();
+            h.push_back(q);
+        }
+        h.pop_back();
+        reverse(p.begin(), p.end());
     }
-
-    for (int i=n-2; i>=0; i--){
-        while (m>=2 && (P[i]-H[m-2]) % (H[m-1]-H[m-2]) <0)H.pop_back(), m--;
-        H.push_back(P[i]), m++;
-    }
+    return h; // ccw; first point is not repeated
 }

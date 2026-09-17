@@ -1,28 +1,17 @@
-class Bitree {
-public:
-    /* bit 一定是 1 indexed */
-    vector<int> data;
-    Bitree(const vector<int> &nums) {
-        data.resize(nums.size() + 1, 0);
-        for(int i = 0; i < nums.size(); i++ ) {
-            update(i, nums[i]);
-        }
+// public indices are 0-based
+struct bit {
+    vector<long long> t;
+    bit(int n) : t(n + 1) {}
+
+    void add(int p, long long x) {
+        for (++p; p < (int)t.size(); p += p & -p) t[p] += x;
     }
-    void update(int x, int val) {
-        x++; /*變成 1 indexed*/
-        for(; x < data.size(); x += lowbit(x)) {
-            data[x] += val;
-        }
+    long long prefix(int r) const { // [0, r]
+        long long ans = 0;
+        for (++r; r > 0; r -= r & -r) ans += t[r];
+        return ans;
     }
-    int query(int x) {
-        x++; /*變成 1 indexed*/
-        int result = 0;
-        for(; x > 0; x -= lowbit(x)) {
-            result += data[x];
-        }
-        return result;
-    }
-    static int lowbit(int x) {
-        return x & (-x);
+    long long sum(int l, int r) const { // [l, r]
+        return l > r ? 0 : prefix(r) - (l ? prefix(l - 1) : 0);
     }
 };

@@ -1,40 +1,16 @@
-#define N 87
-
-bool adj[N][N];     // adjacency matrix
-int visit[N];       // record visited coordinations in DFS
-int order[N], n;    // save the order
- 
-bool cycle;         // detect the cycle
- 
-void DFS(int s)
-{
-    // back edge occured, detected the cycle
-    if (visit[s] == 1) {cycle = true; return;}
-    // forward edge and cross edge¡C
-    if (visit[s] == 2) return;
- 
-    visit[s] = 1;
-    for (int t=0; t<N; ++t){
-        if (adj[s][t]) DFS(t);
+// empty result means the graph has a cycle
+vector<int> topological_sort(const vector<vector<int>> &g) {
+    vector<int> indeg(g.size()), order;
+    for (auto &es : g) for (int v : es) ++indeg[v];
+    queue<int> q;
+    for (int i = 0; i < (int)g.size(); ++i)
+        if (!indeg[i]) q.push(i);
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+        order.push_back(u);
+        for (int v : g[u]) if (!--indeg[v]) q.push(v);
     }
-    visit[s] = 2;
-    order[n--] = s;     // record the order
-}
- 
-void topological_ordering()
-{
-    memset(visit, 0, sizeof(visit));
-    cycle = false;
-    n = N - 1;
-    
-    for (int s=0; s<9; ++s)
-        if (!v[s])
-            DFS(s);
- 
-    if (cycle) cout << "The graph has the cycle!";
-    else{
-        for (int i=0; i<N; ++i)
-            cout << order[i];
-        }
-	}
+    if (order.size() != g.size()) order.clear();
+    return order;
 }

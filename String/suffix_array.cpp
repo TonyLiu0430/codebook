@@ -1,49 +1,53 @@
+struct suffix_data {
+    vector<int> sa, rank, lcp;
+};
 
-/*he[i]保存了在後綴數組中相鄰兩個後綴的最長公共前綴長度
- *sa[i]表示的是字典序排名為i的後綴是誰（字典序越小的排名越靠前）
- *rk[i]表示的是後綴我所對應的排名是多少  */
+suffix_data suffix_array(const string &s) {
+    int n = s.size();
+    if (!n) return {};
+    vector<int> sa(n), rank(n), next(n), temp(n), count(max(n, 256));
 
-const int MAX = 1020304;
-int ct[MAX], he[MAX], rk[MAX];
-int sa[MAX], tsa[MAX], tp[MAX][2];
-void suffix_array(char *ip){
-	int len = strlen(ip);
-	int alp = 256;
-	memset(ct, 0, sizeof(ct));
-	for(int i=0;i<len;i++) ct[ip[i]+1]++;
-	for(int i=1;i<alp;i++) ct[i]+=ct[i-1];
-	for(int i=0;i<len;i++) rk[i]=ct[ip[i]];
-	for(int i=1;i<len;i*=2){
-		for(int j=0;j<len;j++){
-			if(j+i>=len) tp[j][1]=0;
-			else tp[j][1]=rk[j+i]+1;		
-			tp[j][0]=rk[j];
-		}
-		memset(ct, 0, sizeof(ct));
-		for(int j=0;j<len;j++) ct[tp[j][1]+1]++;
-		for(int j=1;j<len+2;j++) ct[j]+=ct[j-1];
-		for(int j=0;j<len;j++) tsa[ct[tp[j][1]]++]=j;
-		memset(ct, 0, sizeof(ct));
-		for(int j=0;j<len;j++) ct[tp[j][0]+1]++;
-		for(int j=1;j<len+1;j++) ct[j]+=ct[j-1];
-		for(int j=0;j<len;j++)
-      sa[ct[tp[tsa[j]][0]]++]=tsa[j];
-		rk[sa[0]]=0;
-		for(int j=1;j<len;j++){
-			if( tp[sa[j]][0] == tp[sa[j-1]][0] &&
-				tp[sa[j]][1] == tp[sa[j-1]][1] )
-				rk[sa[j]] = rk[sa[j-1]];
-			else
-				rk[sa[j]] = j;
-		}
-	}
-	for(int i=0,h=0;i<len;i++){
-		if(rk[i]==0) h=0;
-		else{
-			int j=sa[rk[i]-1];
-			h=max(0,h-1);
-			for(;ip[i+h]==ip[j+h];h++);
-		}
-		he[rk[i]]=h;
-	}
+    for (unsigned char c : s) ++count[c];
+    partial_sum(count.begin(), count.end(), count.begin());
+    for (int i = n - 1; i >= 0; --i) sa[--count[(unsigned char)s[i]]] = i;
+    int classes = 0;
+    for (int i = 0; i < n; ++i) {
+        if (i && s[sa[i]] != s[sa[i - 1]]) ++classes;
+        rank[sa[i]] = classes;
+    }
+    ++classes;
+
+    for (int len = 1; len < n && classes < n; len *= 2) {
+        int p = 0;
+        for (int i = max(0, n - len); i < n; ++i) temp[p++] = i;
+        for (int x : sa) if (x >= len) temp[p++] = x - len;
+
+        fill(count.begin(), count.begin() + classes, 0);
+        for (int x : temp) ++count[rank[x]];
+        partial_sum(count.begin(), count.begin() + classes, count.begin());
+        for (int i = n - 1; i >= 0; --i)
+            sa[--count[rank[temp[i]]]] = temp[i];
+
+        next[sa[0]] = 0;
+        int new_classes = 1;
+        for (int i = 1; i < n; ++i) {
+            int a = sa[i - 1], b = sa[i];
+            int ar = a + len < n ? rank[a + len] : -1;
+            int br = b + len < n ? rank[b + len] : -1;
+            if (rank[a] != rank[b] || ar != br) ++new_classes;
+            next[b] = new_classes - 1;
+        }
+        rank.swap(next);
+        classes = new_classes;
+    }
+
+    vector<int> lcp(n);
+    for (int i = 0, h = 0; i < n; ++i) {
+        if (!rank[i]) continue;
+        int j = sa[rank[i] - 1];
+        while (i + h < n && j + h < n && s[i + h] == s[j + h]) ++h;
+        lcp[rank[i]] = h;
+        if (h) --h;
+    }
+    return {sa, rank, lcp};
 }

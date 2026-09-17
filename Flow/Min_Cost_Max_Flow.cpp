@@ -1,48 +1,55 @@
-struct MinCostMaxFlow { // 0-base N-maximum edge
-  struct Edge {
-    ll from, to, cap, flow, cost, rev; 
-  } *past[N];
-  vector<Edge> G[N];
-  int inq[N], n, s, t;
-  ll dis[N], up[N], pot[N];
-  bool BellmanFord() {
-    fill_n(dis, n, INF), fill_n(inq, n, 0);
-    queue<int> q;
-    auto relax = [&](int u, ll d, ll cap, Edge *e) {
-      if (cap > 0 && dis[u] > d) {
-        dis[u] = d, up[u] = cap, past[u] = e;
-        if (!inq[u]) inq[u] = 1, q.push(u);
-      }
-    };
-    relax(s, 0, INF, 0);
-    while (!q.empty()) {
-      int u = q.front();
-      q.pop(), inq[u] = 0;
-      for (auto &e : G[u]) {
-        ll d2 = dis[u] + e.cost + pot[u] - pot[e.to];
-        relax(e.to, d2, min(up[u], e.cap - e.flow), &e);
-      }
+using ll = long long;
+const ll inf = LLONG_MAX / 4;
+
+struct min_cost_flow {
+    struct edge { int to, rev; ll cap, cost; };
+    vector<vector<edge>> g;
+
+    min_cost_flow(int n) : g(n) {}
+    void add_edge(int u, int v, ll cap, ll cost) {
+        int a = g[u].size(), b = g[v].size();
+        g[u].push_back({v, b, cap, cost});
+        g[v].push_back({u, a, 0, -cost});
     }
-    return dis[t] != INF;
-  }
-  void solve(int _s, int _t, ll &flow, ll &cost, bool neg = true) {
-    s = _s, t = _t, flow = 0, cost = 0;
-    if (neg) BellmanFord(), copy_n(dis, n, pot);
-    for (; BellmanFord(); copy_n(dis, n, pot)) {
-      for (int i = 0; i < n; ++i) dis[i] += pot[i] - pot[s];
-      flow += up[t], cost += up[t] * dis[t];
-      for (int i = t; past[i]; i = past[i]->from) {
-        auto &e = *past[i];
-        e.flow += up[t], G[e.to][e.rev].flow -= up[t];
-      }
+    pair<ll, ll> solve(int s, int t, ll limit = inf) {
+        ll flow = 0, cost = 0;
+        int n = g.size();
+        vector<ll> dist(n);
+        vector<int> pv(n), pe(n);
+        vector<char> in_queue(n);
+        while (flow < limit) {
+            fill(dist.begin(), dist.end(), inf);
+            fill(in_queue.begin(), in_queue.end(), false);
+            queue<int> q;
+            dist[s] = 0;
+            q.push(s);
+            in_queue[s] = true;
+            while (!q.empty()) {
+                int u = q.front();
+                q.pop();
+                in_queue[u] = false;
+                for (int i = 0; i < (int)g[u].size(); ++i) {
+                    edge &e = g[u][i];
+                    __int128 raw = (__int128)dist[u] + e.cost;
+                    ll nd = raw < -inf ? -inf : raw > inf ? inf : (ll)raw;
+                    if (e.cap && dist[e.to] > nd) {
+                        dist[e.to] = nd;
+                        pv[e.to] = u, pe[e.to] = i;
+                        if (!in_queue[e.to]) q.push(e.to), in_queue[e.to] = true;
+                    }
+                }
+            }
+            if (dist[t] == inf) break;
+            ll add = limit - flow;
+            for (int v = t; v != s; v = pv[v]) add = min(add, g[pv[v]][pe[v]].cap);
+            for (int v = t; v != s; v = pv[v]) {
+                edge &e = g[pv[v]][pe[v]];
+                e.cap -= add;
+                g[v][e.rev].cap += add;
+            }
+            flow += add;
+            cost += add * dist[t];
+        }
+        return {flow, cost};
     }
-  }
-  void init(int _n) {
-    n = _n, fill_n(pot, n, 0);
-    for (int i = 0; i < n; ++i) G[i].clear();
-  }
-  void add_edge(ll a, ll b, ll cap, ll cost) {
-    G[a].pb(Edge{a, b, cap, 0, cost, SZ(G[b])});
-    G[b].pb(Edge{b, a, 0, 0, -cost, SZ(G[a]) - 1});
-  }
 };

@@ -1,68 +1,45 @@
-#include<bits/stdc++.h>
+using ld = long double;
 
-int t, n, L;
-int p;
-char s[MAXN][35];
-ll sum[MAXN] = {0};
-long double dp[MAXN] = {0};
-int prevd[MAXN] = {0};
- 
-long double pw(long double a, int n) {
-    if ( n == 1 ) return a;
-    long double b = pw(a, n/2);
-    if ( n & 1 ) return b*b*a;
-    else return b*b;
+ld int_power(ld x, int p) {
+    ld ans = 1;
+    for (; p; p /= 2, x *= x) if (p & 1) ans *= x;
+    return ans;
 }
-long double f(int i, int j) {
-//    cout << (sum[i] - sum[j]+i-j-1-L) << endl;
-    return pw(abs(sum[i] - sum[j]+i-j-1-L), p) + dp[j];
-}
-struct INV {
-    int L, R, pos;
-};
-INV stk[MAXN*10];
-int top = 1, bot = 1;
-void update(int i) {
-    while ( top > bot && i < stk[top].L && f(stk[top].L, i) < f(stk[top].L, stk[top].pos) ) {
-        stk[top - 1].R = stk[top].R;
-        top--;
-    }
-    int lo = stk[top].L, hi = stk[top].R, mid, pos = stk[top].pos;
-    //if ( i >= lo ) lo = i + 1;
-    while ( lo != hi ) {
-        mid = lo + (hi - lo) / 2;
-        if ( f(mid, i) < f(mid, pos) ) hi = mid;
-        else lo = mid + 1;
-    }
-    if ( hi < stk[top].R ) {
-        stk[top + 1] = (INV) { hi, stk[top].R, i };
-        stk[top++].R = hi;
-    }
-}
- 
-int main() {
-    cin >> t;
-    while ( t-- ) {
-        cin >> n >> L >> p;
-        dp[0] = sum[0] = 0;
-        for ( int i = 1 ; i <= n ; i++ ) {
-            cin >> s[i];
-            sum[i] = sum[i-1] + strlen(s[i]);
-            dp[i] = numeric_limits<long double>::max();
+
+// original line-breaking transition; returns dp[n]
+ld line_break_dp(const vector<int> &length, int limit, int power) {
+    struct interval { int l, r, pos; };
+    int n = length.size();
+    vector<long long> prefix(n + 1);
+    vector<ld> dp(n + 1);
+    for (int i = 1; i <= n; ++i) prefix[i] = prefix[i - 1] + length[i - 1];
+    auto cost = [&](int i, int j) {
+        ld extra = fabsl(prefix[i] - prefix[j] + i - j - 1 - limit);
+        return dp[j] + int_power(extra, power);
+    };
+
+    vector<interval> stack(n + 2);
+    int top = 0, bottom = 0;
+    stack[0] = {1, n + 1, 0};
+    for (int i = 1; i <= n; ++i) {
+        while (i >= stack[bottom].r) ++bottom;
+        dp[i] = cost(i, stack[bottom].pos);
+        while (top > bottom && i < stack[top].l &&
+               cost(stack[top].l, i) < cost(stack[top].l, stack[top].pos)) {
+            stack[top - 1].r = stack[top].r;
+            --top;
         }
-        stk[top] = (INV) {1, n + 1, 0};
-        for ( int i = 1 ; i <= n ; i++ ) {
-            if ( i >= stk[bot].R ) bot++;
-            dp[i] = f(i, stk[bot].pos);
-            update(i);
-//            cout << (ll) f(i, stk[bot].pos) << endl;
+        int l = stack[top].l, r = stack[top].r, old = stack[top].pos;
+        while (l < r) {
+            int m = (l + r) / 2;
+            if (cost(m, i) < cost(m, old)) r = m;
+            else l = m + 1;
         }
-        if ( dp[n] > 1e18 ) {
-            cout << "Too hard to arrange" << endl;
-        } else {
-            vector<PI> as;
-            cout << (ll)dp[n] << endl;
+        if (l < stack[top].r) {
+            int old_r = stack[top].r;
+            stack[top].r = l;
+            stack[++top] = {l, old_r, i};
         }
     }
-    return 0;
+    return dp[n];
 }

@@ -1,45 +1,28 @@
-typedef unsigned __int128 ulll;
+using u64 = uint64_t;
+using u128 = __uint128_t;
+const u64 mod = (1ULL << 61) - 1;
 
-ulll power(ulll a, ulll n, ulll m) {
-    ulll re = 1;
-    while (n > 0) {
-        if (n & 1) re = re * a % m;
-        a = a * a % m;
-        n >>= 1;
-    }
-    return re;
+u64 mod_add(u64 a, u64 b) {
+    u64 x = a + b;
+    return x >= mod ? x - mod : x;
 }
+u64 mod_mul(u64 a, u64 b) { return u128(a) * b % mod; }
 
-ulll inv(ulll a, ulll m) {
-    return power(a, m - 2, m);
-}
+struct rolling_hash {
+    u64 base;
+    vector<u64> hash, power;
 
-struct Rh {
-    const ulll p, mod;
-    vector<ulll> ps{1};
-    Rh(ulll p, ulll mod) : p(p), mod(mod) {}
-    vector<ulll> build(const string &s) {
-        vector<ulll> h(s.size() + 1);
-        h[0] = 0;
-        ps.resize(s.size() + 1);
-        for (int i = 0; i < s.size(); i++) {
-            ps[i + 1] = ps[i] * p % mod;
-            h[i + 1] = (h[i] + s[i] * ps[i + 1] % mod) % mod;
+    rolling_hash(const string &s, u64 base = 911382323) : base(base) {
+        assert(1 < base && base < mod);
+        hash.resize(s.size() + 1);
+        power.assign(s.size() + 1, 1);
+        for (int i = 0; i < (int)s.size(); ++i) {
+            power[i + 1] = mod_mul(power[i], base);
+            hash[i + 1] = mod_add(mod_mul(hash[i], base), (unsigned char)s[i] + 1);
         }
-        return h;
     }
-    ulll subhash(const vector<ulll> &h, int l, int r) {
-        // [l, r] 指原字串
-        return ((h[r + 1] - h[l]) * inv(ps[l], mod)) % mod;
+    u64 get(int l, int r) const { // [l, r]
+        u64 cut = mod_mul(hash[l], power[r - l + 1]);
+        return hash[r + 1] >= cut ? hash[r + 1] - cut : hash[r + 1] + mod - cut;
     }
 };
-
-constexpr uint64_t mod = (1ull<<61) - 1;
-uint64_t modmul(uint64_t a, uint64_t b){
-	uint64_t l1 = (uint32_t)a, h1 = a>>32, l2 = (uint32_t)b, h2 = b>>32;
-	uint64_t l = l1*l2, m = l1*h2 + l2*h1, h = h1*h2;
-	uint64_t ret = (l&mod) + (l>>61) + (h << 3) + (m >> 29) + (m << 35 >> 3) + 1;
-	ret = (ret & mod) + (ret>>61);
-	ret = (ret & mod) + (ret>>61);
-	return ret-1;
-}

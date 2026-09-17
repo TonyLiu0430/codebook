@@ -1,38 +1,17 @@
-typedef double Double;
-struct Point {
-	Double x,y;
+using ld = long double;
+const ld eps = 1e-12L;
 
-	bool operator < (const Point &b)const{
-		//return tie(x,y) < tie(b.x,b.y);
-		return atan2(y,x) < atan2(b.y,b.x);
-	}
-	Point operator + (const Point &b)const{
-		return (Point){x+b.x,y+b.y};
-	}
-	Point operator - (const Point &b)const{
-		return (Point){x-b.x,y-b.y};
-	}
-	Point operator * (const Double &d)const{
-		return Point(d*x,d*y);
-	}
-	Double operator * (const Point &b)const{
-		return x*b.x + y*b.y;
-	}
-	Double operator % (const Point &b)const{
-		return x*b.y - y*b.x;
-	}
-	friend Double abs2(const Point &p){
-		return p.x*p.x + p.y*p.y;
-	}
-	friend Double abs(const Point &p){
-		return sqrt( abs2(p) );
-	}
+struct point {
+    ld x = 0, y = 0;
+    point() = default;
+    point(ld x, ld y) : x(x), y(y) {}
+    point operator+(point p) const { return {x + p.x, y + p.y}; }
+    point operator-(point p) const { return {x - p.x, y - p.y}; }
+    point operator*(ld k) const { return {x * k, y * k}; }
+    bool operator<(point p) const { return tie(x, y) < tie(p.x, p.y); }
 };
-typedef Point Vector;
 
-struct Line{
-	Point P; Vector v;
-	bool operator < (const Line &b)const{
-		return atan2(v.y,v.x) < atan2(b.v.y,b.v.x);
-	}
-};
+ld dot(point a, point b) { return a.x * b.x + a.y * b.y; }
+ld cross(point a, point b) { return a.x * b.y - a.y * b.x; }
+ld norm2(point p) { return dot(p, p); }
+ld norm(point p) { return sqrtl(norm2(p)); }

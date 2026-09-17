@@ -1,40 +1,23 @@
-// Maximum Cardinality Bipartite Matching
+// maximum cardinality bipartite matching
+struct bipartite_matching {
+    vector<vector<int>> g;
+    vector<int> right_match, seen;
+    int stamp = 0;
 
-struct Graph {
-    static const int MAXN = 5005;
-    vector<int> G[MAXN];
-    int n;
-    int match[MAXN]; // Matching Result
-    int vis[MAXN];
-
-    void init(int _n) {
-        n = _n;
-        for ( int i = 0 ; i < n ; i++ ) G[i].clear();
-    }
-
+    bipartite_matching(int left, int right)
+        : g(left), right_match(right, -1), seen(right) {}
+    void add_edge(int left, int right) { g[left].push_back(right); }
     bool dfs(int u) {
-        for ( auto v:G[u] ) {
-            if (!vis[v]) {
-                vis[v] = true;
-                if (match[v] == -1 || dfs(match[v])) {
-                    match[v] = u;
-                    match[u] = v;
-                    return true;
-                }
-            }
+        for (int v : g[u]) if (seen[v] != stamp) {
+            seen[v] = stamp;
+            if (right_match[v] == -1 || dfs(right_match[v]))
+                return right_match[v] = u, true;
         }
         return false;
     }
-
     int solve() {
-        int res = 0;
-        memset(match, -1, sizeof(match));
-        for (int i = 0; i < n; i++) {
-            if (match[i] == -1) {
-                memset(vis, 0, sizeof(vis));
-                if (dfs(i)) res += 1;
-            }
-        }
-        return res;
+        int ans = 0;
+        for (int u = 0; u < (int)g.size(); ++u) ++stamp, ans += dfs(u);
+        return ans;
     }
-} graph;
+};

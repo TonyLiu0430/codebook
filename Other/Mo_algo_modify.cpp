@@ -1,27 +1,17 @@
-/*
-Mo's Algorithm With modification
-Block: N^{2/3}, Complexity: N^{5/3}
-*/
-struct Query {
-  int L, R, LBid, RBid, T;
-  Query(int l, int r, int t):
-    L(l), R(r), LBid(l / blk), RBid(r / blk), T(t) {}
-  bool operator<(const Query &q) const {
-    if (LBid != q.LBid) return LBid < q.LBid;
-    if (RBid != q.RBid) return RBid < q.RBid;
-    return T < b.T;
-  }
+// all ranges are [l, r]; time = number of applied updates
+struct time_query {
+    int l, r, time, id;
 };
-void solve(vector<Query> query) {
-  sort(ALL(query));
-  int L=0, R=0, T=-1;
-  for (auto q : query) {
-    while (T < q.T) addTime(L, R, ++T); // TODO
-    while (T > q.T) subTime(L, R, T--); // TODO
-    while (R < q.R) add(arr[++R]); // TODO
-    while (L > q.L) add(arr[--L]); // TODO
-    while (R > q.R) sub(arr[R--]); // TODO
-    while (L < q.L) sub(arr[L++]); // TODO
-    // answer query
-  }
+
+void sort_mo_with_updates(vector<time_query> &queries, int n) {
+    int block = max(1, int(pow(max(1, n), 2.0 / 3)));
+    sort(queries.begin(), queries.end(), [&](time_query a, time_query b) {
+        int al = a.l / block, bl = b.l / block;
+        if (al != bl) return al < bl;
+        int ar = a.r / block, br = b.r / block;
+        if (ar != br) return al & 1 ? ar < br : ar > br;
+        return ar & 1 ? a.time < b.time : a.time > b.time;
+    });
 }
+
+// start with l=0, r=-1, time=0; apply/undo updates while moving time

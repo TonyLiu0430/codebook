@@ -1,45 +1,39 @@
-struct Node{
-    int mx;  // 區間最大值
-    int tag; // 子樹裡所有人的'值'都要加上 tag
+// range add, range maximum; public ranges are [l, r]
+struct segtree {
+    struct node { long long mx = 0, lazy = 0; };
+    int n;
+    vector<node> t;
+
+    segtree(int n) : n(n), t(4 * max(1, n)) { assert(n > 0); }
+    void apply(int o, long long v) { t[o].mx += v, t[o].lazy += v; }
+    void push(int o) {
+        if (!t[o].lazy) return;
+        apply(o * 2, t[o].lazy);
+        apply(o * 2 + 1, t[o].lazy);
+        t[o].lazy = 0;
+    }
+    void add(int ql, int qr, long long v, int o, int l, int r) {
+        if (ql <= l && r <= qr) return apply(o, v);
+        push(o);
+        int m = (l + r) / 2;
+        if (ql < m) add(ql, qr, v, o * 2, l, m);
+        if (m < qr) add(ql, qr, v, o * 2 + 1, m, r);
+        t[o].mx = max(t[o * 2].mx, t[o * 2 + 1].mx);
+    }
+    long long max_query(int ql, int qr, int o, int l, int r) {
+        if (ql <= l && r <= qr) return t[o].mx;
+        push(o);
+        int m = (l + r) / 2;
+        long long ans = LLONG_MIN;
+        if (ql < m) ans = max(ans, max_query(ql, qr, o * 2, l, m));
+        if (m < qr) ans = max(ans, max_query(ql, qr, o * 2 + 1, m, r));
+        return ans;
+    }
+    void add(int l, int r, long long v) {
+        if (l <= r) add(l, r + 1, v, 1, 0, n);
+    }
+    long long max_query(int l, int r) {
+        assert(l <= r);
+        return max_query(l, r + 1, 1, 0, n);
+    }
 };
-
-vector<Node> seg;
-
-// 節點 id 的整個區間要加上 tag
-void addtag(int tag, int id){
-    seg[id].mx += tag; // 最大值會加上 tag
-    seg[id].tag += tag; // 注意可能本來就有標記了，所以是 +=
-}
-
-// 更新子節點資訊並把標記移到子節點身上
-void push(int id){
-    addtag(seg[id].tag, lc);
-    addtag(seg[id].tag, rc);
-    seg[id].tag = 0; // 標記被移到子節點上所以要改成 0
-}
-
-// 區間 [l,r] 加上 v
-void modify(int l, int r, int v, int L, int R, int id){
-    if(l <= L && R <= r){
-        addtag(v, id);
-        return;
-    }
-    push(id);
-    if(r <= M) modify(l, r, v, L, M, lc);
-    else if(l > M) modify(l, r, v, M + 1, R, rc);
-    else{
-        modify(l, r, v, L, M, lc);
-        modify(l, r, v, M + 1, R, rc);
-    }
-    seg[id].mx = max(seg[lc].mx, seg[rc].mx);
-}
-
-int query(int l, int r, int L, int R, int id){
-    if(l <= L && R <= r) return seg[id].mx;
-    push(id);
-    int M = (L + R) / 2;
-    if(r <= M) return query(l, r, L, M, lc);
-    else if(l > M) return query(l, r, M + 1, R, rc);
-    else return max(query(l, r, L, M, lc), 
-                    query(l, r, M + 1, R, rc));
-}

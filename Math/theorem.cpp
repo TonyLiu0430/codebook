@@ -1,7 +1,7 @@
 /*
 Lucas's Theorem
 	For non-negative integer n,m and prime P,
-	C(m,n) mod P = C(m/M,n/M) * C(m%M,n%M) mod P
+	C(m,n) mod P = C(m/P,n/P) * C(m%P,n%P) mod P
 	= mult_i ( C(m_i,n_i) )
 	where m_i is the i-th digit of m in base P.
 -------------------------------------------------------
@@ -48,7 +48,7 @@ construct a solution:
   t_i * M_i = 1 (mod m_i)
 
   solution x = a_1 * t_1 * M_1 + a_2 * t_2 * M_2 + ... + a_n * t_n * M_n + k * M
-  = k*M + ∑ a_i * t_i * M_i, k is positive integer.
+  = k*M + ∑ a_i * t_i * M_i, k is any integer.
 
   under mod M, there is one solution x = ∑ a_i * t_i * M_i
 -------------------------------------------------------

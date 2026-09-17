@@ -1,14 +1,16 @@
-void mobius() {
-    fill(isPrime, isPrime + MAXN, 1);
-    mu[1] = 1, num = 0;
-    for (int i = 2; i < MAXN; ++i) {
-        if (isPrime[i]) primes[num++] = i, mu[i] = -1;
-        static int d;
-        for (int j = 0; j < num && (d = i * primes[j]) < MAXN; ++j) {
-            isPrime[d] = false;
-            if (i % primes[j] == 0) {
-                mu[d] = 0; break;
-            } else mu[d] = -mu[i];
+vector<int> mobius(int n) {
+    vector<int> mu(n + 1), primes;
+    vector<char> composite(n + 1);
+    if (n < 1) return mu;
+    mu[1] = 1;
+    for (int i = 2; i <= n; ++i) {
+        if (!composite[i]) primes.push_back(i), mu[i] = -1;
+        for (int p : primes) {
+            if ((long long)i * p > n) break;
+            composite[i * p] = true;
+            if (i % p == 0) { mu[i * p] = 0; break; }
+            mu[i * p] = -mu[i];
         }
     }
+    return mu;
 }

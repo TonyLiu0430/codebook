@@ -1,33 +1,46 @@
-using ll = long long;
-ll t1[N][N], t2[N][N], t3[N][N], t4[N][N];
+// 1-based rectangle add and rectangle sum; memory is 32*n*m bytes
+struct bit2d {
+    using ll = long long;
+    int n, m;
+    array<vector<vector<ll>>, 4> t;
 
-void add(ll x, ll y, ll z) {
-  for (int X = x; X <= n; X += lowbit(X))
-    for (int Y = y; Y <= m; Y += lowbit(Y)) {
-      t1[X][Y] += z;
-      t2[X][Y] += z * x;  // 注意是 z * x 而不是 z * X，后面同理
-      t3[X][Y] += z * y;
-      t4[X][Y] += z * x * y;
+    bit2d(int n, int m) : n(n), m(m) {
+        for (auto &a : t) a.assign(n + 1, vector<ll>(m + 1));
     }
-}
 
-void range_add(ll xa, ll ya, ll xb, ll yb,
-               ll z) {  //(xa, ya) 到 (xb, yb) 子矩阵
-  add(xa, ya, z);
-  add(xa, yb + 1, -z);
-  add(xb + 1, ya, -z);
-  add(xb + 1, yb + 1, z);
-}
+    void add_one(int x, int y, ll v) {
+        for (int i = x; i <= n; i += i & -i)
+            for (int j = y; j <= m; j += j & -j) {
+                t[0][i][j] += v;
+                t[1][i][j] += v * (x - 1);
+                t[2][i][j] += v * (y - 1);
+                t[3][i][j] += v * (x - 1) * (y - 1);
+            }
+    }
 
-ll ask(ll x, ll y) {
-  ll res = 0;
-  for (int i = x; i; i -= lowbit(i))
-    for (int j = y; j; j -= lowbit(j))
-      res += (x + 1) * (y + 1) * t1[i][j] - (y + 1) * t2[i][j] -
-             (x + 1) * t3[i][j] + t4[i][j];
-  return res;
-}
+    ll get(int k, int x, int y) const {
+        ll ans = 0;
+        for (int i = x; i > 0; i -= i & -i)
+            for (int j = y; j > 0; j -= j & -j) ans += t[k][i][j];
+        return ans;
+    }
 
-ll range_ask(ll xa, ll ya, ll xb, ll yb) {
-  return ask(xb, yb) - ask(xb, ya - 1) - ask(xa - 1, yb) + ask(xa - 1, ya - 1);
-}
+    void add(int x1, int y1, int x2, int y2, ll v) {
+        assert(1 <= x1 && x1 <= x2 && x2 <= n);
+        assert(1 <= y1 && y1 <= y2 && y2 <= m);
+        add_one(x1, y1, v);
+        if (y2 < m) add_one(x1, y2 + 1, -v);
+        if (x2 < n) add_one(x2 + 1, y1, -v);
+        if (x2 < n && y2 < m) add_one(x2 + 1, y2 + 1, v);
+    }
+
+    ll prefix(int x, int y) const {
+        if (x <= 0 || y <= 0) return 0;
+        return get(0, x, y) * x * y - get(1, x, y) * y -
+               get(2, x, y) * x + get(3, x, y);
+    }
+    ll sum(int x1, int y1, int x2, int y2) const {
+        return prefix(x2, y2) - prefix(x1 - 1, y2) -
+               prefix(x2, y1 - 1) + prefix(x1 - 1, y1 - 1);
+    }
+};

@@ -1,37 +1,31 @@
-typedef long long LL;
+using u64 = uint64_t;
+using u128 = __uint128_t;
 
-inline LL bin_mul(LL a, LL n,const LL& MOD){
-	return __int128(a) * n % MOD;
+u64 mod_mul(u64 a, u64 b, u64 mod) { return u128(a) * b % mod; }
+u64 mod_power(u64 a, u64 n, u64 mod) {
+    u64 ans = 1;
+    for (; n; n /= 2, a = mod_mul(a, a, mod))
+        if (n & 1) ans = mod_mul(ans, a, mod);
+    return ans;
 }
 
-inline LL bin_pow(LL a, LL n,const LL& MOD){
-	LL re=1;
-	while (n>0){
-		if (n&1) re = bin_mul(re,a,MOD);
-		a = bin_mul(a,a,MOD);
-		n>>=1;
-	}
-	return re;
-}
-
-bool is_prime(LL n){
-	//static LL sprp[3] = { 2LL, 7LL, 61LL}; 
-	static LL sprp[7] = { 2LL, 325LL, 9375LL, 
-		28178LL, 450775LL, 9780504LL,
-		1795265022LL };
-	if (n==1 || (n&1)==0 ) return n==2;
-	int u=n-1, t=0; 
-	while ( (u&1)==0 ) u>>=1, t++;
-	for (int i=0; i<3; i++){
-		LL x = bin_pow( sprp[i]%n, u, n);
-		if (x==0 || x==1 || x==n-1)continue;
-		
-		for (int j=1; j<t; j++){
-			x=x*x%n;
-			if (x==1 || x==n-1)break;
-		}
-		if (x==n-1)continue;
-		return 0;
-	}
-	return 1;
+bool is_prime(u64 n) {
+    if (n < 2) return false;
+    for (u64 p : array<u64, 7>{2, 3, 5, 7, 11, 13, 17}) {
+        if (n % p == 0) return n == p;
+    }
+    u64 d = n - 1, s = 0;
+    while (!(d & 1)) d /= 2, ++s;
+    for (u64 a : array<u64, 7>{2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
+        if (a % n == 0) continue;
+        u64 x = mod_power(a % n, d, n);
+        if (x == 1 || x == n - 1) continue;
+        bool composite = true;
+        for (u64 r = 1; r < s; ++r) {
+            x = mod_mul(x, x, n);
+            if (x == n - 1) { composite = false; break; }
+        }
+        if (composite) return false;
+    }
+    return true;
 }

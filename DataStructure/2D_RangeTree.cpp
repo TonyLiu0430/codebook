@@ -1,60 +1,35 @@
-// remember sort x !!!!!
-typedef int T;
-const int LGN = 20;
-const int MAXN = 100005;
+// static rectangle point count, inclusive bounds
+struct range_tree_2d {
+    vector<int> xs;
+    vector<vector<int>> ys;
 
-struct Point{
-    T x, y;
-    friend bool operator < (Point a, Point b){
-        return tie(a.x,a.y) < tie(b.x,b.y);
+    range_tree_2d(vector<pair<int, int>> p) {
+        sort(p.begin(), p.end());
+        for (auto q : p) xs.push_back(q.first);
+        ys.resize(4 * max<size_t>(1, p.size()));
+        if (!p.empty()) build(1, 0, p.size(), p);
+    }
+    void build(int o, int l, int r, const vector<pair<int, int>> &p) {
+        if (r - l == 1) return ys[o].push_back(p[l].second);
+        int m = (l + r) / 2;
+        build(o * 2, l, m, p);
+        build(o * 2 + 1, m, r, p);
+        merge(ys[o * 2].begin(), ys[o * 2].end(),
+              ys[o * 2 + 1].begin(), ys[o * 2 + 1].end(),
+              back_inserter(ys[o]));
+    }
+    int query(int ql, int qr, int y1, int y2, int o, int l, int r) const {
+        if (ql <= l && r <= qr)
+            return upper_bound(ys[o].begin(), ys[o].end(), y2) -
+                   lower_bound(ys[o].begin(), ys[o].end(), y1);
+        int m = (l + r) / 2, ans = 0;
+        if (ql < m) ans += query(ql, qr, y1, y2, o * 2, l, m);
+        if (m < qr) ans += query(ql, qr, y1, y2, o * 2 + 1, m, r);
+        return ans;
+    }
+    int count(int x1, int y1, int x2, int y2) const {
+        int l = lower_bound(xs.begin(), xs.end(), x1) - xs.begin();
+        int r = upper_bound(xs.begin(), xs.end(), x2) - xs.begin();
+        return l == r ? 0 : query(l, r, y1, y2, 1, 0, xs.size());
     }
 };
-struct TREE{
-    Point pt;
-    int toleft;
-}tree[LGN][MAXN];
-struct SEG{
-    T mx, Mx;
-    int sz;
-    TREE *st;
-}seg[MAXN*4];
-
-vector<Point> P;
-
-void build(int l, int r, int o, int deep){
-    seg[o].mx = P[l].x;
-    seg[o].Mx = P[r].x;
-    seg[o].sz = r-l+1;;
-
-    if(l == r){
-        tree[deep][r].pt = P[r];
-        tree[deep][r].toleft = 0;
-        seg[o].st = &tree[deep][r];
-        return;
-    }
-    int mid = (l+r)>>1;
-    build(l,mid,o+o,deep+1);
-    build(mid+1,r,o+o+1,deep+1);
-
-    TREE *ptr = &tree[deep][l];
-    TREE *pl = &tree[deep+1][l], *nl = &tree[deep+1][mid+1];
-    TREE *pr = &tree[deep+1][mid+1], *nr = &tree[deep+1][r+1];
-
-    int cnt = 0;
-    while(pl != nl && pr != nr) {
-        *(ptr) = pl->pt.y <= pr->pt.y ? cnt++, *(pl++): *(pr++);
-        ptr -> toleft = cnt; ptr++;
-    }
-    while(pl != nl) *(ptr) = *(pl++), ptr -> toleft = ++cnt, ptr++;
-    while(pr != nr) *(ptr) = *(pr++), ptr -> toleft = cnt, ptr++;
-
-}
-int main(){
-    int n; cin >> n;
-    for(int i = 0 ;i < n; i++){
-        T x,y; cin >> x >> y;
-        P.push_back((Point){x,y});
-    }
-    sort(P.begin(),P.end());
-    build(0,n-1,1,0);
-}
