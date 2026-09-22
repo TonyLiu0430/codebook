@@ -10,7 +10,7 @@ u64 pollard(u64 n) {
         auto f = [&](u64 v) { return (__uint128_t(mod_mul(v, v, n)) + c) % n; };
         while (d == 1) {
             x = f(x), y = f(f(y));
-            d = __gcd(x > y ? x - y : y - x, n);
+            d = gcd(x > y ? x - y : y - x, n);
         }
         if (d != n) return d;
     }

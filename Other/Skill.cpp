@@ -21,4 +21,4 @@ int random_int(int l, int r) {
 }
 
 // sorted unique:
-// a.erase(unique(a.begin(), a.end()), a.end());
+// a.erase(ranges::unique(a).begin(), a.end());

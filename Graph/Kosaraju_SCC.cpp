@@ -15,11 +15,11 @@ struct kosaraju {
         for (int v : rev[u]) if (!used[v]) rdfs(v, id);
     }
     int solve() {
-        fill(used.begin(), used.end(), 0);
+        ranges::fill(used, 0);
         order.clear();
-        for (int u = 0; u < (int)g.size(); ++u) if (!used[u]) dfs(u);
-        fill(used.begin(), used.end(), 0);
-        reverse(order.begin(), order.end());
+        for (int u = 0; u < ssize(g); ++u) if (!used[u]) dfs(u);
+        ranges::fill(used, 0);
+        ranges::reverse(order);
         int count = 0;
         for (int u : order) if (!used[u]) rdfs(u, count++);
         return count;

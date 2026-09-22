@@ -13,7 +13,7 @@ struct dinic {
         g[v].push_back({u, a, 0});
     }
     bool bfs(int s, int t) {
-        fill(level.begin(), level.end(), -1);
+        ranges::fill(level, -1);
         queue<int> q;
         level[s] = 0;
         q.push(s);
@@ -27,7 +27,7 @@ struct dinic {
     }
     ll dfs(int u, int t, ll flow) {
         if (u == t) return flow;
-        for (int &i = it[u]; i < (int)g[u].size(); ++i) {
+        for (int &i = it[u]; i < ssize(g[u]); ++i) {
             edge &e = g[u][i];
             if (!e.cap || level[e.to] != level[u] + 1) continue;
             ll got = dfs(e.to, t, min(flow, e.cap));
@@ -41,12 +41,12 @@ struct dinic {
     ll max_flow(int s, int t) {
         ll ans = 0, got;
         while (bfs(s, t)) {
-            fill(it.begin(), it.end(), 0);
+            ranges::fill(it, 0);
             while ((got = dfs(s, t, inf))) ans += got;
         }
         return ans;
     }
-    vector<char> min_cut_side(int s) const {
+    vector<char> min_cut_side(int s) {
         vector<char> seen(g.size());
         vector<int> stack{ s };
         seen[s] = true;

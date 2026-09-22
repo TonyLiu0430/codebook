@@ -9,7 +9,7 @@ struct edge {
 // {has cycle, minimum mean}; karp, O(nm)
 pair<bool, ld> min_mean_cycle(int n, const vector<edge> &edges) {
     vector<vector<ld>> dp(n + 1, vector<ld>(n, inf));
-    fill(dp[0].begin(), dp[0].end(), 0); // super source
+    ranges::fill(dp[0], 0); // super source
     for (int k = 1; k <= n; ++k)
         for (edge e : edges)
             if (dp[k - 1][e.from] != inf)

@@ -19,5 +19,5 @@ pair<bool, ll> prim(const vector<vector<edge>> &g, int root = 0) {
         ++seen;
         for (edge e : g[u]) if (!used[e.second]) pq.push(e);
     }
-    return {seen == (int)g.size(), total};
+    return {seen == ssize(g), total};
 }

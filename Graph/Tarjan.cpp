@@ -27,7 +27,7 @@ struct tarjan {
         ++count;
     }
     int solve() {
-        for (int u = 0; u < (int)g.size(); ++u) if (!dfn[u]) dfs(u);
+        for (int u = 0; u < ssize(g); ++u) if (!dfn[u]) dfs(u);
         return count;
     }
 };

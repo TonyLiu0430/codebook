@@ -8,7 +8,10 @@ vector<int> mobius(int n) {
         for (int p : primes) {
             if ((long long)i * p > n) break;
             composite[i * p] = true;
-            if (i % p == 0) { mu[i * p] = 0; break; }
+            if (i % p == 0) {
+                mu[i * p] = 0;
+                break;
+            }
             mu[i * p] = -mu[i];
         }
     }

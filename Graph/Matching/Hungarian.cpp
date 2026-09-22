@@ -17,7 +17,7 @@ struct bipartite_matching {
     }
     int solve() {
         int ans = 0;
-        for (int u = 0; u < (int)g.size(); ++u) ++stamp, ans += dfs(u);
+        for (int u = 0; u < ssize(g); ++u) ++stamp, ans += dfs(u);
         return ans;
     }
 };

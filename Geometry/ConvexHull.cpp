@@ -1,9 +1,11 @@
 // needs point, cross and eps from 2Dpoint.cpp
 vector<point> convex_hull(vector<point> p) {
-    sort(p.begin(), p.end());
-    p.erase(unique(p.begin(), p.end(), [](point a, point b) {
+    ranges::sort(p, [](point a, point b) {
+        return tie(a.x, a.y) < tie(b.x, b.y);
+    });
+    p.erase(ranges::unique(p, [](point a, point b) {
         return fabsl(a.x - b.x) <= eps && fabsl(a.y - b.y) <= eps;
-    }), p.end());
+    }).begin(), p.end());
     if (p.size() <= 1) return p;
 
     vector<point> h;
@@ -16,7 +18,7 @@ vector<point> convex_hull(vector<point> p) {
             h.push_back(q);
         }
         h.pop_back();
-        reverse(p.begin(), p.end());
+        ranges::reverse(p);
     }
     return h; // ccw; first point is not repeated
 }

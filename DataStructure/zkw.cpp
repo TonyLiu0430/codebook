@@ -10,7 +10,7 @@ struct zkw_sum {
         for (t[p += n] += v, p /= 2; p; p /= 2)
             t[p] = t[p * 2] + t[p * 2 + 1];
     }
-    long long sum(int l, int r) const {
+    long long sum(int l, int r) {
         long long ans = 0;
         for (l += n, r += n + 1; l < r; l /= 2, r /= 2) {
             if (l & 1) ans += t[l++];

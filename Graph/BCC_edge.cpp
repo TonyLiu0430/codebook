@@ -30,9 +30,9 @@ struct edge_bcc {
             if (!bridge[e.id] && comp[e.to] == -1) paint(e.to, id);
     }
     int solve() {
-        for (int u = 0; u < (int)g.size(); ++u) if (!dfn[u]) dfs(u);
+        for (int u = 0; u < ssize(g); ++u) if (!dfn[u]) dfs(u);
         int count = 0;
-        for (int u = 0; u < (int)g.size(); ++u)
+        for (int u = 0; u < ssize(g); ++u)
             if (comp[u] == -1) paint(u, count++);
         return count;
     }

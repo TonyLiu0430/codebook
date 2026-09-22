@@ -5,7 +5,7 @@ struct query {
 
 void sort_mo(vector<query> &queries, int n) {
     int block = max(1, int(n / sqrt(max<size_t>(1, queries.size()))));
-    sort(queries.begin(), queries.end(), [&](query a, query b) {
+    ranges::sort(queries, [&](query a, query b) {
         int x = a.l / block, y = b.l / block;
         if (x != y) return x < y;
         return x & 1 ? a.r < b.r : a.r > b.r;

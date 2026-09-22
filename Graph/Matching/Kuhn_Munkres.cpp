@@ -11,7 +11,7 @@ struct assignment_result {
 // square maximum-weight assignment; use missing for absent edges
 assignment_result max_weight_matching(const vector<vector<ll>> &weight) {
     int n = weight.size();
-    for (auto &row : weight) assert((int)row.size() == n);
+    for (auto &row : weight) assert(ssize(row) == n);
     vector<ll> u(n + 1), v(n + 1);
     vector<int> p(n + 1), way(n + 1);
 

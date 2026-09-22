@@ -18,8 +18,8 @@ struct min_cost_flow {
         vector<int> pv(n), pe(n);
         vector<char> in_queue(n);
         while (flow < limit) {
-            fill(dist.begin(), dist.end(), inf);
-            fill(in_queue.begin(), in_queue.end(), false);
+            ranges::fill(dist, inf);
+            ranges::fill(in_queue, false);
             queue<int> q;
             dist[s] = 0;
             q.push(s);
@@ -28,7 +28,7 @@ struct min_cost_flow {
                 int u = q.front();
                 q.pop();
                 in_queue[u] = false;
-                for (int i = 0; i < (int)g[u].size(); ++i) {
+                for (int i = 0; i < ssize(g[u]); ++i) {
                     edge &e = g[u][i];
                     __int128 raw = (__int128)dist[u] + e.cost;
                     ll nd = raw < -inf ? -inf : raw > inf ? inf : (ll)raw;

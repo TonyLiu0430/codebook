@@ -11,7 +11,7 @@ struct treap {
         t.push_back({value, int(rng()), 1, 0, 0});
         return t.size() - 1;
     }
-    int size(int u) const { return u ? t[u].size : 0; }
+    int size(int u) { return u ? t[u].size : 0; }
     void pull(int u) { t[u].size = 1 + size(t[u].left) + size(t[u].right); }
 
     split_result split_size(int u, int k) {

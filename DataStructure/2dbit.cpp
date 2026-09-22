@@ -18,7 +18,7 @@ struct bit2d {
             }
     }
 
-    ll get(int k, int x, int y) const {
+    ll get(int k, int x, int y) {
         ll ans = 0;
         for (int i = x; i > 0; i -= i & -i)
             for (int j = y; j > 0; j -= j & -j) ans += t[k][i][j];
@@ -34,12 +34,12 @@ struct bit2d {
         if (x2 < n && y2 < m) add_one(x2 + 1, y2 + 1, v);
     }
 
-    ll prefix(int x, int y) const {
+    ll prefix(int x, int y) {
         if (x <= 0 || y <= 0) return 0;
         return get(0, x, y) * x * y - get(1, x, y) * y -
                get(2, x, y) * x + get(3, x, y);
     }
-    ll sum(int x1, int y1, int x2, int y2) const {
+    ll sum(int x1, int y1, int x2, int y2) {
         return prefix(x2, y2) - prefix(x1 - 1, y2) -
                prefix(x2, y1 - 1) + prefix(x1 - 1, y1 - 1);
     }

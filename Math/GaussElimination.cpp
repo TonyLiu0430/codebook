@@ -28,5 +28,5 @@ int gauss(vector<vector<ld>> a, vector<ld> &answer) {
         for (int i = 0; i < m; ++i) sum += r[i] * answer[i];
         if (fabsl(sum - r[m]) > eps) return 0;
     }
-    return count(where.begin(), where.end(), -1) ? 2 : 1;
+    return ranges::count(where, -1) ? 2 : 1;
 }

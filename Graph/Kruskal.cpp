@@ -19,9 +19,7 @@ struct dsu {
 };
 
 pair<bool, ll> kruskal(int n, vector<edge> edges) {
-    sort(edges.begin(), edges.end(), [](edge a, edge b) {
-        return a.weight < b.weight;
-    });
+    ranges::sort(edges, {}, &edge::weight);
     dsu uf(n);
     ll total = 0;
     int used = 0;

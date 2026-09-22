@@ -23,7 +23,10 @@ bool is_prime(u64 n) {
         bool composite = true;
         for (u64 r = 1; r < s; ++r) {
             x = mod_mul(x, x, n);
-            if (x == n - 1) { composite = false; break; }
+            if (x == n - 1) {
+                composite = false;
+                break;
+            }
         }
         if (composite) return false;
     }

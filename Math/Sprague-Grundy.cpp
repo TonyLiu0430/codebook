@@ -12,10 +12,10 @@ vector<int> grundy(const vector<vector<int>> &g) {
         vector<int> seen(g[u].size() + 1);
         for (int v : g[u]) {
             int x = dfs(v);
-            if (x < (int)seen.size()) seen[x] = true;
+            if (x < ssize(seen)) seen[x] = true;
         }
-        return sg[u] = find(seen.begin(), seen.end(), 0) - seen.begin();
+        return sg[u] = ranges::find(seen, 0) - seen.begin();
     };
-    for (int u = 0; u < (int)g.size(); ++u) dfs(u);
+    for (int u = 0; u < ssize(g); ++u) dfs(u);
     return sg;
 }
