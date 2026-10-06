@@ -1,13 +1,21 @@
 \documentclass[a4paper,8pt,twocolumn,oneside]{article}
 \setlength{\columnsep}{15pt}                    %兩欄模式的間距
-\setlength{\columnseprule}{0pt}                 %兩欄模式間格線粗細
+\setlength{\columnseprule}{0.25pt}              %兩欄模式間格線粗細
 
 \usepackage{amsthm}								%定義，例題
 \usepackage{amssymb}
 \usepackage{fontspec}							%設定字體
 \usepackage{color}
 \usepackage[x11names]{xcolor}
-\usepackage{listings}							%顯示code用的
+\usepackage{etoolbox}
+\definecolor{ColumnRule}{HTML}{B0B8C2}
+\makeatletter
+\patchcmd{\@outputdblcol}
+    {\normalcolor\vrule\@width\columnseprule}
+    {{\color{ColumnRule}\vrule\@width\columnseprule}}
+    {}{\PackageError{codebook}{Cannot style column separator}{Check the LaTeX output routine.}}
+\makeatother
+\usepackage{fvextra}							%顯示code用的
 \usepackage{fancyhdr}							%設定頁首頁尾
 \usepackage{graphicx}							%Graphic
 \usepackage{enumerate}
@@ -16,7 +24,7 @@
 \usepackage[CheckSingle, CJKmath]{xeCJK}
  \usepackage{CJKulem}
 
-\usepackage{amsmath, courier, listings, fancyhdr, graphicx}
+\usepackage{amsmath, courier, fancyhdr, graphicx}
 \topmargin=0pt
 \headsep=5pt
 \textheight=780pt
@@ -38,40 +46,32 @@
 \setmainfont{Consolas}
 %\setmonofont{Ubuntu Mono}
 \setmonofont{Consolas}
-\setCJKmainfont{Noto Sans CJK TC}
+\IfFontExistsTF{Noto Sans CJK TC}{
+    \setCJKmainfont{Noto Sans CJK TC}
+    \setCJKmonofont{Noto Sans CJK TC}
+}{
+    \IfFontExistsTF{Microsoft JhengHei}{
+        \setCJKmainfont{Microsoft JhengHei}
+        \setCJKmonofont{Microsoft JhengHei}
+    }{
+        \setCJKmainfont{Noto Sans TC}
+        \setCJKmonofont{Noto Sans TC}
+    }
+}
 \XeTeXlinebreaklocale "zh"						%中文自動換行
 \XeTeXlinebreakskip = 0pt plus 1pt				%設定段落之間的距離
 \setcounter{secnumdepth}{3}						%目錄顯示第三層
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\definecolor{CodeText}{HTML}{263238}
+\input{.codebook-cache/style.tex}
+\VerbatimPygments{\CB}{\CB}
+% Keep content.tex's source paths; generate highlighting before TeX.
+\newcommand{\lstinputlisting}[1]{\input{.codebook-cache/#1.tex}}
 \makeatletter
-\lst@CCPutMacro\lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
-\@empty\z@\@empty
+\renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{3em}}
 \makeatother
-\lstset{										% Code顯示
-    language=C++,									% the language of the code
-    basicstyle=\footnotesize\ttfamily, 					% the size of the fonts that are used for the code
-    %numbers=left,									% where to put the line-numbers
-    numberstyle=\footnotesize,					% the size of the fonts that are used for the line-numbers
-    stepnumber=1,									% the step between two line-numbers. If it's 1, each line  will be numbered
-    numbersep=5pt,									% how far the line-numbers are from the code
-    backgroundcolor=\color{white},				% choose the background color. You must add \usepackage{color}
-    showspaces=false,								% show spaces adding particular underscores
-    showstringspaces=false,						% underline spaces within strings
-    showtabs=false,								% show tabs within strings adding particular underscores
-    frame=false,										% adds a frame around the code
-    tabsize=2,										% sets default tabsize to 2 spaces
-    captionpos=b,									% sets the caption-position to bottom
-    breaklines=true,								% sets automatic line breaking
-    breakatwhitespace=false,						% sets if automatic breaks should only happen at whitespace
-    escapeinside={\%*}{*)},						% if you want to add a comment within your code
-    morekeywords={*},								% if you want to add more keywords to the set
-    keywordstyle=\bfseries\color{Blue1},
-    commentstyle=\itshape\color{Red4},
-    stringstyle=\itshape\color{Green4},
-}
-
 
 \begin{document}
 \pagestyle{fancy}

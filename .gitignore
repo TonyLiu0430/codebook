@@ -1,0 +1,6 @@
+.codebook-cache/
+tmp/pdfs/
+codebook.aux
+codebook.log
+codebook.toc
+__pycache__/

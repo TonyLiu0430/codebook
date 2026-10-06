@@ -1,12 +1,10 @@
 // idempotent rmq: minimum on [l, r]
 template<class t>
 struct sparse_table {
-    vector<int> lg;
     vector<vector<t>> st;
 
-    sparse_table(const vector<t> &a) : lg(a.size() + 1) {
-        for (int i = 2; i < ssize(lg); ++i) lg[i] = lg[i / 2] + 1;
-        int k = a.empty() ? 0 : lg[a.size()] + 1;
+    sparse_table(const vector<t> &a) {
+        int k = a.empty() ? 0 : __lg(a.size()) + 1;
         st.assign(k, vector<t>(a.size()));
         if (a.empty()) return;
         st[0] = a;
@@ -16,7 +14,7 @@ struct sparse_table {
     }
     t query(int l, int r) {
         assert(l <= r);
-        int k = lg[r - l + 1];
+        int k = __lg(r - l + 1);
         return min(st[k][l], st[k][r - (1 << k) + 1]);
     }
 };

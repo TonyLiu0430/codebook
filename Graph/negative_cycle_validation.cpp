@@ -1,3 +1,4 @@
+// 單純偵測負環請用 bellman-ford
 using ll = long long;
 const ll inf = LLONG_MAX / 4;
 
