@@ -10,15 +10,12 @@ u64 mod_power(u64 a, u64 n, u64 mod) {
 }
 
 bool is_prime(u64 n) {
-    if (n < 2) return false;
-    for (u64 p : array<u64, 7>{2, 3, 5, 7, 11, 13, 17}) {
-        if (n % p == 0) return n == p;
-    }
+    if (n < 2 || n % 2 == 0) return n == 2;
     u64 d = n - 1, s = 0;
     while (!(d & 1)) d /= 2, ++s;
     for (u64 a : array<u64, 7>{2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
         if (a % n == 0) continue;
-        u64 x = mod_power(a % n, d, n);
+        u64 x = mod_power(a, d, n);
         if (x == 1 || x == n - 1) continue;
         bool composite = true;
         for (u64 r = 1; r < s; ++r) {
