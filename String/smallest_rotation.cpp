@@ -1,3 +1,5 @@
+// 回傳字典序最小的循環位移，O(n)
+// 例如 "baca" -> "abac"；將開頭若干字元搬到尾端
 string smallest_rotation(string s) {
     int n = s.size();
     if (!n) return s;

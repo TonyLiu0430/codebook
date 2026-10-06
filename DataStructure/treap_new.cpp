@@ -5,7 +5,7 @@ struct treap {
     };
     struct split_result { int left, right; };
     vector<node> t{node{}};
-    mt19937 rng{uint32_t(chrono::steady_clock::now().time_since_epoch().count())};
+    mt19937 rng{uint32_t(time(0))};
 
     int make_node(int value) {
         t.push_back({value, int(rng()), 1, 0, 0});

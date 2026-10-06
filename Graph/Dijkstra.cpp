@@ -5,17 +5,14 @@ const ll inf = LLONG_MAX / 4;
 
 vector<ll> dijkstra(int source, const vector<vector<graph_edge>> &g) {
     vector<ll> dist(g.size(), inf);
-    priority_queue<state, vector<state>, greater<state>> pq;
+    priority_queue<state, vector<state>, greater<>> pq;
     dist[source] = 0;
     pq.push({0, source}); // distance, vertex
     while (!pq.empty()) {
-        ll d = pq.top().first;
-        int u = pq.top().second;
+        auto [d, u] = pq.top();
         pq.pop();
         if (d != dist[u]) continue;
-        for (graph_edge e : g[u]) {
-            int v = e.first;
-            ll w = e.second;
+        for (auto [v, w] : g[u]) {
             assert(w >= 0);
             if (dist[v] > d + w) {
                 dist[v] = d + w;

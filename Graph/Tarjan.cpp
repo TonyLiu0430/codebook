@@ -1,4 +1,10 @@
-// directed strongly connected components
+// 有向圖 SCC，O(V+E)；low[u] == dfn[u] 時彈棧到 u
+// dfn：訪問順序；樹邊用 low[v]，棧內已訪問邊用 dfn[v] 更新 low[u]
+// 無向圖橋／割點：見 BCC_edge.cpp；邊雙向加，不用 in_stack
+// 只跳過父邊 id（保留重邊）；其餘已訪問邊用 dfn[v] 更新 low[u]
+// 橋：DFS 樹邊 (u,v) 在 dfs(v) 後滿足 low[v] > dfn[u]
+// 割點：非根 u 有 DFS 子節點 v 滿足 low[v] >= dfn[u]
+// DFS 根須有至少兩個 DFS 樹子節點才是割點（不是看度數）
 struct tarjan {
     vector<vector<int>> g;
     vector<int> dfn, low, comp, stack;
