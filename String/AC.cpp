@@ -6,13 +6,15 @@ struct aho_corasick {
         int fail = 0, end = 0;
     };
     vector<node> t{node{}};
-    vector<int> order; // bfs order; reverse it for dp on the fail tree
+    // bfs order; reverse it for dp on the fail tree
+    vector<int> order;
 
     int insert(const string &s) {
         int u = 0;
         for (char ch : s) {
             int c = ch - 'a';
-            if (!t[u].next[c]) t[u].next[c] = t.size(), t.push_back({});
+            if (!t[u].next[c])
+                t[u].next[c] = t.size(), t.push_back({});
             u = t[u].next[c];
         }
         ++t[u].end;
@@ -28,12 +30,14 @@ struct aho_corasick {
             t[u].end += t[t[u].fail].end;
             for (int c = 0; c < 26; ++c) {
                 int &v = t[u].next[c];
-                if (v) t[v].fail = t[t[u].fail].next[c], q.push(v);
-                else v = t[t[u].fail].next[c];
+                int f = t[t[u].fail].next[c];
+                if (v) t[v].fail = f, q.push(v);
+                else v = f;
             }
         }
     }
-    long long count(const string &text) { // total pattern occurrences
+    // total pattern occurrences
+    long long count(const string &text) {
         long long ans = 0;
         for (int u = 0; char ch : text)
             u = t[u].next[ch - 'a'], ans += t[u].end;

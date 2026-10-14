@@ -3,7 +3,9 @@ struct kosaraju {
     vector<int> used, order, comp;
 
     kosaraju(int n) : g(n), rev(n), used(n), comp(n) {}
-    void add_edge(int u, int v) { g[u].push_back(v), rev[v].push_back(u); }
+    void add_edge(int u, int v) {
+        g[u].push_back(v), rev[v].push_back(u);
+    }
     void dfs(int u) {
         used[u] = true;
         for (int v : g[u]) if (!used[v]) dfs(v);
@@ -17,7 +19,8 @@ struct kosaraju {
     int solve() {
         ranges::fill(used, 0);
         order.clear();
-        for (int u = 0; u < ssize(g); ++u) if (!used[u]) dfs(u);
+        for (int u = 0; u < ssize(g); ++u)
+            if (!used[u]) dfs(u);
         ranges::fill(used, 0);
         ranges::reverse(order);
         int count = 0;

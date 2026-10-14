@@ -12,7 +12,8 @@ i128 sum_floor(ll n) {
         ll q = n / l;
         r = n / q;
         ans += (i128)(r - l + 1) * q;
-        if (r == n) break; // 避免 n == LLONG_MAX 時 r + 1 溢位
+        if (r == n)
+            break; // 避免 n == LLONG_MAX 時 r + 1 溢位
     }
     return ans;
 }

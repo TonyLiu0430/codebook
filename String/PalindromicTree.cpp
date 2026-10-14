@@ -11,7 +11,9 @@ struct palindromic_tree {
 
     int get_link(int u) {
         int i = s.size() - 1;
-        while (i - t[u].len - 1 < 0 || s[i - t[u].len - 1] != s[i]) u = t[u].link;
+        while (i - t[u].len - 1 < 0 ||
+               s[i - t[u].len - 1] != s[i])
+            u = t[u].link;
         return u;
     }
     void add(char ch) {
@@ -20,13 +22,16 @@ struct palindromic_tree {
         if (!t[u].next[c]) {
             int v = t.size();
             t.push_back({t[u].len + 2});
-            t[v].link = t[u].len == -1 ? 1 : t[get_link(t[u].link)].next[c];
+            t[v].link = 1;
+            if (t[u].len != -1)
+                t[v].link = t[get_link(t[u].link)].next[c];
             t[u].next[c] = v;
         }
         last = t[u].next[c];
         ++t[last].cnt;
     }
     void count() { // links point to shorter, earlier nodes
-        for (int i = ssize(t) - 1; i > 1; --i) t[t[i].link].cnt += t[i].cnt;
+        for (int i = ssize(t) - 1; i > 1; --i)
+            t[t[i].link].cnt += t[i].cnt;
     }
 };

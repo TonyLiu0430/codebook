@@ -10,7 +10,9 @@ struct sparse_table {
         st[0] = a;
         for (int j = 1; j < k; ++j)
             for (int i = 0; i + (1 << j) <= ssize(a); ++i)
-                st[j][i] = min(st[j - 1][i], st[j - 1][i + (1 << (j - 1))]);
+                st[j][i] =
+                    min(st[j - 1][i],
+                        st[j - 1][i + (1 << (j - 1))]);
     }
     T query(int l, int r) {
         assert(l <= r);

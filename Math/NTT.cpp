@@ -23,9 +23,12 @@ void ntt(vector<int> &a, bool inverse) {
         for (int i = 0; i < n; i += len) {
             long long w = 1;
             for (int j = 0; j < len / 2; ++j) {
-                int u = a[i + j], v = w * a[i + j + len / 2] % mod;
-                a[i + j] = u + v < mod ? u + v : u + v - mod;
-                a[i + j + len / 2] = u - v >= 0 ? u - v : u - v + mod;
+                int u = a[i + j],
+                    v = w * a[i + j + len / 2] % mod;
+                a[i + j] =
+                    u + v < mod ? u + v : u + v - mod;
+                a[i + j + len / 2] =
+                    u - v >= 0 ? u - v : u - v + mod;
                 w = w * wlen % mod;
             }
         }
@@ -43,7 +46,8 @@ vector<int> convolution(vector<int> a, vector<int> b) {
     assert(n <= (1 << 23));
     a.resize(n), b.resize(n);
     ntt(a, false), ntt(b, false);
-    for (int i = 0; i < n; ++i) a[i] = (long long)a[i] * b[i] % mod;
+    for (int i = 0; i < n; ++i)
+        a[i] = (long long)a[i] * b[i] % mod;
     ntt(a, true);
     a.resize(need);
     return a;

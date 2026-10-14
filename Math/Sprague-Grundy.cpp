@@ -14,7 +14,8 @@ vector<int> grundy(const vector<vector<int>> &g) {
             int x = dfs(v);
             if (x < ssize(seen)) seen[x] = true;
         }
-        return sg[u] = ranges::find(seen, 0) - seen.begin();
+        return sg[u] =
+                   ranges::find(seen, 0) - seen.begin();
     };
     for (int u = 0; u < ssize(g); ++u) dfs(u);
     return sg;

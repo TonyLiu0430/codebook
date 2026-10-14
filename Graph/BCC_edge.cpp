@@ -20,17 +20,20 @@ struct edge_bcc {
             if (!dfn[e.to]) {
                 dfs(e.to, e.id);
                 low[u] = min(low[u], low[e.to]);
-                if (low[e.to] > dfn[u]) bridge[e.id] = true;
+                if (low[e.to] > dfn[u])
+                    bridge[e.id] = true;
             } else low[u] = min(low[u], dfn[e.to]);
         }
     }
     void paint(int u, int id) {
         comp[u] = id;
         for (edge e : g[u])
-            if (!bridge[e.id] && comp[e.to] == -1) paint(e.to, id);
+            if (!bridge[e.id] && comp[e.to] == -1)
+                paint(e.to, id);
     }
     int solve() {
-        for (int u = 0; u < ssize(g); ++u) if (!dfn[u]) dfs(u);
+        for (int u = 0; u < ssize(g); ++u)
+            if (!dfn[u]) dfs(u);
         int count = 0;
         for (int u = 0; u < ssize(g); ++u)
             if (comp[u] == -1) paint(u, count++);

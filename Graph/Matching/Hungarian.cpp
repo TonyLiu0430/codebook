@@ -6,18 +6,22 @@ struct bipartite_matching {
 
     bipartite_matching(int left, int right)
         : g(left), right_match(right, -1), seen(right) {}
-    void add_edge(int left, int right) { g[left].push_back(right); }
+    void add_edge(int left, int right) {
+        g[left].push_back(right);
+    }
     bool dfs(int u) {
         for (int v : g[u]) if (seen[v] != stamp) {
             seen[v] = stamp;
-            if (right_match[v] == -1 || dfs(right_match[v]))
+            if (right_match[v] == -1 ||
+                dfs(right_match[v]))
                 return right_match[v] = u, true;
         }
         return false;
     }
     int solve() {
         int ans = 0;
-        for (int u = 0; u < ssize(g); ++u) ++stamp, ans += dfs(u);
+        for (int u = 0; u < ssize(g); ++u)
+            ++stamp, ans += dfs(u);
         return ans;
     }
 };

@@ -13,6 +13,7 @@ vector<ll> inverse_table(int n, ll mod) {
     vector<ll> inv(n + 1);
     inv[1] = 1;
     for (int i = 2; i <= n; ++i)
-        inv[i] = mod - (__int128)(mod / i) * inv[mod % i] % mod;
+        inv[i] =
+            mod - (__int128)(mod / i) * inv[mod % i] % mod;
     return inv;
 }

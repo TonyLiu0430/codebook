@@ -15,6 +15,7 @@ Alternatively:
 python scripts/highlight_code.py
 xelatex -interaction=nonstopmode -halt-on-error codebook.tex
 xelatex -interaction=nonstopmode -halt-on-error codebook.tex
+xelatex -interaction=nonstopmode -halt-on-error codebook.tex  # TOC page numbers
 ```
 
 Tectonic also works after generating the highlights:

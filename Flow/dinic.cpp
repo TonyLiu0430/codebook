@@ -20,8 +20,10 @@ struct dinic {
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            for (auto &e : g[u]) if (e.cap && level[e.to] == -1)
-                level[e.to] = level[u] + 1, q.push(e.to);
+            for (auto &e : g[u])
+                if (e.cap && level[e.to] == -1)
+                    level[e.to] = level[u] + 1,
+                    q.push(e.to);
         }
         return level[t] != -1;
     }
@@ -29,7 +31,8 @@ struct dinic {
         if (u == t) return flow;
         for (int &i = it[u]; i < ssize(g[u]); ++i) {
             edge &e = g[u][i];
-            if (!e.cap || level[e.to] != level[u] + 1) continue;
+            if (!e.cap || level[e.to] != level[u] + 1)
+                continue;
             ll got = dfs(e.to, t, min(flow, e.cap));
             if (!got) continue;
             e.cap -= got;

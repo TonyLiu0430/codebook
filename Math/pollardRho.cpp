@@ -7,7 +7,9 @@ u64 pollard(u64 n) {
     while (true) {
         u64 c = rng() % (n - 1) + 1;
         u64 x = rng() % n, y = x, d = 1;
-        auto f = [&](u64 v) { return (__uint128_t(mod_mul(v, v, n)) + c) % n; };
+        auto f = [&](u64 v) {
+            return (__uint128_t(mod_mul(v, v, n)) + c) % n;
+        };
         while (d == 1) {
             x = f(x), y = f(f(y));
             d = gcd(x > y ? x - y : y - x, n);

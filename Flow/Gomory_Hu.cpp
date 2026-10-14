@@ -6,7 +6,8 @@ vector<tuple<int, int, ll>> gomory_hu(
     vector<tuple<int, int, ll>> tree;
     for (int s = 1; s < n; ++s) {
         dinic d(n);
-        for (auto [u, v, w] : edges) d.add_edge(u, v, w), d.add_edge(v, u, w);
+        for (auto [u, v, w] : edges)
+            d.add_edge(u, v, w), d.add_edge(v, u, w);
         ll f = d.max_flow(s, p[s]);
         auto side = d.min_cut_side(s);
         for (int i = s + 1; i < n; ++i)

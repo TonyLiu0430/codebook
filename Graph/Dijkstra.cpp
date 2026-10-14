@@ -3,7 +3,8 @@ using graph_edge = pair<int, ll>; // to, weight
 using state = pair<ll, int>;      // distance, vertex
 const ll inf = LLONG_MAX / 4;
 
-vector<ll> dijkstra(int source, const vector<vector<graph_edge>> &g) {
+vector<ll> dijkstra(int source,
+                    const vector<vector<graph_edge>> &g) {
     vector<ll> dist(g.size(), inf);
     priority_queue<state, vector<state>, greater<>> pq;
     dist[source] = 0;

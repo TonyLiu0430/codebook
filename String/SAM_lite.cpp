@@ -17,7 +17,8 @@ struct sam {
         if (p == -1) st[cur].link = 0;
         else {
             int q = st[p].next[c];
-            if (st[p].len + 1 == st[q].len) st[cur].link = q;
+            if (st[p].len + 1 == st[q].len)
+                st[cur].link = q;
             else {
                 int clone = st.size();
                 st.push_back(st[q]);

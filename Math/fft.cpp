@@ -18,22 +18,26 @@ void fft(vector<cd> &a, bool inverse) {
             for (int j = 0; j < len / 2; ++j) {
                 cd w = root[n / len * j];
                 if (inverse) w = conj(w);
-                cd u = a[i + j], v = a[i + j + len / 2] * w;
-                a[i + j] = u + v, a[i + j + len / 2] = u - v;
+                cd &x = a[i + j], &y = a[i + j + len / 2];
+                cd u = x, v = y * w;
+                x = u + v, y = u - v;
             }
     if (inverse) for (cd &x : a) x /= n;
 }
 
-vector<ll> multiply(const vector<ll> &a, const vector<ll> &b) {
+vector<ll> multiply(const vector<ll> &a,
+                    const vector<ll> &b) {
     if (a.empty() || b.empty()) return {};
     int need = a.size() + b.size() - 1, n = 1;
     while (n < need) n *= 2;
-    vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
+    vector<cd> fa(a.begin(), a.end()),
+        fb(b.begin(), b.end());
     fa.resize(n), fb.resize(n);
     fft(fa, false), fft(fb, false);
     for (int i = 0; i < n; ++i) fa[i] *= fb[i];
     fft(fa, true);
     vector<ll> c(need);
-    for (int i = 0; i < need; ++i) c[i] = llround(fa[i].real());
+    for (int i = 0; i < need; ++i)
+        c[i] = llround(fa[i].real());
     return c;
 }

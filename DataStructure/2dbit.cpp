@@ -5,7 +5,8 @@ struct bit2d {
     array<vector<vector<ll>>, 4> t;
 
     bit2d(int n, int m) : n(n), m(m) {
-        for (auto &a : t) a.assign(n + 1, vector<ll>(m + 1));
+        for (auto &a : t)
+            a.assign(n + 1, vector<ll>(m + 1));
     }
 
     void add_one(int x, int y, ll v) {
@@ -21,7 +22,8 @@ struct bit2d {
     ll get(int k, int x, int y) {
         ll ans = 0;
         for (int i = x; i > 0; i -= i & -i)
-            for (int j = y; j > 0; j -= j & -j) ans += t[k][i][j];
+            for (int j = y; j > 0; j -= j & -j)
+                ans += t[k][i][j];
         return ans;
     }
 

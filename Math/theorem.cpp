@@ -56,4 +56,3 @@ Burnside's lemma
 |G| * |X/G|  = sum( |X^g| ) where g in G
 總方法數: 每一種旋轉下不動點的個數總和 除以 旋轉的方法數
 */
-

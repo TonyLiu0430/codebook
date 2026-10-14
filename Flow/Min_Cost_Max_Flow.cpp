@@ -30,18 +30,20 @@ struct min_cost_flow {
                 in_queue[u] = false;
                 for (int i = 0; i < ssize(g[u]); ++i) {
                     edge &e = g[u][i];
-                    __int128 raw = (__int128)dist[u] + e.cost;
-                    ll nd = raw < -inf ? -inf : raw > inf ? inf : (ll)raw;
-                    if (e.cap && dist[e.to] > nd) {
-                        dist[e.to] = nd;
-                        pv[e.to] = u, pe[e.to] = i;
-                        if (!in_queue[e.to]) q.push(e.to), in_queue[e.to] = true;
-                    }
+                    if (!e.cap) continue;
+                    auto x = (__int128)dist[u] + e.cost;
+                    ll nd = clamp<__int128>(x, -inf, inf);
+                    if (dist[e.to] <= nd) continue;
+                    dist[e.to] = nd;
+                    pv[e.to] = u, pe[e.to] = i;
+                    if (in_queue[e.to]) continue;
+                    q.push(e.to), in_queue[e.to] = true;
                 }
             }
             if (dist[t] == inf) break;
             ll add = limit - flow;
-            for (int v = t; v != s; v = pv[v]) add = min(add, g[pv[v]][pe[v]].cap);
+            for (int v = t; v != s; v = pv[v])
+                add = min(add, g[pv[v]][pe[v]].cap);
             for (int v = t; v != s; v = pv[v]) {
                 edge &e = g[pv[v]][pe[v]];
                 e.cap -= add;

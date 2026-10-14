@@ -13,6 +13,7 @@ struct bit {
         return ans;
     }
     ll sum(int l, int r) { // [l, r]
-        return l > r ? 0 : prefix(r) - (l ? prefix(l - 1) : 0);
+        return l > r ? 0
+                     : prefix(r) - (l ? prefix(l - 1) : 0);
     }
 };

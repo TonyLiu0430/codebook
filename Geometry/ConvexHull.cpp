@@ -3,9 +3,10 @@ vector<point> convex_hull(vector<point> p) {
     ranges::sort(p, [](point a, point b) {
         return tie(a.x, a.y) < tie(b.x, b.y);
     });
-    p.erase(ranges::unique(p, [](point a, point b) {
-        return fabsl(a.x - b.x) <= eps && fabsl(a.y - b.y) <= eps;
-    }).begin(), p.end());
+    auto same = [](point a, point b) {
+        return norm2(a - b) <= eps * eps;
+    };
+    p.erase(ranges::unique(p, same).begin(), p.end());
     if (p.size() <= 1) return p;
 
     vector<point> h;
@@ -13,7 +14,8 @@ vector<point> convex_hull(vector<point> p) {
         size_t base = h.size();
         for (point q : p) {
             while (h.size() >= base + 2 &&
-                   cross(h.back() - h[h.size() - 2], q - h.back()) <= eps)
+                   cross(h.back() - h.end()[-2],
+                         q - h.back()) <= eps)
                 h.pop_back();
             h.push_back(q);
         }

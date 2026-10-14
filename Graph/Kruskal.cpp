@@ -6,8 +6,12 @@ struct edge {
 };
 struct dsu {
     vector<int> p, size;
-    dsu(int n) : p(n), size(n, 1) { iota(p.begin(), p.end(), 0); }
-    int find(int x) { return p[x] == x ? x : p[x] = find(p[x]); }
+    dsu(int n) : p(n), size(n, 1) {
+        iota(p.begin(), p.end(), 0);
+    }
+    int find(int x) {
+        return p[x] == x ? x : p[x] = find(p[x]);
+    }
     bool unite(int a, int b) {
         a = find(a), b = find(b);
         if (a == b) return false;

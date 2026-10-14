@@ -1,7 +1,8 @@
 // implicit/key treap primitives; node 0 means null
 struct treap {
     struct node {
-        int value = 0, priority = 0, size = 0, left = 0, right = 0;
+        int value = 0, priority = 0, size = 0, left = 0,
+            right = 0;
     };
     struct split_result { int left, right; };
     vector<node> t{node{}};
@@ -12,7 +13,9 @@ struct treap {
         return t.size() - 1;
     }
     int size(int u) { return u ? t[u].size : 0; }
-    void pull(int u) { t[u].size = 1 + size(t[u].left) + size(t[u].right); }
+    void pull(int u) {
+        t[u].size = 1 + size(t[u].left) + size(t[u].right);
+    }
 
     split_result split_size(int u, int k) {
         if (!u) return {0, 0};
@@ -22,7 +25,8 @@ struct treap {
             pull(u);
             return {s.left, u};
         }
-        auto s = split_size(t[u].right, k - size(t[u].left) - 1);
+        auto s = split_size(t[u].right,
+                            k - size(t[u].left) - 1);
         t[u].right = s.left;
         pull(u);
         return {u, s.right};

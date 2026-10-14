@@ -3,7 +3,8 @@ struct time_query {
     int l, r, time, id;
 };
 
-void sort_mo_with_updates(vector<time_query> &queries, int n) {
+void sort_mo_with_updates(vector<time_query> &queries,
+                          int n) {
     int block = max(1, int(pow(max(1, n), 2.0 / 3)));
     ranges::sort(queries, [&](time_query a, time_query b) {
         int al = a.l / block, bl = b.l / block;

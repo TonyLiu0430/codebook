@@ -17,7 +17,8 @@ bool on_segment(ipoint a, ipoint b, ipoint p) {
            min(a.y, b.y) <= p.y && p.y <= max(a.y, b.y);
 }
 
-bool segments_intersect(ipoint a, ipoint b, ipoint c, ipoint d) {
+bool segments_intersect(ipoint a, ipoint b, ipoint c,
+                        ipoint d) {
     i128 x = cross(a, b, c), y = cross(a, b, d);
     i128 z = cross(c, d, a), w = cross(c, d, b);
     if (!x && on_segment(a, b, c)) return true;

@@ -2,7 +2,8 @@
 struct lazy_sum {
     int n;
     vector<long long> sum, tag;
-    lazy_sum(int n) : n(n), sum(4 * max(1, n)), tag(sum.size()) {
+    lazy_sum(int n)
+        : n(n), sum(4 * max(1, n)), tag(sum.size()) {
         assert(n > 0);
     }
 
@@ -17,7 +18,8 @@ struct lazy_sum {
         apply(o * 2 + 1, m, r, tag[o]);
         tag[o] = 0;
     }
-    void add(int ql, int qr, long long v, int o, int l, int r) {
+    void add(int ql, int qr, long long v, int o, int l,
+             int r) {
         if (ql <= l && r <= qr) return apply(o, l, r, v);
         push(o, l, r);
         int m = (l + r) / 2;

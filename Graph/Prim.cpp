@@ -2,7 +2,8 @@ using ll = long long;
 using edge = pair<ll, int>; // weight, to
 
 // {connected, mst weight}; zero and parallel edges are allowed
-pair<bool, ll> prim(const vector<vector<edge>> &g, int root = 0) {
+pair<bool, ll> prim(const vector<vector<edge>> &g,
+                    int root = 0) {
     if (g.empty()) return {true, 0};
     vector<char> used(g.size());
     priority_queue<edge, vector<edge>, greater<edge>> pq;
@@ -17,7 +18,8 @@ pair<bool, ll> prim(const vector<vector<edge>> &g, int root = 0) {
         used[u] = true;
         total += w;
         ++seen;
-        for (edge e : g[u]) if (!used[e.second]) pq.push(e);
+        for (edge e : g[u])
+            if (!used[e.second]) pq.push(e);
     }
     return {seen == ssize(g), total};
 }

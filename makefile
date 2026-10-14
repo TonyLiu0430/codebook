@@ -6,6 +6,8 @@ codebook.pdf: codebook.tex content.tex scripts/highlight_code.py $(SOURCES)
 	$(PYTHON) scripts/highlight_code.py
 	$(XELATEX) -interaction=nonstopmode -halt-on-error codebook.tex
 	$(XELATEX) -interaction=nonstopmode -halt-on-error codebook.tex
+	# third pass: the filled TOC shifts pages, so record them again
+	$(XELATEX) -interaction=nonstopmode -halt-on-error codebook.tex
 	$(RM) codebook.aux codebook.log codebook.toc
 
 clean:

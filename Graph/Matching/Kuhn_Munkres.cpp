@@ -9,7 +9,8 @@ struct assignment_result {
 };
 
 // square maximum-weight assignment; use missing for absent edges
-assignment_result max_weight_matching(const vector<vector<ll>> &weight) {
+assignment_result
+max_weight_matching(const vector<vector<ll>> &weight) {
     int n = weight.size();
     for (auto &row : weight) assert(ssize(row) == n);
     vector<ll> u(n + 1), v(n + 1);
@@ -25,15 +26,19 @@ assignment_result max_weight_matching(const vector<vector<ll>> &weight) {
             int row = p[col], next = 0;
             ll delta = inf;
             for (int j = 1; j <= n; ++j) if (!used[j]) {
-                ll cost = weight[row - 1][j - 1] == missing
-                        ? inf / 2 : -weight[row - 1][j - 1];
-                ll cur = cost - u[row] - v[j];
-                if (cur < best[j]) best[j] = cur, way[j] = col;
-                if (best[j] < delta) delta = best[j], next = j;
+                ll w = weight[row - 1][j - 1];
+                ll cur = (w == missing ? inf / 2 : -w)
+                         - u[row] - v[j];
+                if (cur < best[j])
+                    best[j] = cur, way[j] = col;
+                if (best[j] < delta)
+                    delta = best[j], next = j;
             }
-            for (int j = 0; j <= n; ++j)
-                if (used[j]) u[p[j]] += delta, v[j] -= delta;
+            for (int j = 0; j <= n; ++j) {
+                if (used[j])
+                    u[p[j]] += delta, v[j] -= delta;
                 else best[j] -= delta;
+            }
             col = next;
         } while (p[col]);
         do {
@@ -48,7 +53,8 @@ assignment_result max_weight_matching(const vector<vector<ll>> &weight) {
     for (int col = 1; col <= n; ++col) {
         int row = p[col] - 1;
         match[col - 1] = row;
-        if (weight[row][col - 1] == missing) return {false, 0, {}};
+        if (weight[row][col - 1] == missing)
+            return {false, 0, {}};
         sum += weight[row][col - 1];
     }
     return {true, sum, match};

@@ -9,7 +9,8 @@ vector<int> prefix_function(const string &s) {
     return pi;
 }
 
-vector<int> kmp(const string &text, const string &pattern) {
+vector<int> kmp(const string &text,
+                const string &pattern) {
     if (pattern.empty()) return {};
     vector<int> pi = prefix_function(pattern), pos;
     for (int i = 0, j = 0; i < ssize(text); ++i) {

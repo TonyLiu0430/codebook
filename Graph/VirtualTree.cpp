@@ -10,7 +10,7 @@ vector<pair<int, int>> virtual_tree(vector<int> v,
     for (int i = 0, k = v.size(); i + 1 < k; ++i)
         v.push_back(lca(v[i], v[i + 1]));
     ranges::sort(v, cmp);
-    v.erase(unique(v.begin(), v.end()), v.end());
+    v.erase(ranges::unique(v).begin(), v.end());
     vector<pair<int, int>> e;
     for (int i = 0; i + 1 < ssize(v); ++i)
         e.push_back({lca(v[i], v[i + 1]), v[i + 1]});

@@ -16,7 +16,8 @@ struct li_chao {
         int u = 0;
         for (ll l = lo, r = hi;;) {
             ll m = l + (r - l) / 2;
-            bool left = f(l) > t[u].f(l), mid = f(m) > t[u].f(m);
+            bool left = f(l) > t[u].f(l),
+                 mid = f(m) > t[u].f(m);
             if (mid) swap(t[u].f, f);
             if (l == r || f.b == LLONG_MIN) return;
             bool go_left = left != mid;

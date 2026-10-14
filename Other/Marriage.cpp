@@ -1,6 +1,7 @@
 // preference[a][rank] = b; order[b][a] = rank
-vector<int> stable_marriage(const vector<vector<int>> &preference,
-                            const vector<vector<int>> &order) {
+vector<int>
+stable_marriage(const vector<vector<int>> &preference,
+                const vector<vector<int>> &order) {
     int n = preference.size();
     vector<int> next(n), partner(n, -1);
     queue<int> free;

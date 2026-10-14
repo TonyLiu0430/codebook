@@ -15,14 +15,16 @@ struct svg { // shows [x1,x2] x [y1,y2], y axis points up
         double y2) : o(f), X(x1), Y(y2) {
         k = 1e3 / max(x2 - x1, y2 - y1);
         p("<svg xmlns='http://www.w3.org/2000/svg' "
-          "viewBox='-50 -50 $ $'><style>*{stroke-width:.3%;"
-          "fill:none}text{fill:black;text-anchor:middle;"
+          "viewBox='-50 -50 $ $'><style>"
+          "*{stroke-width:.3%;fill:none}"
+          "text{fill:black;text-anchor:middle;"
           "dominant-baseline:central}</style>\n",
           tx(x2) + 100, ty(y1) + 100);
     }
     ~svg() { p("</svg>\n"); }
     void line(double x1, double y1, double x2, double y2) {
-        p("<line x1='$' y1='$' x2='$' y2='$' stroke='$'/>\n",
+        p("<line x1='$' y1='$' x2='$' y2='$' "
+          "stroke='$'/>\n",
           tx(x1), ty(y1), tx(x2), ty(y2), c);
     }
     void circle(double x, double y, double r,

@@ -11,16 +11,17 @@ floyd_result floyd_warshall(vector<vector<ll>> dist) {
     int n = dist.size();
     for (int k = 0; k < n; ++k)
         for (int i = 0; i < n; ++i) if (dist[i][k] != inf)
-            for (int j = 0; j < n; ++j) if (dist[k][j] != inf) {
-                __int128 x = (__int128)dist[i][k] + dist[k][j];
-                ll value = x < -inf ? -inf : x > inf ? inf : (ll)x;
-                dist[i][j] = min(dist[i][j], value);
+            for (int j = 0; j < n; ++j) {
+                if (dist[k][j] == inf) continue;
+                auto x = (__int128)dist[i][k] + dist[k][j];
+                ll v = clamp<__int128>(x, -inf, inf);
+                dist[i][j] = min(dist[i][j], v);
             }
 
     vector<vector<char>> negative(n, vector<char>(n));
     for (int k = 0; k < n; ++k) if (dist[k][k] < 0)
         for (int i = 0; i < n; ++i) if (dist[i][k] != inf)
-            for (int j = 0; j < n; ++j) if (dist[k][j] != inf)
-                negative[i][j] = true;
+            for (int j = 0; j < n; ++j)
+                negative[i][j] |= dist[k][j] != inf;
     return {dist, negative};
 }

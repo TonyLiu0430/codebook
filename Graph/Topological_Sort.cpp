@@ -1,5 +1,6 @@
 // empty result means the graph has a cycle
-vector<int> topological_sort(const vector<vector<int>> &g) {
+vector<int>
+topological_sort(const vector<vector<int>> &g) {
     vector<int> indeg(g.size()), order;
     for (auto &es : g) for (int v : es) ++indeg[v];
     queue<int> q;

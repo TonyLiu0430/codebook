@@ -8,7 +8,9 @@ ll mod_power(ll a, ll n, ll mod) {
 }
 
 // undirected multigraph; mod must be prime
-ll spanning_trees(int n, const vector<pair<int, int>> &edges, ll mod) {
+ll spanning_trees(int n,
+                  const vector<pair<int, int>> &edges,
+                  ll mod) {
     if (n == 1) return 1;
     vector<vector<ll>> a(n - 1, vector<ll>(n - 1));
     for (auto e : edges) {
@@ -26,13 +28,16 @@ ll spanning_trees(int n, const vector<pair<int, int>> &edges, ll mod) {
         int pivot = col;
         while (pivot < n - 1 && !a[pivot][col]) ++pivot;
         if (pivot == n - 1) return 0;
-        if (pivot != col) swap(a[pivot], a[col]), det = mod - det;
+        if (pivot != col)
+            swap(a[pivot], a[col]), det = mod - det;
         det = (__int128)det * a[col][col] % mod;
         ll inv = mod_power(a[col][col], mod - 2, mod);
         for (int row = col + 1; row < n - 1; ++row) {
             ll mul = (__int128)a[row][col] * inv % mod;
-            for (int j = col; j < n - 1; ++j)
-                a[row][j] = (a[row][j] - (__int128)mul * a[col][j] % mod + mod) % mod;
+            for (int j = col; j < n - 1; ++j) {
+                ll x = (__int128)mul * a[col][j] % mod;
+                a[row][j] = (a[row][j] - x + mod) % mod;
+            }
         }
     }
     return det;

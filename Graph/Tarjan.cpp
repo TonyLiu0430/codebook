@@ -19,8 +19,10 @@ struct tarjan {
         stack.push_back(u);
         in_stack[u] = true;
         for (int v : g[u]) {
-            if (!dfn[v]) dfs(v), low[u] = min(low[u], low[v]);
-            else if (in_stack[v]) low[u] = min(low[u], dfn[v]);
+            if (!dfn[v])
+                dfs(v), low[u] = min(low[u], low[v]);
+            else if (in_stack[v])
+                low[u] = min(low[u], dfn[v]);
         }
         if (low[u] != dfn[u]) return;
         while (true) {
@@ -33,7 +35,8 @@ struct tarjan {
         ++count;
     }
     int solve() {
-        for (int u = 0; u < ssize(g); ++u) if (!dfn[u]) dfs(u);
+        for (int u = 0; u < ssize(g); ++u)
+            if (!dfn[u]) dfs(u);
         return count;
     }
 };
