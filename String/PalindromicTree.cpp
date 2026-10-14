@@ -1,58 +1,32 @@
-// remember init()      !!!
-// remember make_fail() !!!
-// insert s need 1 base !!!
-// notice MLE
-const int sigma = 62;
-const int MAXC = 1000006;
-inline int idx(char c){
-    if ('a'<= c && c <= 'z')return c-'a';
-    if ('A'<= c && c <= 'Z')return c-'A'+26;
-    if ('0'<= c && c <= '9')return c-'0'+52;
-}
-struct PalindromicTree{
-    struct Node{
-        Node *next[sigma], *fail;
-        int len, cnt; // for dp
-        Node(){
-            memset(next,0,sizeof(next));
-            fail=0;
-            len = cnt = 0;
-        }
-    } buf[MAXC], *bufp, *even, *odd;
+// eertree, lowercase; node 0 has len -1, node 1 has len 0
+// every other node is a distinct palindrome; call count() for occurrences
+struct palindromic_tree {
+    struct node {
+        int len, link = 0, cnt = 0;
+        array<int, 26> next{};
+    };
+    vector<node> t{{-1}, {0}};
+    string s;
+    int last = 1;
 
-    void init(){
-        bufp = buf;
-        even = new (bufp++) Node();
-        odd  = new (bufp++) Node();
-        even->fail = odd;
-        odd->len = -1;
+    int get_link(int u) {
+        int i = s.size() - 1;
+        while (i - t[u].len - 1 < 0 || s[i - t[u].len - 1] != s[i]) u = t[u].link;
+        return u;
     }
-
-    void insert(char *s){
-        Node* ptr = even;
-        for (int i=1; s[i]; i++){
-            ptr = extend(ptr,s+i);
+    void add(char ch) {
+        s += ch;
+        int c = ch - 'a', u = get_link(last);
+        if (!t[u].next[c]) {
+            int v = t.size();
+            t.push_back({t[u].len + 2});
+            t[v].link = t[u].len == -1 ? 1 : t[get_link(t[u].link)].next[c];
+            t[u].next[c] = v;
         }
+        last = t[u].next[c];
+        ++t[last].cnt;
     }
-
-    Node* extend(Node *o, char *ptr){
-        int c = idx(*ptr);
-        while ( *ptr != *(ptr-1-o->len) )o=o->fail;
-        Node *&np = o->next[c];
-        if (!np){
-            np = new (bufp++) Node();
-            np->len = o->len+2;
-            Node *f = o->fail;
-            if (f){
-                while ( *ptr != *(ptr-1-f->len) )f=f->fail;
-                np->fail = f->next[c];
-            }
-            else {
-                np->fail = even;
-            }
-            np->cnt = np->fail->cnt;
-        }
-        np->cnt++;
-        return np;
+    void count() { // links point to shorter, earlier nodes
+        for (int i = ssize(t) - 1; i > 1; --i) t[t[i].link].cnt += t[i].cnt;
     }
-} PAM;
+};

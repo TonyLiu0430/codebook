@@ -1,75 +1,63 @@
-// Maximum Cardinality Matching
+// Edmonds blossom, O(V^3); match[v] is the partner or -1
+struct general_matching {
+    int n;
+    vector<vector<int>> g;
+    vector<int> match, parent, base, q;
+    vector<char> used, blossom;
 
-struct Graph {
-  vector<int> G[MAXN];
-  int pa[MAXN], match[MAXN], st[MAXN], S[MAXN], vis[MAXN];
-  int t, n;
-
-  void init(int _n) {
-    n = _n;
-    for ( int i = 1 ; i <= n ; i++ ) G[i].clear();
-  }
-  void add_edge(int u, int v) {
-    G[u].push_back(v);
-    G[v].push_back(u);
-  }
-  int lca(int u, int v){
-    for ( ++t ; ; swap(u, v) ) {
-      if ( u == 0 ) continue;
-      if ( vis[u] == t ) return u;
-      vis[u] = t;
-      u = st[ pa[ match[u] ] ];
-    }
-  }
-  void flower(int u, int v, int l, queue<int> &q) {
-    while ( st[u] != l ) {
-      pa[u] = v;
-      if ( S[ v = match[u] ] == 1 ) {
-        q.push(v);
-        S[v] = 0;
-      }
-      st[u] = st[v] = l;
-      u = pa[v];
-    }
-  }
-  bool bfs(int u){
-    for ( int i = 1 ; i <= n ; i++ ) st[i] = i;
-    memset(S, -1, sizeof(S));
-    queue<int>q; 
-    q.push(u);
-    S[u] = 0;
-    while ( !q.empty() ) {
-      u = q.front(); q.pop();
-      for ( int i = 0 ; i < (int)G[u].size(); i++) {
-        int v = G[u][i];
-        if ( S[v] == -1 ) {
-          pa[v] = u;
-          S[v] = 1;
-          if ( !match[v] ) {
-            for ( int lst ; u ; v = lst, u = pa[v] ) {
-              lst = match[u];
-              match[u] = v;
-              match[v] = u;
-            }
-            return 1;
-          }
-          q.push(match[v]);
-          S[ match[v] ] = 0;
-        } else if ( !S[v] && st[v] != st[u] ) {
-          int l = lca(st[v], st[u]);
-          flower(v, u, l, q);
-          flower(u, v, l, q);
+    general_matching(int n) : n(n), g(n), match(n, -1) {}
+    void add_edge(int u, int v) { g[u].push_back(v), g[v].push_back(u); }
+    int lca(int a, int b) {
+        vector<char> seen(n);
+        for (;;) {
+            a = base[a], seen[a] = true;
+            if (match[a] == -1) break;
+            a = parent[match[a]];
         }
-      }
+        for (;; b = parent[match[b]])
+            if (b = base[b]; seen[b]) return b;
     }
-    return 0;
-  }
-  int solve(){
-    memset(pa, 0, sizeof(pa));
-    memset(match, 0, sizeof(match));
-    int ans = 0;
-    for ( int i = 1 ; i <= n ; i++ )
-      if ( !match[i] && bfs(i) ) ans++;
-    return ans;
-  }
-} graph;
+    void mark_path(int v, int b, int child) {
+        while (base[v] != b) {
+            blossom[base[v]] = blossom[base[match[v]]] = true;
+            parent[v] = child, child = match[v], v = parent[match[v]];
+        }
+    }
+    int find_path(int root) {
+        used.assign(n, false), parent.assign(n, -1), base.resize(n);
+        iota(base.begin(), base.end(), 0);
+        used[root] = true, q = {root};
+        for (int h = 0; h < ssize(q); ++h) {
+            int v = q[h];
+            for (int to : g[v]) {
+                if (base[v] == base[to] || match[v] == to) continue;
+                if (to == root || (match[to] != -1 && parent[match[to]] != -1)) {
+                    int cur = lca(v, to);
+                    blossom.assign(n, false);
+                    mark_path(v, cur, to), mark_path(to, cur, v);
+                    for (int i = 0; i < n; ++i) if (blossom[base[i]]) {
+                        base[i] = cur;
+                        if (!used[i]) used[i] = true, q.push_back(i);
+                    }
+                } else if (parent[to] == -1) {
+                    parent[to] = v;
+                    if (match[to] == -1) return to;
+                    used[match[to]] = true, q.push_back(match[to]);
+                }
+            }
+        }
+        return -1;
+    }
+    int solve() {
+        int ans = 0;
+        for (int v = 0; v < n; ++v) if (match[v] == -1) {
+            int u = find_path(v);
+            if (u != -1) ++ans;
+            while (u != -1) {
+                int pv = parent[u], next = match[pv];
+                match[u] = pv, match[pv] = u, u = next;
+            }
+        }
+        return ans;
+    }
+};

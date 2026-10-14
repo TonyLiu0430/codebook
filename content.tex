@@ -11,6 +11,8 @@
 \lstinputlisting{Basic/default.cpp}
 \subsection{debug list}
 \lstinputlisting{Basic/bug_list.txt}
+\subsection{SVG 視覺化 debug}
+\lstinputlisting{Basic/svg.cpp}
 \subsection{時間複雜度}
 \input{Basic/time_complexity.tex}
 
@@ -24,11 +26,23 @@
 \subsection{2D point}
 \lstinputlisting{Geometry/2Dpoint.cpp}
 \subsection{兩線段交點}
-\lstinputlisting{Geometry/intersection_of_two_lines.cpp}
+\lstinputlisting{Geometry/Intersection_of_two_lines.cpp}
 \subsection{兩圓交點}
 \lstinputlisting{Geometry/Intersection_of_two_circle.cpp}
 \subsection{Convex Hull}
 \lstinputlisting{Geometry/ConvexHull.cpp}
+\subsection{多邊形 / 旋轉卡尺}
+\lstinputlisting{Geometry/polygon.cpp}
+\subsection{最近點對}
+\lstinputlisting{Geometry/closest_pair.cpp}
+\subsection{外心}
+\lstinputlisting{Geometry/circumcentre.cpp}
+\subsection{最小覆蓋圓}
+\lstinputlisting{Geometry/Smallest_Circle.cpp}
+\subsection{半平面交}
+\lstinputlisting{Geometry/half_plane_intersection.cpp}
+\subsection{凸包查詢 / 圓切線 / Minkowski}
+\lstinputlisting{Geometry/convex_extra.cpp}
 
 \section{Flow}
 
@@ -36,11 +50,19 @@
 \lstinputlisting{Flow/dinic.cpp}
 \subsection{min cost flow}
 \lstinputlisting{Flow/Min_Cost_Max_Flow.cpp}
+\subsection{Gomory-Hu Tree}
+\lstinputlisting{Flow/Gomory_Hu.cpp}
 
 \section{Mathematics}
 
 \subsection{ax+by=gcd(a,b)}
 \lstinputlisting{Math/ax+by=gcd.cpp}
+\subsection{exCRT 中國剩餘定理}
+\lstinputlisting{Math/CRT.cpp}
+\subsection{BSGS 離散對數}
+\lstinputlisting{Math/BSGS.cpp}
+\subsection{原根}
+\lstinputlisting{Math/PrimitiveRoot.cpp}
 \subsection{GaussElimination}
 \lstinputlisting{Math/GaussElimination.cpp}
 \subsection{Inverse}
@@ -53,6 +75,18 @@
 \lstinputlisting{Math/pollardRho.cpp}
 \subsection{NTT}
 \lstinputlisting{Math/NTT.cpp}
+\subsection{FFT}
+\lstinputlisting{Math/fft.cpp}
+\subsection{FWHT}
+\lstinputlisting{Math/FWHT.cpp}
+\subsection{Simplex}
+\lstinputlisting{Math/Simplex.cpp}
+\subsection{線性基 XOR basis}
+\lstinputlisting{Math/LinearBasis.cpp}
+\subsection{Berlekamp-Massey / 線性遞迴第 k 項}
+\lstinputlisting{Math/BerlekampMassey.cpp}
+\subsection{Lagrange 插值}
+\lstinputlisting{Math/Lagrange.cpp}
 \subsection{數論基本工具}
 \lstinputlisting{Math/number_tool.cpp}
 \subsection{Mobius}
@@ -65,6 +99,8 @@
 \input{Math/ex-euler.tex}
 \subsection{Theorem}
 \lstinputlisting{Math/theorem.cpp}
+\subsection{組合數學公式}
+\lstinputlisting{Math/combinatorics.txt}
 
 
 \section{Graph}
@@ -83,6 +119,8 @@
 \lstinputlisting{Graph/Kosaraju_SCC.cpp}
 \subsection{Hungarian}
 \lstinputlisting{Graph/Matching/Hungarian.cpp}
+\subsection{Hopcroft-Karp}
+\lstinputlisting{Graph/Matching/HopcroftKarp.cpp}
 \subsection{KM}
 \lstinputlisting{Graph/Matching/Kuhn_Munkres.cpp}
 \subsection{最小平均環}
@@ -93,6 +131,26 @@
 \lstinputlisting{Graph/Tarjan.cpp}
 \subsection{Topological Sort}
 \lstinputlisting{Graph/Topological_Sort.cpp}
+\subsection{LCA}
+\lstinputlisting{Graph/LCA.cpp}
+\subsection{樹鏈剖分 HLD}
+\lstinputlisting{Graph/HLD.cpp}
+\subsection{虛樹}
+\lstinputlisting{Graph/VirtualTree.cpp}
+\subsection{重心分解}
+\lstinputlisting{Graph/CentroidDecomposition.cpp}
+\subsection{2-SAT}
+\lstinputlisting{Graph/TwoSAT.cpp}
+\subsection{歐拉路徑}
+\lstinputlisting{Graph/EulerCircuit.cpp}
+\subsection{一般圖匹配}
+\lstinputlisting{Graph/Matching/Maximum_General_Matching.cpp}
+\subsection{匹配相關定理}
+\lstinputlisting{Graph/Matching/Matching.txt}
+\subsection{Dominator Tree}
+\lstinputlisting{Graph/DominatorTree.cpp}
+\subsection{Stoer-Wagner 全域最小割}
+\lstinputlisting{Graph/StoerWagner.cpp}
 
 \section{Data Structure}
 
@@ -111,10 +169,16 @@
 \lstinputlisting{DataStructure/BIT.cpp}
 \subsection{並查集 union find}
 \lstinputlisting{DataStructure/djs.cpp}
+\subsection{可撤銷並查集}
+\lstinputlisting{DataStructure/RollbackDSU.cpp}
 \subsection{Treap}
 \lstinputlisting{DataStructure/treap_new.cpp}
 \subsection{2D BIT}
 \lstinputlisting{DataStructure/2dbit.cpp}
+\subsection{持久化線段樹}
+\lstinputlisting{DataStructure/PersistentSegTree.cpp}
+\subsection{李超線段樹}
+\lstinputlisting{DataStructure/LiChao.cpp}
 
 
 
@@ -132,6 +196,10 @@
 \lstinputlisting{String/RollingHash.cpp}
 \subsection{後綴自動機}
 \lstinputlisting{String/SAM_lite.cpp}
+\subsection{AC 自動機}
+\lstinputlisting{String/AC.cpp}
+\subsection{回文樹}
+\lstinputlisting{String/PalindromicTree.cpp}
 
 \section{Others}
 
@@ -157,3 +225,5 @@
 \input{Other/Perpetual_calendar.tex}
 \subsection{多重背包}
 \lstinputlisting{Other/generic_knapsack.cpp}
+\subsection{LIS}
+\lstinputlisting{Other/LIS.cpp}

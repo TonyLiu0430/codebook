@@ -1,78 +1,41 @@
-// PEC VER
-
-// idom[n] is the unique node that strictly dominates n but does
-// not strictly dominate any other node that strictly dominates n. 
-// idom[n] = 0 if n is entry or the entry cannot reach n.
-struct DominatorTree{
-  static const int MAXN = 200010;
-  int n,s;
-  vector<int> g[MAXN],pred[MAXN];
-  vector<int> cov[MAXN];
-  int dfn[MAXN],nfd[MAXN],ts;
-  int par[MAXN];
-  int sdom[MAXN],idom[MAXN];
-  int mom[MAXN],mn[MAXN];
-
-  inline bool cmp(int u,int v) { return dfn[u] < dfn[v]; }
-
-  int eval(int u) {
-    if(mom[u] == u) return u;
-    int res = eval(mom[u]);
-    if(cmp(sdom[mn[mom[u]]],sdom[mn[u]]))
-      mn[u] = mn[mom[u]];
-    return mom[u] = res;
-  }
-
-  void init(int _n, int _s) {
-    n = _n;
-    s = _s;
-    REP1(i,1,n) {
-      g[i].clear();
-      pred[i].clear();
-      idom[i] = 0;
+// Lengauer-Tarjan, O((V+E) log V); directed graph g from root
+// returns idom; idom[root] = root, unreachable vertices get -1
+vector<int> dominator_tree(const vector<vector<int>> &g, int root) {
+    int n = g.size(), m = 0;
+    vector<vector<int>> rg(n), bucket(n);
+    vector<int> dfn(n, -1), order, par(n), sd(n), id(n), anc(n), lab(n);
+    for (int u = 0; u < n; ++u) for (int v : g[u]) rg[v].push_back(u);
+    auto dfs = [&](auto &self, int u) -> void {
+        dfn[u] = m++, order.push_back(u);
+        for (int v : g[u]) if (dfn[v] == -1) self(self, v), par[dfn[v]] = dfn[u];
+    };
+    dfs(dfs, root);
+    // below every index is a dfn
+    iota(sd.begin(), sd.end(), 0), anc = lab = sd;
+    auto compress = [&](auto &self, int v) -> void {
+        if (anc[anc[v]] == anc[v]) return;
+        self(self, anc[v]);
+        if (sd[lab[anc[v]]] < sd[lab[v]]) lab[v] = lab[anc[v]];
+        anc[v] = anc[anc[v]];
+    };
+    auto eval = [&](int v) {
+        if (anc[v] == v) return v;
+        compress(compress, v);
+        return lab[v];
+    };
+    for (int w = m - 1; w > 0; --w) {
+        for (int v : rg[order[w]])
+            if (dfn[v] != -1) sd[w] = min(sd[w], sd[eval(dfn[v])]);
+        bucket[sd[w]].push_back(w);
+        anc[w] = par[w];
+        for (int v : bucket[par[w]]) {
+            int u = eval(v);
+            id[v] = sd[u] < sd[v] ? u : par[w];
+        }
+        bucket[par[w]].clear();
     }
-  }
-  void add_edge(int u, int v) {
-    g[u].push_back(v);
-    pred[v].push_back(u);
-  }
-  void DFS(int u) {
-    ts++;
-    dfn[u] = ts;
-    nfd[ts] = u;
-    for(int v:g[u]) if(dfn[v] == 0) {
-      par[v] = u;
-      DFS(v);
-    }
-  }
-  void build() {
-    ts = 0;
-    REP1(i,1,n) {
-      dfn[i] = nfd[i] = 0;
-      cov[i].clear();
-      mom[i] = mn[i] = sdom[i] = i;
-    }
-    DFS(s);
-    for (int i=ts; i>=2; i--) {
-      int u = nfd[i];
-      if(u == 0) continue ;
-      for(int v:pred[u]) if(dfn[v]) {
-        eval(v);
-        if(cmp(sdom[mn[v]],sdom[u])) sdom[u] = sdom[mn[v]];
-      }
-      cov[sdom[u]].push_back(u);
-      mom[u] = par[u];
-      for(int w:cov[par[u]]) {
-        eval(w);
-        if(cmp(sdom[mn[w]],par[u])) idom[w] = mn[w];
-        else idom[w] = par[u];
-      }
-      cov[par[u]].clear();
-    }
-    REP1(i,2,ts) {
-      int u = nfd[i];
-      if(u == 0) continue ;
-      if(idom[u] != sdom[u]) idom[u] = idom[idom[u]];
-    }
-  }
-}dom;
+    vector<int> idom(n, -1);
+    for (int w = 1; w < m; ++w) if (id[w] != sd[w]) id[w] = id[id[w]];
+    for (int w = 0; w < m; ++w) idom[order[w]] = order[w ? id[w] : 0];
+    return idom;
+}

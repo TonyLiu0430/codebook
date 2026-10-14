@@ -1,47 +1,42 @@
-const int MAXN = 2020;
+// variable x: node 2x means x is true, 2x+1 means x is false
+struct two_sat {
+    int n, time = 0, count = 0;
+    vector<vector<int>> g;
+    vector<int> dfn, low, comp, stack;
 
-struct TwoSAT{
-    static const int MAXv = 2*MAXN;
-    vector<int> GO[MAXv],BK[MAXv],stk;
-    bool vis[MAXv];
-    int SC[MAXv];
-
-    void imply(int u,int v){ // u imply v
-        GO[u].push_back(v);
-        BK[v].push_back(u);
+    two_sat(int n) : n(n), g(2 * n) {}
+    // (x == a) or (y == b)
+    void either(int x, bool a, int y, bool b) {
+        int u = 2 * x + !a, v = 2 * y + !b;
+        g[u ^ 1].push_back(v);
+        g[v ^ 1].push_back(u);
     }
-    int dfs(int u,vector<int>*G,int sc){
-        vis[u]=1, SC[u]=sc;
-        for (int v:G[u])if (!vis[v])
-            dfs(v,G,sc);
-        if (G==GO)stk.push_back(u);
-    }
-    int scc(int n=MAXv){
-        memset(vis,0,sizeof(vis));
-        for (int i=0; i<n; i++)if (!vis[i])
-            dfs(i,GO,-1);
-        memset(vis,0,sizeof(vis));
-        int sc=0;
-        while (!stk.empty()){
-            if (!vis[stk.back()])
-                dfs(stk.back(),BK,sc++);
-            stk.pop_back();
+    void implies(int x, bool a, int y, bool b) { either(x, !a, y, b); }
+    void set(int x, bool a) { either(x, a, x, a); }
+    void dfs(int u) {
+        dfn[u] = low[u] = ++time;
+        stack.push_back(u);
+        for (int v : g[u]) {
+            if (!dfn[v]) dfs(v), low[u] = min(low[u], low[v]);
+            else if (comp[v] == -1) low[u] = min(low[u], dfn[v]);
+        }
+        if (low[u] == dfn[u]) {
+            int v;
+            do v = stack.back(), stack.pop_back(), comp[v] = count;
+            while (v != u);
+            ++count;
         }
     }
-}SAT;
-
-int main(){
-    SAT.scc(2*n);
-    bool ok=1;
-    for (int i=0; i<n; i++){
-        if (SAT.SC[2*i]==SAT.SC[2*i+1])ok=0;
-    }
-    if (ok){
-        for (int i=0; i<n; i++){
-            if (SAT.SC[2*i]>SAT.SC[2*i+1]){
-                cout << i << endl;
-            }
+    // nullopt if unsatisfiable
+    optional<vector<bool>> solve() {
+        dfn.assign(2 * n, 0), low.assign(2 * n, 0), comp.assign(2 * n, -1);
+        for (int i = 0; i < 2 * n; ++i) if (!dfn[i]) dfs(i);
+        vector<bool> ans(n);
+        for (int i = 0; i < n; ++i) {
+            if (comp[2 * i] == comp[2 * i + 1]) return nullopt;
+            // tarjan numbers SCCs in reverse topological order
+            ans[i] = comp[2 * i] < comp[2 * i + 1];
         }
+        return ans;
     }
-    else puts("NO");
-}
+};

@@ -1,12 +1,7 @@
-#include "2Dpoint.cpp"
-
-Point circumcentre(Point &p0, Point &p1, Point &p2){
-	Point a = p1-p0;
-	Point b = p2-p0;
-	Double c1 = abs2(a)*0.5;
-	Double c2 = abs2(b)*0.5;
-	Double d = a % b;
-	Double x = p0.x + ( c1*b.y - c2*a.y ) / d;
-	Double y = p0.y + ( c2*a.x - c1*b.x ) / d;
-	return {x,y};
+// needs 2Dpoint.cpp; a, b, c must not be collinear
+point circumcentre(point a, point b, point c) {
+    point u = b - a, v = c - a;
+    ld d = 2 * cross(u, v);
+    point o{v.y * norm2(u) - u.y * norm2(v), u.x * norm2(v) - v.x * norm2(u)};
+    return a + o * (1 / d);
 }

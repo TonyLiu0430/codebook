@@ -1,31 +1,17 @@
-Construct of Gomory Hu Tree
-
-1. make sure the whole graph is clear
-2. set node 0 as root, also be the parent of other nodes.
-3. for every node i > 0, we run maxflow from i to parent[i]
-4. hense we know the weight between i and parent[i]
-5. for each node j > i, if j is at the same side with i,
-   make the parent of j as i
--------------------------------------------------------
-
-int e[MAXN][MAXN];
-int p[MAXN]; 
-
-Dinic D; // original graph
-
-void gomory_hu() {
-    fill(p, p+n, 0);
-    fill(e[0], e[n], INF);
-    for ( int s = 1 ; s < n ; s++ ) {
-        int t = p[s];
-        Dinic F = D;
-        int tmp = F.max_flow(s, t);
-
-        for ( int i = 1 ; i < s ; i++ )
-            e[s][i] = e[i][s] = min(tmp, e[t][i]);
-
-        for ( int i = s+1 ; i <= n ; i++ ) 
-            if ( p[i] == t && F.side[i] ) p[i] = s;
-
+// needs dinic.cpp; undirected graph, n - 1 max flows (Gusfield)
+// returns tree edges {u, v, w}; min cut(a, b) = min w on the tree path
+vector<tuple<int, int, ll>> gomory_hu(
+    int n, const vector<tuple<int, int, ll>> &edges) {
+    vector<int> p(n);
+    vector<tuple<int, int, ll>> tree;
+    for (int s = 1; s < n; ++s) {
+        dinic d(n);
+        for (auto [u, v, w] : edges) d.add_edge(u, v, w), d.add_edge(v, u, w);
+        ll f = d.max_flow(s, p[s]);
+        auto side = d.min_cut_side(s);
+        for (int i = s + 1; i < n; ++i)
+            if (p[i] == p[s] && side[i]) p[i] = s;
+        tree.push_back({s, p[s], f});
     }
+    return tree;
 }
