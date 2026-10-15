@@ -1,6 +1,5 @@
 // 求兩圓交點：回傳交點個數 (0/1/2，完全重合為 -1) 與交
 // 點座標。
-// count: -1 identical circles; otherwise number of points
 struct circle_hit {
     int count;
     vector<point> p;

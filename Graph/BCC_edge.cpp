@@ -1,6 +1,5 @@
 // 無向圖邊雙連通分量：找出所有橋，並把每個點標上所屬的
 // 邊雙分量編號；允許重邊。
-// undirected edge-biconnected components; parallel edges are allowed
 struct edge_bcc {
     struct edge { int to, id; };
     vector<vector<edge>> g;

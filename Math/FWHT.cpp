@@ -3,8 +3,6 @@
 // or 正轉換即子集和 (SOS dp)，and 為超集和；在模數下要
 // 把除以 n 改成乘反元素。
 // c[i op j] += a[i] * b[j]; op is '^', '&' or '|'; size is a power of two
-// under a modulus replace "/= n" with "*= inverse(n)"
-// SOS dp = fwht(a, '|', false); superset sum uses '&'
 using ll = long long;
 
 void fwht(vector<ll> &a, char op, bool inverse) {

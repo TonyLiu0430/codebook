@@ -1,6 +1,5 @@
 // 浮點 FFT 多項式乘法 (整數係數)，O(n log n)；結果每項
 // 需小於約 10^15 才不會有精度誤差。
-// floating fft; exact while every result value < about 1e15
 using ll = long long;
 using cd = complex<double>;
 

@@ -4,8 +4,6 @@
 // 通解為 x+k*lcm。
 // 注意 lcm 必須在 long long 範圍內。
 // needs ext_gcd from ax+by=gcd.cpp
-// x = r[i] (mod m[i]), moduli need not be coprime; lcm must fit in ll
-// returns {x, lcm} with 0 <= x < lcm, nullopt if no solution
 optional<pair<ll, ll>> crt(const vector<ll> &r,
                            const vector<ll> &m) {
     ll x = 0, l = 1;

@@ -1,6 +1,5 @@
 // Hierholzer 求歐拉路徑／迴路（每條邊恰走一次），有向、
 // 無向圖皆可，O(V+E)。
-// Hierholzer, O(V+E); works for directed and undirected graphs
 struct euler {
     int n;
     bool directed;

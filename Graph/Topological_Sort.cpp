@@ -1,5 +1,4 @@
 // 拓撲排序（Kahn BFS），有環時回傳空陣列，可順便判 DAG。
-// empty result means the graph has a cycle
 vector<int>
 topological_sort(const vector<vector<int>> &g) {
     vector<int> indeg(g.size()), order;

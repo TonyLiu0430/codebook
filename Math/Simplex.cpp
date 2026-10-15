@@ -1,7 +1,5 @@
 // 單純形法解線性規劃：最大化 c^Tx，限制 Ax <= b, x >= 0；
 // 回傳最優值，無界為 inf、無解為 -inf。
-// maximize c^T x subject to A x <= b, x >= 0 (two-phase simplex)
-// solve() returns the optimum, inf if unbounded, -inf if infeasible
 using ld = long double;
 
 struct simplex {

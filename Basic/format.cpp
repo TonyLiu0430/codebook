@@ -63,3 +63,36 @@ void ranges_examples(string s, vector<string> ws,
     auto [mn, mx] = ranges::minmax(vector{5, 2, 9});
     // map：for (auto &k : m | views::keys)，values 同理
 }
+
+// take / drop：O(1) 建立、不複製；
+// 對 view 排序、反轉會直接改到原陣列
+void take_drop_examples(vector<int> v, int l, int r,
+                        int k, string s) {
+    auto sub = v | views::drop(l) | views::take(r - l);
+    ranges::sort(sub);   // 只排 [l, r)
+    ranges::max(sub);    // [l, r) 最大值
+    accumulate(sub.begin(), sub.end(), 0); // [l, r) 總和
+    ranges::reverse(v | views::take(k)); // 反轉前 k 個
+    for (int x : v | views::drop(1)) {}  // 跳過第一個
+    v | views::reverse | views::take(2); // 最後 2 個，倒序
+    v | views::take_while([](int x) { return x < 9; });
+    s | views::drop_while(::isspace);    // 去開頭空白
+}
+
+void more_examples(ll hi, auto ok, vector<int> v,
+                   vector<pii> ps, vector<array<ll, 3>> e) {
+    // 二分答案：第一個 ok(x) 為真的 x（ok 為 F..F T..T）
+    auto bad = [&](ll x) { return !ok(x); };
+    ll ans = *ranges::partition_point(views::iota(0LL, hi), bad);
+    ranges::max(e | views::elements<2>); // 第 2 欄最大
+    ranges::lower_bound(ps, 3, {}, &pii::first); // 依 first
+    ranges::sort(v); // 排序去重
+    v.erase(ranges::unique(v).begin(), v.end());
+    v | views::filter([](int x) { return x % 2; })
+      | views::transform([](int x) { return x * x; });
+    string s = "abc";
+    do {} while (ranges::next_permutation(s).found);
+    auto small = [](int i) { return i * i <= 20; };
+    for (int i : views::iota(1) | views::take_while(small)) {}
+    for (int x : views::istream<int>(cin) | views::take(3)) {}
+}

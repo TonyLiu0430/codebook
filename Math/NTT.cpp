@@ -1,7 +1,6 @@
 // 數論轉換 (NTT)：模 998244353 下的多項式乘法／卷積，
 // O(n log n)，結果精確無誤差。
 // 係數需在 [0,mod)；換其他 NTT 模數要改對應原根 root。
-// coefficients must be in [0, mod)
 const int mod = 998244353, root = 3;
 
 int power(int a, int n) {
