@@ -8,8 +8,8 @@
 // const ll inf = numeric_limits<ll>::max();
 // prim<ll>(n, [&](int i, int j) {
 //     return g[i][j] == -1 ? inf : g[i][j]; });
-template<class T, class F>
-pair<bool, T> prim(int n, F w) {
+template<class T>
+pair<bool, T> prim(int n, auto &&w) {
     const T inf = numeric_limits<T>::max();
     vector<T> dist(n, inf);
     vector<char> used(n);
