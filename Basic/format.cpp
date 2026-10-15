@@ -8,12 +8,10 @@ void println(format_string<t...> fmt, t&&... args) {
 void format_examples() {
     format("{} + {} = {}", 2, 3, 5); // "2 + 3 = 5"
     format("{1} {0}", "a", "b");     // "b a"
-
     double x = 3.1415926;
     format("{:.3f}", x);  // "3.142"：小數點後 3 位
     format("{:.3}", x);   // "3.14"：3 位有效數字
     format("{:8.2f}", x); // 寬度 8、小數 2 位
-
     format("{:<8}", "hi"); // 靠左
     format("{:^8}", "hi"); // 置中
     format("{:>8}", "hi"); // 靠右
@@ -21,7 +19,6 @@ void format_examples() {
     format("{:+}", 42);    // "+42"
     format("{:#x}", 255);  // "0xff"
     format("{{{}}}", 42);  // "{42}"
-
     println("answer = {}", 42);
     println("pi = {:.6f}", numbers::pi);
 }
@@ -35,8 +32,7 @@ vector<string_view> split(string_view s, char d = ' ') {
             res.emplace_back(w.begin(), w.end());
     return res;
 }
-// 轉數字：int x;
-// from_chars(w.data(), w.data() + w.size(), x);
+// 轉數字：from_chars(w.data(), w.data() + w.size(), x);
 
 // 去頭尾空白，全空白回傳 ""
 string_view trim(string_view s) {
