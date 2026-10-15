@@ -52,12 +52,5 @@ struct svg { // shows [x1,x2] x [y1,y2], y axis points up
     }
 };
 #else
-struct svg {
-    string c;
-    svg(auto...) {}
-    void line(auto...) {}
-    void circle(auto...) {}
-    void text(auto...) {}
-    void graph(auto...) {}
-};
+struct svg { string c; svg(auto...) {} void line(auto...) {} void circle(auto...) {} void text(auto...) {} void graph(auto...) {} };
 #endif

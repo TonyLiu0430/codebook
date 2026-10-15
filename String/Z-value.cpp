@@ -1,5 +1,4 @@
 // Z function：z[i] 為 s 與 s[i..] 的最長共同前綴長度；
-// 另附 Manacher O(n) 求每個中心的最長回文半徑。
 vector<int> z_function(const string &s) {
     int n = s.size();
     vector<int> z(n);
@@ -11,8 +10,7 @@ vector<int> z_function(const string &s) {
     }
     return z;
 }
-
-// radius of odd palindrome centered at i, including the center
+// Manacher O(n)：奇數回文半徑，包含中心
 vector<int> manacher_odd(const string &s) {
     int n = s.size();
     vector<int> radius(n);
@@ -27,3 +25,6 @@ vector<int> manacher_odd(const string &s) {
     }
     return radius;
 }
+// 奇偶共用：string t="#"; for(char c:s) t+=c,t+='#';
+// auto d=manacher_odd(t); // 原字串回文長度 d[i]-1
+// 起點 (i-d[i]+1)/2；例如 abba -> #a#b#b#a#
