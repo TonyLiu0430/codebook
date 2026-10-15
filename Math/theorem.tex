@@ -1,0 +1,62 @@
+{\setlength{\parindent}{0pt}
+\textbf{Lucas 定理}（$p$ 為質數）：把 $n, m$ 寫成 $p$ 進位，逐位算組合數再相乘。
+\[
+\binom{n}{m} \equiv \binom{\lfloor n/p\rfloor}{\lfloor m/p\rfloor}\binom{n \bmod p}{m \bmod p} \pmod p
+\]
+用途：$n$ 很大（$\ge p$）時求 $\binom{n}{m} \bmod p$；遞迴到 $n<p$ 再用階乘表。
+
+\smallskip
+\textbf{Pick 定理}：頂點都在格子點上的簡單多邊形，
+面積 $A = i + \frac{b}{2} - 1$，$i$ 為內部格子點數，$b$ 為邊上格子點數。
+線段 $(x_1,y_1)$--$(x_2,y_2)$ 上的格子點（不含一端）有 $\gcd(|\Delta x|,|\Delta y|)$ 個。
+
+\smallskip
+\textbf{矩陣樹定理 (Kirchhoff)}：求生成樹個數。
+無向圖：拉普拉斯矩陣 $L = D - A$（$D$ 為度數對角矩陣，$A$ 為鄰接矩陣，重邊要算次數），
+刪掉任意一行和同編號的一列，剩下的行列式就是生成樹個數。
+有向圖、以 $r$ 為根的外向樹：用入度 $L = D_{in} - A$，刪掉第 $r$ 行第 $r$ 列。
+行列式在模質數下用高斯消去 $O(n^3)$。
+
+\smallskip
+\textbf{Catalan 數}：$C_0 = 1$，$C_{n+1} = C_n \cdot \frac{2(2n+1)}{n+2}$。
+（通項與數列見下一節組合數學公式）
+
+\smallskip
+\textbf{莫比烏斯函數 $\mu$}：
+$\mu(1)=1$；$n$ 有平方因數時 $\mu(n)=0$；
+$n = p_1p_2\cdots p_k$（相異質數）時 $\mu(n)=(-1)^k$。
+\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+\item 積性：$\gcd(a,b)=1 \Rightarrow \mu(ab)=\mu(a)\mu(b)$
+\item $\sum_{d\mid n}\mu(d) = [n=1]$，所以 $[\gcd(i,j)=1] = \sum_{d\mid \gcd(i,j)}\mu(d)$
+\item $\sum_{d\mid n}\varphi(d) = n$，所以 $\gcd(i,j) = \sum_{d\mid\gcd(i,j)}\varphi(d)$
+\end{itemize}
+
+\textbf{莫比烏斯反演}：
+\[
+f(n) = \sum_{d\mid n} g(d) \iff g(n) = \sum_{d\mid n}\mu(d)\, f\!\left(\frac{n}{d}\right)
+\]
+用途：算「$\gcd(i,j)=k$ 的對數」或 $\sum\gcd(i,j)$ 這類題目，反演後變成
+$\sum_d \mu(d)\lfloor n/d\rfloor\lfloor m/d\rfloor$，再用數論分塊 $O(\sqrt n)$。
+
+\smallskip
+\textbf{中國剩餘定理}（$m_i$ 兩兩互質；不互質請用 exCRT 模板）：
+解 $x \equiv a_i \pmod{m_i}$。令 $M = \prod m_i$，$M_i = M/m_i$，$t_i = M_i^{-1} \bmod m_i$，則
+\[
+x \equiv \sum_i a_i\, t_i\, M_i \pmod M
+\]
+在模 $M$ 下解唯一。
+
+\smallskip
+\textbf{Burnside 引理}：在對稱操作（旋轉、翻轉）下視為相同的方案數
+\[
+|X/G| = \frac{1}{|G|}\sum_{g\in G}|X^g|
+\]
+即「每種操作下不動的方案數」的平均。$X^g$：做完操作 $g$ 後不變的方案。
+例：$n$ 顆珠子 $k$ 種顏色的項鍊（只算旋轉）有 $\frac{1}{n}\sum_{d\mid n}\varphi(d)\,k^{n/d}$ 種。
+
+\smallskip
+\textbf{Fermat / Euler / Wilson}：
+$p$ 質數時 $a^{p-1}\equiv 1 \pmod p$（$p\nmid a$）；
+$\gcd(a,m)=1$ 時 $a^{\varphi(m)} \equiv 1 \pmod m$；
+$(p-1)! \equiv -1 \pmod p$。
+\par}
