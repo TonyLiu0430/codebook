@@ -1,8 +1,13 @@
-// Prim 陣列版 O(V^2)，不用存邊：稠密圖／完全圖用（如
-// 平面點兩兩距離求 MST）；稀疏圖請用 Kruskal。
-// w(i, j)：邊權，沒有邊回傳 numeric_limits<T>::max()
-// 回傳 {是否連通, MST 權重和}，例：
-// prim<double>(n, [&](int i, int j) { return d(i, j); })
+// Prim O(V^2)：完全圖／稠密圖的 MST（稀疏圖用 Kruskal）
+// 不存邊，邊權由 w(i, j) 現算；沒邊回傳 T 的最大值
+// 回傳 {是否連通, 權重和}
+// 例1 完全圖（平面點距離）：
+// prim<double>(n, [&](int i, int j) {
+//     return hypot(x[i] - x[j], y[i] - y[j]); });
+// 例2 鄰接矩陣，g[i][j] == -1 表示沒邊：
+// const ll inf = numeric_limits<ll>::max();
+// prim<ll>(n, [&](int i, int j) {
+//     return g[i][j] == -1 ? inf : g[i][j]; });
 template<class T, class F>
 pair<bool, T> prim(int n, F w) {
     const T inf = numeric_limits<T>::max();
