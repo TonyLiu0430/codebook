@@ -5,8 +5,9 @@
 
 \section{Basic}
 
-\subsection{debug list}
-\lstinputlisting{Basic/bug_list.txt}
+\subsection{對拍}
+\lstinputlisting{Basic/stress.sh}
+\lstinputlisting{Basic/gen.cpp}
 \subsection{SVG 視覺化 debug}
 \lstinputlisting{Basic/svg.cpp}
 \subsection{時間複雜度}
@@ -16,6 +17,94 @@
 
 \subsection{IO optimization}
 \lstinputlisting{DarkCode/IO_optimization.cpp}
+
+\section{Data Structure}
+
+\subsection{2D Range Tree}
+\lstinputlisting{DataStructure/2D_RangeTree.cpp}
+
+\subsection{Segment Tree}
+\lstinputlisting{DataStructure/Segment_tree.cpp}
+\subsection{ZKW 線段樹}
+\lstinputlisting{DataStructure/zkw.cpp}
+\subsection{Sparse Table}
+\lstinputlisting{DataStructure/SparseTable.cpp}
+\subsection{Lazy Tag}
+\lstinputlisting{DataStructure/Lazy_tag.cpp}
+\subsection{Lazy Min / 線段樹上二分}
+\lstinputlisting{DataStructure/LazyMin.cpp}
+\subsection{BIT 樹狀樹組}
+\lstinputlisting{DataStructure/BIT.cpp}
+\subsection{並查集 union find}
+\lstinputlisting{DataStructure/djs.cpp}
+\subsection{可撤銷並查集}
+\lstinputlisting{DataStructure/RollbackDSU.cpp}
+\subsection{Treap}
+\lstinputlisting{DataStructure/treap_new.cpp}
+\subsection{2D BIT}
+\lstinputlisting{DataStructure/2dbit.cpp}
+\subsection{持久化線段樹}
+\lstinputlisting{DataStructure/PersistentSegTree.cpp}
+\subsection{李超線段樹}
+\lstinputlisting{DataStructure/LiChao.cpp}
+
+\section{Graph}
+
+\subsection{BCC}
+\lstinputlisting{Graph/BCC_edge.cpp}
+\subsection{Prim}
+\lstinputlisting{Graph/Prim.cpp}
+\subsection{Bellman Ford}
+\lstinputlisting{Graph/Bellman_ford.cpp}
+\subsection{Kruskal}
+\lstinputlisting{Graph/Kruskal.cpp}
+\subsection{Dijkstra}
+\lstinputlisting{Graph/Dijkstra.cpp}
+\subsection{Johnson 全源最短路}
+\lstinputlisting{Graph/Johnson.cpp}
+\subsection{最小平均環}
+\lstinputlisting{Graph/Min_mean_cycle.cpp}
+\subsection{floyd+負環偵測}
+\lstinputlisting{Graph/negative_cycle_validation.cpp}
+\subsection{Tarjan}
+\lstinputlisting{Graph/Tarjan.cpp}
+\subsection{Topological Sort}
+\lstinputlisting{Graph/Topological_Sort.cpp}
+\subsection{LCA}
+\lstinputlisting{Graph/LCA.cpp}
+\subsection{樹鏈剖分 HLD}
+\lstinputlisting{Graph/HLD.cpp}
+\subsection{虛樹}
+\lstinputlisting{Graph/VirtualTree.cpp}
+\subsection{重心分解}
+\lstinputlisting{Graph/CentroidDecomposition.cpp}
+\subsection{2-SAT}
+\lstinputlisting{Graph/TwoSAT.cpp}
+\subsection{歐拉路徑}
+\lstinputlisting{Graph/EulerCircuit.cpp}
+\subsection{Dominator Tree}
+\lstinputlisting{Graph/DominatorTree.cpp}
+\subsection{Stoer-Wagner 全域最小割}
+\lstinputlisting{Graph/StoerWagner.cpp}
+
+\section{Flow / Matching}
+
+\subsection{Dinic}
+\lstinputlisting{Flow/dinic.cpp}
+\subsection{min cost flow}
+\lstinputlisting{Flow/Min_Cost_Max_Flow.cpp}
+\subsection{Gomory-Hu Tree}
+\lstinputlisting{Flow/Gomory_Hu.cpp}
+\subsection{Hungarian}
+\lstinputlisting{Graph/Matching/Hungarian.cpp}
+\subsection{Hopcroft-Karp}
+\lstinputlisting{Graph/Matching/HopcroftKarp.cpp}
+\subsection{KM}
+\lstinputlisting{Graph/Matching/Kuhn_Munkres.cpp}
+\subsection{一般圖匹配}
+\lstinputlisting{Graph/Matching/Maximum_General_Matching.cpp}
+\subsection{匹配相關定理}
+\lstinputlisting{Graph/Matching/Matching.txt}
 
 \section{Geometry}
 
@@ -40,14 +129,24 @@
 \subsection{凸包查詢 / 圓切線 / Minkowski}
 \lstinputlisting{Geometry/convex_extra.cpp}
 
-\section{Flow}
+\section{String}
 
-\subsection{Dinic}
-\lstinputlisting{Flow/dinic.cpp}
-\subsection{min cost flow}
-\lstinputlisting{Flow/Min_Cost_Max_Flow.cpp}
-\subsection{Gomory-Hu Tree}
-\lstinputlisting{Flow/Gomory_Hu.cpp}
+\subsection{KMP}
+\lstinputlisting{String/KMP.h}
+\subsection{smallest rotation}
+\lstinputlisting{String/smallest_rotation.cpp}
+\subsection{Suffix Array}
+\lstinputlisting{String/suffix_array.cpp}
+\subsection{Z-value}
+\lstinputlisting{String/Z-value.cpp}
+\subsection{旋轉哈希}
+\lstinputlisting{String/RollingHash.cpp}
+\subsection{後綴自動機}
+\lstinputlisting{String/SAM_lite.cpp}
+\subsection{AC 自動機}
+\lstinputlisting{String/AC.cpp}
+\subsection{回文樹}
+\lstinputlisting{String/PalindromicTree.cpp}
 
 \section{Mathematics}
 
@@ -97,105 +196,6 @@
 \input{Math/theorem.tex}
 \subsection{組合數學公式}
 \input{Math/combinatorics.tex}
-
-
-\section{Graph}
-
-\subsection{BCC}
-\lstinputlisting{Graph/BCC_edge.cpp}
-\subsection{Prim}
-\lstinputlisting{Graph/Prim.cpp}
-\subsection{Bellman Ford}
-\lstinputlisting{Graph/Bellman_ford.cpp}
-\subsection{Kruskal}
-\lstinputlisting{Graph/Kruskal.cpp}
-\subsection{Dijkstra}
-\lstinputlisting{Graph/Dijkstra.cpp}
-\subsection{Hungarian}
-\lstinputlisting{Graph/Matching/Hungarian.cpp}
-\subsection{Hopcroft-Karp}
-\lstinputlisting{Graph/Matching/HopcroftKarp.cpp}
-\subsection{KM}
-\lstinputlisting{Graph/Matching/Kuhn_Munkres.cpp}
-\subsection{最小平均環}
-\lstinputlisting{Graph/Min_mean_cycle.cpp}
-\subsection{floyd+負環偵測}
-\lstinputlisting{Graph/negative_cycle_validation.cpp}
-\subsection{Tarjan}
-\lstinputlisting{Graph/Tarjan.cpp}
-\subsection{Topological Sort}
-\lstinputlisting{Graph/Topological_Sort.cpp}
-\subsection{LCA}
-\lstinputlisting{Graph/LCA.cpp}
-\subsection{樹鏈剖分 HLD}
-\lstinputlisting{Graph/HLD.cpp}
-\subsection{虛樹}
-\lstinputlisting{Graph/VirtualTree.cpp}
-\subsection{重心分解}
-\lstinputlisting{Graph/CentroidDecomposition.cpp}
-\subsection{2-SAT}
-\lstinputlisting{Graph/TwoSAT.cpp}
-\subsection{歐拉路徑}
-\lstinputlisting{Graph/EulerCircuit.cpp}
-\subsection{一般圖匹配}
-\lstinputlisting{Graph/Matching/Maximum_General_Matching.cpp}
-\subsection{匹配相關定理}
-\lstinputlisting{Graph/Matching/Matching.txt}
-\subsection{Dominator Tree}
-\lstinputlisting{Graph/DominatorTree.cpp}
-\subsection{Stoer-Wagner 全域最小割}
-\lstinputlisting{Graph/StoerWagner.cpp}
-
-\section{Data Structure}
-
-\subsection{2D Range Tree}
-\lstinputlisting{DataStructure/2D_RangeTree.cpp}
-
-\subsection{Segment Tree}
-\lstinputlisting{DataStructure/Segment_tree.cpp}
-\subsection{ZKW 線段樹}
-\lstinputlisting{DataStructure/zkw.cpp}
-\subsection{Sparse Table}
-\lstinputlisting{DataStructure/SparseTable.cpp}
-\subsection{Lazy Tag}
-\lstinputlisting{DataStructure/Lazy_tag.cpp}
-\subsection{Lazy Min / 線段樹上二分}
-\lstinputlisting{DataStructure/LazyMin.cpp}
-\subsection{BIT 樹狀樹組}
-\lstinputlisting{DataStructure/BIT.cpp}
-\subsection{並查集 union find}
-\lstinputlisting{DataStructure/djs.cpp}
-\subsection{可撤銷並查集}
-\lstinputlisting{DataStructure/RollbackDSU.cpp}
-\subsection{Treap}
-\lstinputlisting{DataStructure/treap_new.cpp}
-\subsection{2D BIT}
-\lstinputlisting{DataStructure/2dbit.cpp}
-\subsection{持久化線段樹}
-\lstinputlisting{DataStructure/PersistentSegTree.cpp}
-\subsection{李超線段樹}
-\lstinputlisting{DataStructure/LiChao.cpp}
-
-
-
-\section{String}
-
-\subsection{KMP}
-\lstinputlisting{String/KMP.h}
-\subsection{smallest rotation}
-\lstinputlisting{String/smallest_rotation.cpp}
-\subsection{Suffix Array}
-\lstinputlisting{String/suffix_array.cpp}
-\subsection{Z-value}
-\lstinputlisting{String/Z-value.cpp}
-\subsection{旋轉哈希}
-\lstinputlisting{String/RollingHash.cpp}
-\subsection{後綴自動機}
-\lstinputlisting{String/SAM_lite.cpp}
-\subsection{AC 自動機}
-\lstinputlisting{String/AC.cpp}
-\subsection{回文樹}
-\lstinputlisting{String/PalindromicTree.cpp}
 
 \section{Others}
 

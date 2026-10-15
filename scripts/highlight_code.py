@@ -4,7 +4,7 @@ import re
 
 from pygments import format as format_tokens, lex
 from pygments.formatters import LatexFormatter
-from pygments.lexers import CppLexer, PythonLexer, TextLexer
+from pygments.lexers import BashLexer, CppLexer, PythonLexer, TextLexer
 from pygments.style import Style
 from pygments.token import Comment, Error, Keyword, Name, Number, Operator, String, Text
 
@@ -82,7 +82,8 @@ def main():
         if path.suffix in {".cpp", ".h", ".hpp"}:
             tokens = cpp_tokens(source)
         else:
-            lexer = PythonLexer if path.suffix == ".py" else TextLexer
+            lexer = {".py": PythonLexer, ".sh": BashLexer}.get(
+                path.suffix, TextLexer)
             tokens = lex(source, lexer(ensurenl=False, stripnl=False))
         # Plain whitespace lets fvextra see indentation when wrapping a line.
         tokens = ((Text, value) if token in Text else (token, value)
