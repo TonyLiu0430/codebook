@@ -1,8 +1,8 @@
 #include <format>
 
-template<class... t>
-void println(format_string<t...> fmt, t&&... args) {
-    cout << format(fmt, forward<t>(args)...) << '\n';
+template<class... T>
+void println(format_string<T...> fmt, T&&... args) {
+    cout << format(fmt, forward<T>(args)...) << '\n';
 }
 
 void format_examples() {
