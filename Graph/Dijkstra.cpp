@@ -1,3 +1,4 @@
+// Dijkstra 單源最短路（非負邊權），heap 優化 O(E log V)。
 using ll = long long;
 using graph_edge = pair<int, ll>; // to, weight
 using state = pair<ll, int>;      // distance, vertex

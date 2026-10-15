@@ -1,3 +1,5 @@
+// Kosaraju 有向圖強連通分量：正圖與反圖各做一次 DFS 求
+// SCC 編號。
 struct kosaraju {
     vector<vector<int>> g, rev;
     vector<int> used, order, comp;

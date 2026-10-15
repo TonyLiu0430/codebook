@@ -1,3 +1,7 @@
+// 後綴自動機 (SAM)：逐字加入建出接受所有子字串的自動機；
+// 可判斷子字串是否出現、算不同子字串數
+// sum(len[v]-len[link[v]])。
+// link 樹（後綴連結樹）就是反轉字串的後綴樹。
 struct sam {
     struct state {
         int len = 0, link = -1;

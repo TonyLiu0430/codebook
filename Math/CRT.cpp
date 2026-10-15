@@ -1,3 +1,8 @@
+// 擴展中國剩餘定理：解聯立同餘 x ≡ r_i (mod m_i)，模數
+// 「不必兩兩互質」。
+// 逐條合併，回傳 {最小非負解 x, lcm}，無解回傳 nullopt；
+// 通解為 x+k*lcm。
+// 注意 lcm 必須在 long long 範圍內。
 // needs ext_gcd from ax+by=gcd.cpp
 // x = r[i] (mod m[i]), moduli need not be coprime; lcm must fit in ll
 // returns {x, lcm} with 0 <= x < lcm, nullopt if no solution

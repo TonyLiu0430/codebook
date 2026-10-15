@@ -1,4 +1,4 @@
-PYTHON ?= python
+PYTHON ?= $(shell command -v python3 2>/dev/null || echo python)
 XELATEX ?= xelatex
 SOURCES := $(wildcard Basic/* DarkCode/* Geometry/* Flow/* Math/* Graph/* Graph/Matching/* DataStructure/* String/* Other/*)
 

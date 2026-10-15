@@ -1,3 +1,7 @@
+// Pollard's rho 大數質因數分解（期望約 O(n^(1/4))），可
+// 分解到 10^18。
+// factor(n, cnt) 把質因數與次數存進 map；需搭配
+// Miller-Rabin 判斷質數。
 // needs is_prime() and mod_mul() from Miller-Rabin.cpp
 using u64 = uint64_t;
 

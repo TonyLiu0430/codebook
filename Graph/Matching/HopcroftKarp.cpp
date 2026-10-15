@@ -1,3 +1,5 @@
+// Hopcroft-Karp 二分圖最大匹配，O(E sqrt(V))，點數邊數
+// 大時使用。
 // O(E sqrt V); left side [0, n), right side [0, m)
 struct hopcroft_karp {
     int n;

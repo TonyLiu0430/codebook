@@ -1,3 +1,5 @@
+// 多邊形有向面積、點在多邊形內外判斷、點到線段距離；旋
+// 轉卡尺求凸包直徑（最遠點對）。
 // needs 2Dpoint.cpp; polygon vertices are given in order
 // signed area, ccw is positive
 ld polygon_area(const vector<point> &p) {

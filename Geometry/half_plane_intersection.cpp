@@ -1,3 +1,5 @@
+// 半平面交：求所有有向直線左側區域的交集（凸多邊形），
+// 可解多邊形核、線性約束可行域。
 // needs 2Dpoint.cpp; keeps the left side of every directed line
 // returns a ccw polygon, empty if the area is empty
 // the result may be unbounded: add a large bounding box first

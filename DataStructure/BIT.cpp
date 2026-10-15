@@ -1,3 +1,5 @@
+// 樹狀數組 (Fenwick)：單點加值、前綴和／區間和，
+// O(log n)。
 // public indices are 0-based
 struct bit {
     using ll = long long;

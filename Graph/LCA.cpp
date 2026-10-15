@@ -1,3 +1,5 @@
+// 最近共同祖先：倍增法，O(n log n) 建表、O(log n) 查詢，
+// 可算樹上兩點距離。
 // binary lifting on a tree; O(n log n) build, O(log n) query
 struct lca {
     int lg = 1;

@@ -1,3 +1,5 @@
+// 凸包 O(log n) 點包含查詢、直線與圓交點、點到圓的切點、
+// Minkowski 和（兩凸包相加）。
 // needs 2Dpoint.cpp
 int sign(ld x) { return (x > eps) - (x < -eps); }
 

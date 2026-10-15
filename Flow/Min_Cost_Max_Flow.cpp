@@ -1,3 +1,5 @@
+// 最小費用最大流（SPFA 找最短增廣路），可設流量上限；回
+// 傳 {流量, 費用}。支援負費用邊。
 using ll = long long;
 const ll inf = LLONG_MAX / 4;
 

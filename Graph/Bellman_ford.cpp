@@ -1,3 +1,5 @@
+// Bellman-Ford 單源最短路，可處理負權邊並偵測從源點可達
+// 的負環，O(VE)。
 using ll = long long;
 const ll inf = LLONG_MAX / 4;
 

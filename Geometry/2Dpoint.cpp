@@ -1,3 +1,5 @@
+// 二維點／向量基本運算：加減、數乘、內積 dot、外積
+// cross、長度。其他幾何模板都依賴它。
 using ld = long double;
 const ld eps = 1e-12L;
 

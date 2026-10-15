@@ -1,3 +1,7 @@
+// 擴展 BSGS 離散對數：求最小 x >= 0 使 a^x ≡ b (mod m)，
+// m 不必是質數，O(sqrt(m))。
+// 先不斷除掉 gcd(a,m) 化成互質情形，再用大步小步 (hash
+// 表) 碰撞。無解回傳 -1。
 using ll = long long;
 
 // smallest x >= 0 with a^x = b (mod m); m need not be prime; -1 if none

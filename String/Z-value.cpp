@@ -1,3 +1,5 @@
+// Z function：z[i] 為 s 與 s[i..] 的最長共同前綴長度；
+// 另附 Manacher O(n) 求每個中心的最長回文半徑。
 vector<int> z_function(const string &s) {
     int n = s.size();
     vector<int> z(n);

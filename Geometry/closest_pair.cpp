@@ -1,3 +1,4 @@
+// 平面最近點對，掃描線 + set，O(n log n)，回傳距離平方。
 // needs 2Dpoint.cpp; O(n log n), returns the squared distance, n >= 2
 ld closest_pair(vector<point> p) {
     ranges::sort(p, {}, &point::x);

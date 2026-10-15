@@ -1,3 +1,7 @@
+// 求奇質數 p 的最小原根 g（g 的冪可走遍 1..p-1）。
+// 做法：分解 p-1，對每個質因數 q 檢查 g^((p-1)/q) != 1。
+// 用途：NTT 找 root、把乘法轉成指數加法（離散對數／k 次
+// 剩餘）。
 // needs mod_power from number_tool.cpp; p is an odd prime
 ll primitive_root(ll p) {
     vector<ll> f;

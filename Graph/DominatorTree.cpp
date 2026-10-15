@@ -1,3 +1,5 @@
+// 支配樹：從起點出發，求每個點的最近必經點 idom（所有路
+// 徑都必須經過的點）。
 // Lengauer-Tarjan, O((V+E) log V); directed graph g from root
 // returns idom; idom[root] = root, unreachable vertices get -1
 vector<int> dominator_tree(const vector<vector<int>> &g,

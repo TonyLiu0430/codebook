@@ -1,3 +1,5 @@
+// 後綴陣列 SA（倍增 + radix sort）與 rank、LCP 陣列；用
+// 於不同子字串數、最長重複子字串等。
 struct suffix_data {
     vector<int> sa, rank, lcp;
 };

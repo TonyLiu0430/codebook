@@ -1,3 +1,5 @@
+// 樹鏈剖分：把樹上路徑／子樹拆成 O(log n) 段連續區間，
+// 搭配線段樹做路徑修改與查詢。
 // heavy-light decomposition; pos[] indexes a segment tree
 // path(u, v) is O(log n) ranges [l, r] of pos
 // edge values: store edge (parent, v) at pos[v], skip the lca's pos

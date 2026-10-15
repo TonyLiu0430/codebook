@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Python 小抄：快速讀整數、LCS 範例、stack / queue / 去
+# 重寫法。
 from collections import deque
 import sys
 

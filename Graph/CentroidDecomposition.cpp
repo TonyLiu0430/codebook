@@ -1,3 +1,5 @@
+// 重心分解：遞迴取重心切樹，深度 O(log n)，用於統計樹上
+// 路徑（如距離 <= k 的點對數）。
 // centroid decomposition; cpar[] is the parent in the centroid tree
 // centroid tree depth is O(log n); every path passes some centroid
 struct centroid {

@@ -1,3 +1,5 @@
+// Gomory-Hu 樹：無向圖做 n-1 次最大流建樹，任兩點最小割
+// = 樹上路徑最小邊權。適合多組兩點最小割詢問。
 // needs dinic.cpp; undirected graph, n - 1 max flows (Gusfield)
 // returns tree edges {u, v, w}; min cut(a, b) = min w on the tree path
 vector<tuple<int, int, ll>> gomory_hu(

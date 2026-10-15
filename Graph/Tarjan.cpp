@@ -1,3 +1,5 @@
+// Tarjan 有向圖強連通分量 O(V+E)；註解附無向圖橋與割點
+// 的判斷條件。
 // 有向圖 SCC，O(V+E)；low[u] == dfn[u] 時彈棧到 u
 // dfn：訪問順序；樹邊用 low[v]，棧內已訪問邊用 dfn[v] 更新 low[u]
 // 無向圖橋／割點：見 BCC_edge.cpp；邊雙向加，不用 in_stack

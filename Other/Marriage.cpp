@@ -1,3 +1,5 @@
+// 穩定婚姻問題 (Gale-Shapley)：依偏好求一組不存在私奔對
+// 的穩定配對。
 // preference[a][rank] = b; order[b][a] = rank
 vector<int>
 stable_marriage(const vector<vector<int>> &preference,

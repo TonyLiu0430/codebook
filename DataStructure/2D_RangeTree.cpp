@@ -1,3 +1,5 @@
+// 靜態二維區域樹：離線點集，查詢矩形內點的數量，
+// O(log^2 n)。
 // static rectangle point count, inclusive bounds
 struct range_tree_2d {
     vector<int> xs;

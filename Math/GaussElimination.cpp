@@ -1,3 +1,5 @@
+// 高斯消去法解實數線性方程組（輸入增廣矩陣），回傳 0 無
+// 解 / 1 唯一解 / 2 無限多解。
 using ld = long double;
 const ld eps = 1e-12L;
 

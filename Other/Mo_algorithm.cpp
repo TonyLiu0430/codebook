@@ -1,3 +1,5 @@
+// 莫隊演算法：離線區間查詢，排序後移動左右端點，
+// O((n+q) sqrt(n))。
 // all ranges are [l, r]
 struct query {
     int l, r, id;

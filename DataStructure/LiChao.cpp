@@ -1,3 +1,5 @@
+// 李超線段樹：動態插入直線 kx+b，查詢某個 x 的最大值；
+// 常用於斜率優化 DP。
 // Li Chao tree on integer x in [lo, hi]: add line kx+b, query max
 // for min, insert {-k, -b} and negate the answer
 using ll = long long;

@@ -1,3 +1,5 @@
+// 回文樹 (eertree)：儲存字串中所有不同的回文子字串，並
+// 可算出每個回文的出現次數。
 // eertree, lowercase; node 0 has len -1, node 1 has len 0
 // every other node is a distinct palindrome; call count() for occurrences
 struct palindromic_tree {

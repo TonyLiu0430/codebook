@@ -1,3 +1,4 @@
+// 三角形外心（三點共圓的圓心），三點不可共線。
 // needs 2Dpoint.cpp; a, b, c must not be collinear
 point circumcentre(point a, point b, point c) {
     point u = b - a, v = c - a;

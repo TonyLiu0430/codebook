@@ -1,3 +1,5 @@
+// AC 自動機：多模式字串匹配，一次掃 text 統計所有
+// pattern 的出現次數。
 // lowercase only; call build() after all inserts
 // after build, next[] is the full automaton and end counts suffix matches
 struct aho_corasick {

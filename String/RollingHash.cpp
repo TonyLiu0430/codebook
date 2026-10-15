@@ -1,3 +1,5 @@
+// 字串滾動哈希（模 2^61-1），O(1) 取任意子字串的 hash
+// 來比較是否相等。
 using u64 = uint64_t;
 using u128 = __uint128_t;
 const u64 mod = (1ULL << 61) - 1;

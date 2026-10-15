@@ -1,3 +1,5 @@
+// 用 fread 一次讀一大塊的快速輸入，輸入量極大 (10^6 以
+// 上) 時取代 cin。read(x) 遇到 EOF 回傳 false。
 // fread input. read(x) returns false on eof.
 struct fast_input {
     static constexpr size_t size = 1 << 16;

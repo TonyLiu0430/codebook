@@ -1,3 +1,5 @@
+// 最長嚴格遞增子序列 O(n log n)，回傳子序列的索引；要非
+// 嚴格遞增改用 upper_bound。
 // longest strictly increasing subsequence, O(n log n)
 // non-decreasing: use upper_bound; returns indices
 vector<int> lis(const vector<long long> &a) {

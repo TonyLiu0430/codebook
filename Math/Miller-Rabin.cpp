@@ -1,3 +1,7 @@
+// Miller-Rabin 質數測試，使用 7 個固定底數，對所有 64
+// 位元整數都是確定性正確。
+// 附 __int128 的模乘 mod_mul 與快速冪 mod_power，供
+// Pollard rho 使用。
 using u64 = uint64_t;
 using u128 = __uint128_t;
 

@@ -1,3 +1,4 @@
+// 二維 BIT：矩形加值、矩形求和。
 // 1-based rectangle add and rectangle sum; memory is 32*n*m bytes
 struct bit2d {
     using ll = long long;

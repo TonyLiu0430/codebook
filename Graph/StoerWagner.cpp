@@ -1,3 +1,5 @@
+// Stoer-Wagner 無向圖全域最小割（不指定源匯點，把圖切成
+// 兩半的最小代價），O(V^3)。
 // global min cut, undirected, adjacency matrix, O(V^3)
 // n >= 2, weights >= 0; parallel edges: add the weights
 using ll = long long;

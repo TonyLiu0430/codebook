@@ -1,3 +1,4 @@
+// 最小覆蓋圓：包住所有點的最小圓，隨機增量法期望 O(n)。
 // needs circumcentre.cpp; expected O(n); returns {centre, radius}
 pair<point, ld> smallest_circle(vector<point> p) {
     ranges::shuffle(p, mt19937(random_device{}()));

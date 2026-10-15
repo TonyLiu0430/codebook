@@ -1,3 +1,5 @@
+// 區間加值、區間最小值的懶標記線段樹，並支援線段樹上二
+// 分：找區間內第一個／最後一個 <= x 的位置。
 // range add, range min, segment tree binary search, n >= 1
 // public ranges are [l, r]; first/last_le: -1 if none
 using ll = long long;

@@ -1,3 +1,5 @@
+// 多重背包（每種物品有數量上限），求總重不超過 w 的最大
+// 價值。
 using ll = long long;
 
 struct item {

@@ -1,3 +1,5 @@
+// 1D/1D DP 決策單調性優化：以單調 stack 二分轉移點，
+// O(n^2) -> O(n log n)；範例為 line-breaking 問題。
 using ld = long double;
 
 ld int_power(ld x, int p) {

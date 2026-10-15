@@ -1,3 +1,6 @@
+// 數論常用小工具：快速冪 mod_power；
+// 預處理階乘與階乘反元素，O(1) 求組合數 C(n,k) mod p（p
+// 為質數且 n<p；n >= p 請用 Lucas）。
 using ll = long long;
 
 ll mod_power(ll a, ll n, ll mod) {

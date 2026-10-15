@@ -1,3 +1,5 @@
+// KM 演算法：二分圖最大權完美匹配（指派問題），O(n^3)；
+// 不存在的邊填 missing。
 using ll = long long;
 const ll missing = LLONG_MIN / 4;
 const ll inf = LLONG_MAX / 4;

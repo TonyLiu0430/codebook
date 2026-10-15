@@ -1,3 +1,7 @@
+// Berlekamp-Massey：給數列前 2L 項，求出最短線性遞迴式
+// （模質數）；
+// 再用 linear_rec 以多項式取模在 O(L^2 log k) 求第 k 項。
+// 適合「打表發現是線性遞迴」的題目。
 // mod must be prime; give about 2L terms for order L
 using ll = long long;
 const ll mod = 998244353;

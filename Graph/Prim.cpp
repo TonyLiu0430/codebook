@@ -1,25 +1,26 @@
-using ll = long long;
-using edge = pair<ll, int>; // weight, to
-
-// {connected, mst weight}; zero and parallel edges are allowed
-pair<bool, ll> prim(const vector<vector<edge>> &g,
-                    int root = 0) {
-    if (g.empty()) return {true, 0};
-    vector<char> used(g.size());
-    priority_queue<edge, vector<edge>, greater<edge>> pq;
-    pq.push({0, root});
-    ll total = 0;
-    int seen = 0;
-    while (!pq.empty()) {
-        ll w = pq.top().first;
-        int u = pq.top().second;
-        pq.pop();
-        if (used[u]) continue;
-        used[u] = true;
-        total += w;
-        ++seen;
-        for (edge e : g[u])
-            if (!used[e.second]) pq.push(e);
+// Prim 陣列版 O(V^2)，不用存邊：稠密圖／完全圖用（如
+// 平面點兩兩距離求 MST）；稀疏圖請用 Kruskal。
+// w(i, j)：邊權，沒有邊回傳 numeric_limits<T>::max()
+// 回傳 {是否連通, MST 權重和}，例：
+// prim<double>(n, [&](int i, int j) { return d(i, j); })
+template<class T, class F>
+pair<bool, T> prim(int n, F w) {
+    const T inf = numeric_limits<T>::max();
+    vector<T> dist(n, inf);
+    vector<char> used(n);
+    T total = 0;
+    if (n) dist[0] = 0;
+    for (int it = 0; it < n; ++it) {
+        int u = -1;
+        for (int v = 0; v < n; ++v)
+            if (!used[v] &&
+                (u == -1 || dist[v] < dist[u]))
+                u = v;
+        if (dist[u] == inf) return {false, total};
+        used[u] = true, total += dist[u];
+        for (int v = 0; v < n; ++v)
+            if (!used[v])
+                dist[v] = min(dist[v], w(u, v));
     }
-    return {seen == ssize(g), total};
+    return {true, total};
 }

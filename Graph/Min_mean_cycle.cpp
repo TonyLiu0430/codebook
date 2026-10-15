@@ -1,3 +1,4 @@
+// 最小平均權環（環上邊權平均最小）：Karp 演算法 O(nm)。
 using ld = long double;
 const ld inf = 1e100L;
 

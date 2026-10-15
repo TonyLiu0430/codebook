@@ -1,3 +1,5 @@
+// 一般圖（非二分圖）最大匹配：Edmonds 開花演算法，
+// O(V^3)。
 // Edmonds blossom, O(V^3); match[v] is the partner or -1
 struct general_matching {
     int n;

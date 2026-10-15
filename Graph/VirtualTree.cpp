@@ -1,3 +1,5 @@
+// 虛樹：只保留關鍵點與它們兩兩的 LCA 建出縮小的樹，多次
+// 詢問且關鍵點總數有限時做樹 DP。
 // tin: dfs preorder (hld.pos works), lca: e.g. hld.lca
 // returns edges (parent, child) of the virtual tree on
 // keys and their lcas; the root is the first parent

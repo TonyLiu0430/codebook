@@ -1,3 +1,4 @@
+// 懶標記線段樹：區間加值、區間和。
 // range add, range sum; public ranges are [l, r]
 struct lazy_sum {
     int n;

@@ -1,3 +1,7 @@
+// 二分圖最大匹配（Kuhn 逐點增廣），O(VE)，程式短。
+// 可控制增廣順序：左點依權重由大到小 dfs，得到「被配到
+// 的左點權重和最大」；也可做字典序最小、逐點加入的增量
+// 匹配（HK 是整批增廣，做不到）。
 // maximum cardinality bipartite matching
 struct bipartite_matching {
     vector<vector<int>> g;

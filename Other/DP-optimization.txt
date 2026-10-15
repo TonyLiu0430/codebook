@@ -1,27 +1,32 @@
-Monotonicity & 1D/1D DP & 2D/1D DP
+// DP 優化：四邊形不等式與決策單調性（以下都是取 min）
+1D/1D：dp[j] = min_{i<j} dp[i] + w(i, j)         O(n^2)
+2D/1D：dp[i][j] = min_{i<k<=j} dp[i][k-1] + dp[k][j]
+                  + w(i, j)，dp[i][i] = 0         O(n^3)
 -------------------------------------------------------
-Definition xD/yD
-1D/1D DP[j] = min(0≤i<j) { DP[i] + w(i, j) }; DP[0] = k
-2D/1D DP[i][j] = min(i<k≤j) { DP[i][k - 1] + DP[k][j] } + w(i, j); DP[i][i] = 0
+四邊形不等式 (QI)：對所有 a <= b <= c <= d
+  w(a, c) + w(b, d) <= w(a, d) + w(b, c)
+  白話：兩段「交叉」的和 <= 「一大包一小」的和
+  常見成立：w(i, j) = f(s[j] - s[i])，f 凸且 s 遞增
+  例如 (區間和)^2、|區間長 - L|^p (p >= 1)
+區間包含單調：a <= b <= c <= d 時 w(b, c) <= w(a, d)
+不確定時：先寫 O(n^2) 暴力，印出 opt 看是否單調
 -------------------------------------------------------
-Monotonicity
-       c       d 
-  -----------------
-a | w(a, c) w(a, d)
-b | w(b, c) w(b, d)
-
-Monge Condition
-Concave(凹四邊形不等式): w(a, c) + w(b, d) >= w(a, d) + w(b, c)
-Convex (凸四邊形不等式): w(a, c) + w(b, d) <= w(a, d) + w(b, c)
-
-Totally Monotone
-Concave(凹單調): w(a, c) <= w(b, d) -----> w(a, d) <= w(b, c)
-Convex (凸單調): w(a, c) >= w(b, d) -----> w(a, d) >= w(b, c)
+決策單調性：opt[j] = 讓 dp[j] 最小的 i
+  w 滿足 QI => opt[j] <= opt[j+1]
+1D/1D 優化成 O(n log n)：
+(1) 分層 dp_new[j] = min dp_old[i] + w(i, j)：
+    分治 solve(l, r, optl, optr)，暴力求 mid 的 opt，
+    左半在 [optl, opt]、右半在 [opt, optr] 找
+(2) dp 依賴自己（不分層）：deque 存
+    「一段 j 的區間 -> 目前最佳決策 i」
+    QI 成立：新決策只會贏「後段」，從尾端彈出、
+    二分找分界點（見 1D/1D dp 優化模板）
+    不等式反向：新決策只會贏「前段」，改用 stack
+(3) w(i, j) 可拆成 a[i] * b[j] + c[i] + d[j]：
+    改用斜率優化（凸包）或李超線段樹
 -------------------------------------------------------
-1D/1D DP O(n^2) -> O(nlgn)
-**CONSIDER THE TRANSITION POINT**
-Solve 1D/1D Concave by Stack
-Solve 1D/1D Convex by Deque
--------------------------------------------------------
-2D/1D Convex DP (Totally Monotone) O(n^3) -> O(n^2)
-h(i, j − 1) ≤ h(i, j) ≤ h(i + 1, j)
+2D/1D Knuth 優化 O(n^3) -> O(n^2)
+  條件：w 滿足 QI 且區間包含單調
+  則 opt[i][j-1] <= opt[i][j] <= opt[i+1][j]
+  區間長度由小到大算，k 只在上面範圍內枚舉
+  例：石子合併（相鄰合併）、最佳二元搜尋樹

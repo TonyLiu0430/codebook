@@ -1,3 +1,5 @@
+// 模 mod 的矩陣乘法 O(n^3)；搭配快速冪可求線性遞迴（如
+// 費氏數列）第 n 項。
 using ll = long long;
 using matrix = vector<vector<ll>>;
 

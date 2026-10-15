@@ -1,3 +1,5 @@
+// Kruskal 最小生成樹（排序邊 + 並查集），回傳 {是否連通,
+// MST 權重和}。
 using ll = long long;
 
 struct edge {

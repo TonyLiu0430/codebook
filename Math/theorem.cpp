@@ -1,3 +1,5 @@
+// 常用數學定理整理：Lucas、Pick、矩陣樹 (Kirchhoff)、
+// Catalan、莫比烏斯反演、中國剩餘定理等公式。
 /*
 Lucas's Theorem
 	For non-negative integer n,m and prime P,

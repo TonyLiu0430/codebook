@@ -1,3 +1,5 @@
+// Andrew 單調鏈求凸包，O(n log n)，回傳逆時針頂點、不含
+// 共線點。
 // needs point, cross and eps from 2Dpoint.cpp
 vector<point> convex_hull(vector<point> p) {
     ranges::sort(p, [](point a, point b) {

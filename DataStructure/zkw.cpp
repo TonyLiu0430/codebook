@@ -1,3 +1,4 @@
+// ZKW 非遞迴線段樹：單點加值、區間和，常數小、程式短。
 // iterative segment tree: point add and range sum [l, r]
 struct zkw_sum {
     int n = 1;

@@ -1,3 +1,5 @@
+// 稀疏表：靜態陣列 O(n log n) 預處理、O(1) 區間最小值
+// (RMQ)。
 // idempotent rmq: minimum on [l, r]
 template<class T>
 struct sparse_table {

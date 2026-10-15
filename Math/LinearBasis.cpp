@@ -1,3 +1,5 @@
+// XOR 線性基：插入數字、判斷某數能否由集合 xor 出來、求
+// 子集 xor 最大值。
 // xor basis; b[i] has highest bit i
 using ull = unsigned long long;
 

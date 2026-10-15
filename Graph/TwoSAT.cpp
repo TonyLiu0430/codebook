@@ -1,3 +1,5 @@
+// 2-SAT：每個布林變數二選一、限制為「a 或 b」形式，以
+// SCC 判斷可滿足並求出一組解。
 // variable x: node 2x means x is true, 2x+1 means x is false
 struct two_sat {
     int n, time = 0, count = 0;

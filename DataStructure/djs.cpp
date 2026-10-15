@@ -1,3 +1,5 @@
+// 並查集：路徑壓縮 + 按大小合併，判斷連通性、維護集合大
+// 小。
 struct dsu {
     vector<int> parent, size;
     dsu(int n) : parent(n), size(n, 1) {

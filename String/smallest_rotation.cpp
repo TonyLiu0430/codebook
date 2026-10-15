@@ -1,3 +1,4 @@
+// 最小表示法：O(n) 求字串字典序最小的循環位移。
 // 回傳字典序最小的循環位移，O(n)
 // 例如 "baca" -> "abac"；將開頭若干字元搬到尾端
 string smallest_rotation(string s) {

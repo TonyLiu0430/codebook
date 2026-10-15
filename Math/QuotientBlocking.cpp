@@ -1,3 +1,7 @@
+// 數論分塊（整除分塊）：floor(n/i) 只有 O(sqrt(n)) 種值，
+// 把值相同的 i 一段一起算。
+// 求 sum f(i) floor(n/i) 時配合 f 的前綴和；雙變數版同
+// 時處理 floor(n/i) floor(m/i)，常跟莫比烏斯反演一起用。
 using ll = long long;
 using i128 = __int128;
 

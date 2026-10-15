@@ -1,3 +1,7 @@
+// 模反元素：快速冪 a^(p-2)（費馬小定理，p 為質數）；
+// 以及 O(n) 線性求 1..n 所有反元素：inv[i] =
+// -floor(p/i)*inv[p mod i]。
+// 模數非質數時改用擴展歐幾里得。
 using ll = long long;
 
 ll power(ll a, ll n, ll mod) {

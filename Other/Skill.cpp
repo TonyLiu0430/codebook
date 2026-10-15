@@ -1,3 +1,5 @@
+// C++ 小技巧：pb_ds 的 ordered set（第 k 小／rank）與可
+// 合併 heap、__builtin 位元函數、亂數、去重。
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/priority_queue.hpp>

@@ -1,3 +1,4 @@
+// 線段樹：區間加值、區間最大值（帶懶標記）。
 // range add, range maximum; public ranges are [l, r]
 struct segtree {
     struct node { long long mx = 0, lazy = 0; };

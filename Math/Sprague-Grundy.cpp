@@ -1,3 +1,5 @@
+// SG 函數：在遊戲 DAG 上求每個狀態的 Grundy 值 (mex)；
+// 多個獨立遊戲把 SG 值 xor，非 0 先手必勝。
 /*
 finite impartial game:
 sg[u] = mex({sg[v] | u -> v}).

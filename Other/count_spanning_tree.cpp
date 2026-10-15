@@ -1,3 +1,5 @@
+// 矩陣樹定理：拉普拉斯矩陣去掉一行一列取行列式，求無向
+// 圖生成樹個數 (mod 質數)。
 using ll = long long;
 
 ll mod_power(ll a, ll n, ll mod) {

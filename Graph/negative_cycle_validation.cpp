@@ -1,3 +1,5 @@
+// Floyd-Warshall 全點對最短路 O(n^3)，並標記哪些點對會
+// 受負環影響（距離為 -inf）。
 // 單純偵測負環請用 bellman-ford
 using ll = long long;
 const ll inf = LLONG_MAX / 4;

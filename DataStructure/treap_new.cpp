@@ -1,3 +1,5 @@
+// Treap（split / merge）：可當平衡樹（依 key）或序列
+// （依位置）使用，支援區間操作、插入刪除。
 // implicit/key treap primitives; node 0 means null
 struct treap {
     struct node {

@@ -1,3 +1,7 @@
+// 拉格朗日插值：已知 f(0),...,f(n-1) (deg f<n)，O(n) 求
+// 任意 f(x) mod p。
+// 常用於求 sum_{i=1..x} i^k 這類多項式前綴和（它是 k+1
+// 次多項式）。
 // needs power, mod from BerlekampMassey.cpp
 // y[i] = f(i) in [0, mod) for i in [0, n), deg f < n
 ll lagrange(const vector<ll> &y, ll x) {

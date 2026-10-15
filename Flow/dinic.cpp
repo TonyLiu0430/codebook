@@ -1,3 +1,5 @@
+// Dinic 最大流，另可取得最小割的 S 側點集。二分圖匹配、
+// 最小割建模都用它。
 using ll = long long;
 const ll inf = LLONG_MAX / 4;
 

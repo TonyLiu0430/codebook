@@ -1,3 +1,5 @@
+// 可撤銷並查集（不做路徑壓縮）：可回滾到之前的狀態，用
+// 於離線動態連通性（線段樹分治）。
 // union by size, no path compression: find is O(log n)
 // t = d.time(); ...unite...; d.rollback(t) undoes them
 // offline dynamic connectivity: put each edge on the

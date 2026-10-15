@@ -1,3 +1,5 @@
+// 組合數學公式表：Stirling 數、Bell、Catalan、錯排、分
+// 割數、球與盒、Cayley / Prufer、Hall、Dilworth、LGV 等。
 第一類 Stirling s(n,k)：n 個元素排成 k 個環
   s(n,k) = s(n-1,k-1) + (n-1) s(n-1,k)
 第二類 Stirling S(n,k)：n 個相異球放進 k 個相同非空盒

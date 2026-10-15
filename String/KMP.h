@@ -1,3 +1,5 @@
+// KMP：prefix function（失敗函數），O(n+m) 找出 pattern
+// 在 text 中所有出現位置。
 vector<int> prefix_function(const string &s) {
     vector<int> pi(s.size());
     for (int i = 1; i < ssize(s); ++i) {

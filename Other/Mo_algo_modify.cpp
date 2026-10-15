@@ -1,3 +1,4 @@
+// 帶修改莫隊：多加時間維度處理單點修改，約 O(n^(5/3))。
 // all ranges are [l, r]; time = number of applied updates
 struct time_query {
     int l, r, time, id;

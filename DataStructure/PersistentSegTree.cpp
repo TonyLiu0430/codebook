@@ -1,3 +1,5 @@
+// 持久化線段樹（主席樹）：每次修改產生新版本；經典用途
+// 為靜態區間第 k 小。
 // persistent segment tree on [0, n): point add, range sum
 // every add returns a new root; root 0 is the empty tree
 // reserve about (updates * (log n + 2)) nodes if memory is tight
