@@ -12,7 +12,7 @@ struct svg { // shows [x1,x2] x [y1,y2], y axis points up
     svg(string path, double x1, double y1, double x2,
         double y2) : o(path), X(x1), Y(y2) {
         k = 1e3 / max(x2 - x1, y2 - y1);
-        p("<svg viewBox=-50,-50,{},{} stroke-width=.3% "
+        p("<svg width=1000 viewBox=-50,-50,{},{} stroke-width=.3% "
           "text-anchor=middle dominant-baseline=central>"
           // 不畫 graph() 可刪除此段
           "<marker id=a orient=auto overflow=visible>"
