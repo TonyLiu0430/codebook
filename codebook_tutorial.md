@@ -1,0 +1,1 @@
+叫 GPT 教你怎麼 build ，建議使用 wsl 產生 pdf 更方便一點
