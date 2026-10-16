@@ -8,7 +8,7 @@ struct svg { // shows [x1,x2] x [y1,y2], y axis points up
     }
     double tx(double x) { return (x - X) * k; }
     double ty(double y) { return (Y - y) * k; }
-    // 畫 graph() 建議用 svg(path, -1, -1, 1, 1)
+    // path 要以 .html 結尾；畫 graph() 建議 svg(path, -1, -1, 1, 1)
     svg(string path, double x1, double y1, double x2,
         double y2) : o(path), X(x1), Y(y2) {
         k = 1e3 / max(x2 - x1, y2 - y1);
