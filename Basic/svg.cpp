@@ -16,8 +16,8 @@ struct svg { // shows [x1,x2] x [y1,y2], y axis points up
           "text-anchor=middle dominant-baseline=central>"
           // 不畫 graph() 可刪除此段
           "<marker id=a orient=auto overflow=visible>"
-          "<path d=M-14-3l5,3-5,3z "
-          "fill=context-stroke /></marker>",
+          "<path d=M-14-3v6l5-3z "
+          "fill=context-stroke></marker>",
           tx(x2) + 100, ty(y1) + 100);
     }
     void line(double x1, double y1, double x2, double y2) {
