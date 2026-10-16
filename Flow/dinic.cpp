@@ -66,10 +66,11 @@ struct dinic {
 };
 
 /*
-lower bounds [low, high]:
-add u->v with high-low; balance[u]-=low, balance[v]+=low.
-add ss->v for positive balance, v->tt for negative balance.
-for s-t flow also add t->s with inf before the feasibility flow.
-after feasibility, remove ss/tt and t->s:
-max = base + max_flow(s,t), min = base - max_flow(t,s).
+上下界 [low, high]：u->v 容量改為 high-low。
+balance[u]-=low，balance[v]+=low。
+正接 ss->v、負接 v->tt，容量為 balance 絕對值。
+有源匯時先加 t->s 容量 inf，再跑 ss->tt 可行流。
+ss 出邊須滿流；base 為 t->s 流量。
+移除 ss/tt、t->s 及其反向邊，於殘量圖擇一：
+最大 = base + max_flow(s,t)，最小 = base - max_flow(t,s)。
 */
